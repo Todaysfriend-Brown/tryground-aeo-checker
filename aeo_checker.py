@@ -235,7 +235,7 @@ def generate_dashboard(history: list) -> str:
               <div style="font-size:11px;color:#94a3b8;margin-top:2px">미실행</div>
             </div>"""
 
-    # 주간 추이 테이블 (날짜별, 엔진별 행)
+    # 주간 추이 테이블 (날짜별, 엔진별 행) - 날짜를 누르면 상세 서브페이지로 이동
     rows = ""
     for entry in reversed(history[-60:]):  # 최근 60개 실행
         color = ENGINE_COLORS.get(entry["engine"], "#64748b")
@@ -244,7 +244,9 @@ def generate_dashboard(history: list) -> str:
         area_str = " · ".join([f'{a} {areas.get(a, 0):.0f}%' for a in AREAS])
         rows += f"""
         <tr>
-          <td style="padding:10px 12px;font-weight:600;color:#334155">{entry['date']}</td>
+          <td style="padding:10px 12px;font-weight:600">
+            <a href="reports/{entry['date']}.html" style="color:#2563eb;text-decoration:none">{entry['date']} →</a>
+          </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{color};background:{color}15;padding:3px 10px;border-radius:8px">{entry['engine']}</span></td>
           <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:{rate_color}">{entry['rate']:.1f}%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">{entry['mentioned']}/{entry['total']}</td>
@@ -326,6 +328,95 @@ def generate_dashboard(history: list) -> str:
 </html>"""
 
 
+def generate_report_page(date: str, entries_for_date: list) -> str:
+    """특정 날짜의 상세 리포트 - 엔진별로 어떤 프롬프트가 인용됐는지 전체 표시"""
+
+    cards_html = ""
+    for entry in entries_for_date:
+        engine = entry["engine"]
+        detail = entry.get("detail", {})
+        color = ENGINE_COLORS.get(engine, "#64748b")
+        s = {"rate": entry["rate"], "mentioned": entry["mentioned"], "total": entry["total"]}
+
+        rows = ""
+        for p in PROMPTS:
+            r = detail.get(p["id"], {})
+            m = r.get("mentioned", False)
+            badge = "O" if m else "X"
+            bg = "#dcfce7" if m else "#fee2e2"
+            fg = "#166534" if m else "#991b1b"
+            cite = r.get("citationType", "미언급")
+            rank_str = f' ({r["rank"]}위)' if r.get("rank") else ""
+            comps = ", ".join(r.get("competitors", [])[:3]) or "-"
+            ac = AREA_COLORS.get(p["area"], "#64748b")
+
+            rows += f"""
+            <tr>
+              <td style="padding:10px 12px"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:{ac};margin-right:6px"></span>{p['short']}</td>
+              <td style="padding:10px 12px;text-align:center"><span style="display:inline-block;width:26px;height:26px;line-height:26px;border-radius:50%;background:{bg};color:{fg};font-weight:700;font-size:12px">{badge}</span></td>
+              <td style="padding:10px 12px;text-align:center;font-size:12px">{cite}{rank_str}</td>
+              <td style="padding:10px 12px;font-size:11px;color:#64748b">{comps}</td>
+            </tr>"""
+
+        area_boxes = ""
+        for area in AREAS:
+            ar = entry.get("areas", {}).get(area, 0)
+            aps = [p for p in PROMPTS if p["area"] == area]
+            am = sum(1 for p in aps if detail.get(p["id"], {}).get("mentioned", False))
+            area_boxes += f'<div style="text-align:center;padding:10px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0"><div style="font-size:20px;font-weight:800;color:{AREA_COLORS[area]}">{ar:.0f}%</div><div style="font-size:11px;color:#64748b">{area} ({am}/{len(aps)})</div></div>'
+
+        rate_color = "#059669" if s["rate"] >= 30 else "#dc2626"
+        cards_html += f"""
+        <div style="margin-bottom:32px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+            <span style="font-size:18px;font-weight:800;color:{color}">{engine}</span>
+            <span style="font-size:28px;font-weight:800;color:{rate_color}">{s['rate']:.1f}%</span>
+            <span style="font-size:13px;color:#94a3b8">({s['mentioned']}/{s['total']})</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">{area_boxes}</div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="border-bottom:2px solid #e2e8f0;background:#f8fafc">
+              <th style="text-align:left;padding:10px 12px;color:#64748b">프롬프트</th>
+              <th style="text-align:center;padding:10px 12px;color:#64748b;width:60px">인용</th>
+              <th style="text-align:center;padding:10px 12px;color:#64748b;width:130px">유형</th>
+              <th style="text-align:left;padding:10px 12px;color:#64748b">경쟁사</th>
+            </tr></thead>
+            <tbody>{rows}</tbody>
+          </table>
+        </div>"""
+
+    return f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{date} 상세 리포트 - 트라이그라운드 AEO</title>
+<style>
+  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+  body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
+  .container {{ max-width: 800px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
+  h1 {{ font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }}
+  .subtitle {{ font-size: 13px; color: #94a3b8; margin-bottom: 24px; }}
+  .back-link {{ display: inline-block; margin-bottom: 16px; font-size: 13px; color: #2563eb; text-decoration: none; }}
+  table {{ width: 100%; }}
+  td {{ border-bottom: 1px solid #f1f5f9; }}
+  tr:hover td {{ background: #fafbfc; }}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="../index.html">← 대시보드로 돌아가기</a>
+  <h1>{date} 상세 리포트</h1>
+  <div class="subtitle">프롬프트 {len(PROMPTS)}개 × 실행 엔진 {len(entries_for_date)}개</div>
+  {cards_html}
+  <div style="margin-top:24px;padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
+    <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ AI 응답 원문은 history.json에서 확인 가능합니다.</p>
+  </div>
+</div>
+</body>
+</html>"""
+
+
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # 메인
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -376,6 +467,17 @@ def main():
     dashboard_path = output_dir / "index.html"
     dashboard_path.write_text(generate_dashboard(history), encoding="utf-8")
     print(f"✅ 통합 대시보드 저장: {dashboard_path}")
+
+    # 날짜별 상세 서브페이지 생성 (모든 날짜 재생성 - 데이터 누락 방지)
+    reports_dir = output_dir / "reports"
+    reports_dir.mkdir(exist_ok=True)
+    by_date = {}
+    for entry in history:
+        by_date.setdefault(entry["date"], []).append(entry)
+    for d, entries_for_date in by_date.items():
+        report_path = reports_dir / f"{d}.html"
+        report_path.write_text(generate_report_page(d, entries_for_date), encoding="utf-8")
+    print(f"✅ 날짜별 상세 리포트 {len(by_date)}개 저장: {reports_dir}/")
 
     print(f"\n{'='*50}\n  완료! aeo_results/index.html 을 브라우저로 여세요.\n{'='*50}\n")
 
