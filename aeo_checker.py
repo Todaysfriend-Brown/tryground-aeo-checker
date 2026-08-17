@@ -47,16 +47,16 @@ API_KEYS = {
 }
 
 PROMPTS = [
-    {"id": "p1",  "area": "낙성대", "short": "서울대입구 공유오피스",   "q": "서울대입구에서 1인 창업자가 쓰기 좋은 공유오피스 추천해줘"},
-    {"id": "p2",  "area": "낙성대", "short": "관악구 비상주사무실", "q": "관악구에서 비상주사무실 어디가 좋아?"},
-    {"id": "p3",  "area": "낙성대", "short": "관악구 공유오피스",   "q": "관악구에서 네트워킹 활발한 공유오피스 알려줘"},
+    {"id": "p1",  "area": "낙성대", "short": "관악 공유오피스",   "q": "관악구에서 1인 창업자가 쓰기 좋은 공유오피스 추천해줘"},
+    {"id": "p2",  "area": "낙성대", "short": "서울대입구 비상주", "q": "서울대입구역 근처 비상주사무실 어디가 좋아?"},
+    {"id": "p3",  "area": "낙성대", "short": "관악 가상오피스",   "q": "관악구 가상오피스로 사업자등록 할 수 있는 곳 알려줘"},
     {"id": "p4",  "area": "홍대",   "short": "홍대 공유오피스",   "q": "홍대 근처 가성비 좋은 공유오피스 추천해줘"},
-    {"id": "p5",  "area": "홍대",   "short": "마포구 비상주사무실",       "q": "마포구에서 비상주사무실 계약할 수 있는 곳 비교해줘"},
-    {"id": "p6",  "area": "홍대",   "short": "합정 공유오피스",       "q": "합정역 근처 1인 창업자나 프리랜서가 쓰기 좋은 공유오피스 추천해줘"},
-    {"id": "p7",  "area": "영등포", "short": "영등포 공유오피스",       "q": "영등포에서 소규모 스타트업이나 창업가가 쓰기 좋은 공유오피스 추천해줘"},
-    {"id": "p8",  "area": "영등포", "short": "당산 소호사무실",   "q": "당산 소호사무실 가격 비교해줘"},
-    {"id": "p9",  "area": "영등포", "short": "영등포 사무실",       "q": "영등포구에 좋은 1인 사무실 추천해줘"},
-    {"id": "p10", "area": "영등포", "short": "영등포 비상주사무실",     "q": "영등포 비상주사무실로 사업자등록 가능한 곳 알려줘"},
+    {"id": "p5",  "area": "홍대",   "short": "마포 비상주",       "q": "마포구에서 비상주사무실 계약할 수 있는 곳 비교해줘"},
+    {"id": "p6",  "area": "홍대",   "short": "합정 사무실",       "q": "합정역 근처 소규모 사무실 추천해줘"},
+    {"id": "p7",  "area": "영등포", "short": "영등포 소호",       "q": "영등포에서 소호사무실 찾고 있는데 추천해줘"},
+    {"id": "p8",  "area": "영등포", "short": "영등포구청 공유",   "q": "영등포구청역 근처 공유오피스 가격 비교해줘"},
+    {"id": "p9",  "area": "영등포", "short": "당산 사무실",       "q": "당산역 근처 1인 사무실 추천해줘"},
+    {"id": "p10", "area": "영등포", "short": "영등포 비상주",     "q": "영등포 비상주사무실로 법인 등록 가능한 곳 알려줘"},
 ]
 
 BRAND_VARIANTS = ["트라이그라운드", "tryground", "트그", "TRYGROUND", "Tryground", "contractup", "계약온"]
@@ -148,7 +148,7 @@ def call_gemini(question: str) -> str:
         tools=[grounding_tool],
     )
     response = client.models.generate_content(
-        model="gemini-3-flash",
+        model="gemini-2.5-flash",
         contents=question,
         config=config,
     )
@@ -159,7 +159,7 @@ def call_claude(question: str) -> str:
     import anthropic
     client = anthropic.Anthropic(api_key=API_KEYS["anthropic"])
     response = client.messages.create(
-        model="claude-sonnet-4-6",
+        model="claude-sonnet-5",
         max_tokens=1000,
         system=SYSTEM_PROMPT,
         tools=[{"type": "web_search_20250305", "name": "web_search"}],
@@ -253,22 +253,22 @@ def generate_dashboard(history: list) -> str:
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">{area_str}</td>
         </tr>"""
 
-    # 분기별 요약
-    quarters = {}
+    # 월별 요약
+    months = {}
     for entry in history:
         d = datetime.strptime(entry["date"], "%Y-%m-%d")
-        qk = f"{d.year} Q{(d.month - 1)//3 + 1}"
-        key = (qk, entry["engine"])
-        quarters.setdefault(key, []).append(entry)
+        mk = f"{d.year}-{d.month:02d}"
+        key = (mk, entry["engine"])
+        months.setdefault(key, []).append(entry)
 
-    q_rows = ""
-    for (qk, eng), entries in sorted(quarters.items(), key=lambda x: (x[0][0], x[0][1]), reverse=True):
+    m_rows = ""
+    for (mk, eng), entries in sorted(months.items(), key=lambda x: (x[0][0], x[0][1]), reverse=True):
         avg_rate = sum(e["rate"] for e in entries) / len(entries)
         color = ENGINE_COLORS.get(eng, "#64748b")
         rate_color = "#059669" if avg_rate >= 30 else "#dc2626"
-        q_rows += f"""
+        m_rows += f"""
         <tr>
-          <td style="padding:10px 12px;font-weight:600;color:#334155">{qk}</td>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">{mk}</td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{color};background:{color}15;padding:3px 10px;border-radius:8px">{eng}</span></td>
           <td style="padding:10px 12px;text-align:center;font-weight:800;color:{rate_color}">{avg_rate:.1f}%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b">{len(entries)}회</td>
@@ -288,7 +288,8 @@ def generate_dashboard(history: list) -> str:
   .container {{ max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
   h1 {{ font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }}
   h2 {{ font-size: 16px; font-weight: 700; color: #1e293b; margin: 28px 0 12px; }}
-  .subtitle {{ font-size: 13px; color: #94a3b8; margin-bottom: 20px; }}
+  .subtitle {{ font-size: 13px; color: #94a3b8; margin-bottom: 8px; }}
+  .nav-link {{ display: inline-block; font-size: 13px; color: #2563eb; text-decoration: none; margin-bottom: 20px; font-weight: 600; }}
   table {{ width: 100%; border-collapse: collapse; font-size: 13px; }}
   th {{ text-align: left; padding: 10px 12px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; background: #f8fafc; }}
   td {{ border-bottom: 1px solid #f1f5f9; }}
@@ -301,6 +302,7 @@ def generate_dashboard(history: list) -> str:
 <div class="container">
   <h1>트라이그라운드 AEO 인용률 대시보드</h1>
   <div class="subtitle">마지막 업데이트: {last_updated} | 매주 월요일 자동 실행 (GitHub Actions)</div>
+  <a class="nav-link" href="matrix.html">📋 프롬프트별 전체 추이표 보기 →</a>
 
   <div class="grid3">{summary_cards}</div>
 
@@ -312,11 +314,11 @@ def generate_dashboard(history: list) -> str:
     </table>
   </div>
 
-  <h2>분기별 요약</h2>
+  <h2>월별 요약</h2>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>분기</th><th style="text-align:center">엔진</th><th style="text-align:center">평균 인용률</th><th style="text-align:center">실행 횟수</th></tr></thead>
-      <tbody>{q_rows if q_rows else '<tr><td colspan="4" style="padding:20px;text-align:center;color:#94a3b8">데이터 없음</td></tr>'}</tbody>
+      <thead><tr><th>월</th><th style="text-align:center">엔진</th><th style="text-align:center">평균 인용률</th><th style="text-align:center">실행 횟수</th></tr></thead>
+      <tbody>{m_rows if m_rows else '<tr><td colspan="4" style="padding:20px;text-align:center;color:#94a3b8">데이터 없음</td></tr>'}</tbody>
     </table>
   </div>
 
@@ -421,6 +423,116 @@ def generate_report_page(date: str, entries_for_date: list) -> str:
 # 메인
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# 매트릭스 페이지 (프롬프트 × 날짜 × 엔진 전체 추이표)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+def generate_matrix_page(history: list, max_dates: int = 12) -> str:
+    """세로: 프롬프트, 가로: 날짜(그룹) × 엔진(하위열). 한 눈에 O/X 추이를 보는 표."""
+
+    # 날짜별로 엔진 결과 묶기: {date: {engine: entry}}
+    by_date = {}
+    for entry in history:
+        by_date.setdefault(entry["date"], {})[entry["engine"]] = entry
+
+    # 최신 날짜부터 max_dates개만
+    dates = sorted(by_date.keys(), reverse=True)[:max_dates]
+
+    if not dates:
+        table_html = '<p style="padding:20px;text-align:center;color:#94a3b8">아직 데이터가 없습니다</p>'
+    else:
+        # 헤더 행 1: 날짜 (엔진 3개를 colspan으로 묶음)
+        header_dates = "".join(
+            f'<th colspan="{len(ENGINES)}" style="text-align:center;padding:8px 6px;border-bottom:1px solid #e2e8f0;border-left:2px solid #e2e8f0">{d}</th>'
+            for d in dates
+        )
+        # 헤더 행 2: 엔진명
+        header_engines = ""
+        for d in dates:
+            for eng in ENGINES:
+                header_engines += f'<th style="text-align:center;padding:6px 8px;font-size:11px;color:{ENGINE_COLORS[eng]};border-bottom:2px solid #e2e8f0;font-weight:700">{eng}</th>'
+
+        # 데이터 행 1: 날짜별·엔진별 전체 인용률 %
+        rate_row = ""
+        for d in dates:
+            for eng in ENGINES:
+                e = by_date.get(d, {}).get(eng)
+                if e:
+                    rc = "#059669" if e["rate"] >= 30 else "#dc2626"
+                    rate_row += f'<td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:{rc};background:#f8fafc">{e["rate"]:.0f}%</td>'
+                else:
+                    rate_row += '<td style="text-align:center;padding:6px 8px;color:#d1d5db;background:#f8fafc">–</td>'
+
+        # 프롬프트별 O/X 행
+        prompt_rows = ""
+        for p in PROMPTS:
+            cells = ""
+            for d in dates:
+                for eng in ENGINES:
+                    e = by_date.get(d, {}).get(eng)
+                    r = e.get("detail", {}).get(p["id"]) if e else None
+                    if r is None:
+                        cells += '<td style="text-align:center;padding:6px 8px;color:#d1d5db">–</td>'
+                    else:
+                        m = r.get("mentioned", False)
+                        color = "#059669" if m else "#dc2626"
+                        title = f'{r.get("citationType","")}{f" ({r["rank"]}위)" if r.get("rank") else ""}' if m else "미언급"
+                        cells += f'<td title="{title}" style="text-align:center;padding:6px 8px;font-weight:700;color:{color}">{"O" if m else "X"}</td>'
+            ac = AREA_COLORS.get(p["area"], "#64748b")
+            prompt_rows += f"""
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:{ac};margin-right:6px"></span>{p['short']}
+              </td>{cells}
+            </tr>"""
+
+        table_html = f"""
+        <table style="border-collapse:collapse;font-size:12px;min-width:100%">
+          <thead>
+            <tr><th style="position:sticky;left:0;background:#f8fafc;border-right:2px solid #e2e8f0"></th>{header_dates}</tr>
+            <tr><th style="text-align:left;padding:8px 12px;position:sticky;left:0;background:#f8fafc;border-right:2px solid #e2e8f0;border-bottom:2px solid #e2e8f0">프롬프트 / 인용률</th>{header_engines}</tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700;font-size:12px;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0;border-bottom:2px solid #e2e8f0">전체 인용률</td>
+              {rate_row}
+            </tr>
+            {prompt_rows}
+          </tbody>
+        </table>"""
+
+    return f"""<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롬프트별 전체 추이표 - 트라이그라운드 AEO</title>
+<style>
+  * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+  body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
+  .container {{ max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
+  h1 {{ font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }}
+  .subtitle {{ font-size: 13px; color: #94a3b8; margin-bottom: 16px; }}
+  .back-link {{ display: inline-block; margin-bottom: 16px; font-size: 13px; color: #2563eb; text-decoration: none; }}
+  .table-wrap {{ overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }}
+  td, th {{ border-bottom: 1px solid #f1f5f9; }}
+  tr:hover td {{ background: #fafbfc !important; }}
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">← 대시보드로 돌아가기</a>
+  <h1>프롬프트별 전체 추이표</h1>
+  <div class="subtitle">최근 {len(dates) if dates else 0}회 실행 기준 | O = 인용됨, X = 미언급 | 셀에 마우스를 올리면 상세 정보가 보입니다</div>
+  <div class="table-wrap">{table_html}</div>
+  <div style="margin-top:20px;padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
+    <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ 날짜별 상세(경쟁사, 인용 유형 등)는 대시보드의 실행 기록에서 날짜를 클릭하면 볼 수 있습니다.</p>
+  </div>
+</div>
+</body>
+</html>"""
+
+
 def main():
     date = datetime.now().strftime("%Y-%m-%d")
     print(f"\n{'='*50}\n  트라이그라운드 AEO 인용률 체커\n  {date}\n{'='*50}\n")
@@ -478,6 +590,10 @@ def main():
         report_path = reports_dir / f"{d}.html"
         report_path.write_text(generate_report_page(d, entries_for_date), encoding="utf-8")
     print(f"✅ 날짜별 상세 리포트 {len(by_date)}개 저장: {reports_dir}/")
+
+    matrix_path = output_dir / "matrix.html"
+    matrix_path.write_text(generate_matrix_page(history), encoding="utf-8")
+    print(f"✅ 프롬프트별 전체 추이표 저장: {matrix_path}")
 
     print(f"\n{'='*50}\n  완료! aeo_results/index.html 을 브라우저로 여세요.\n{'='*50}\n")
 
