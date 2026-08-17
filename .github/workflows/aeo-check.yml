@@ -1,0 +1,37 @@
+name: AEO 인용률 주간 체크
+
+on:
+  schedule:
+    # 매주 월요일 오전 9시 (KST) = UTC 기준 일요일 00:00 (한국이 UTC+9)
+    - cron: '0 0 * * 1'
+  workflow_dispatch: {}  # 수동 실행 버튼도 사용 가능
+
+jobs:
+  check-aeo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 패키지 설치
+        run: pip install openai google-genai anthropic
+
+      - name: AEO 체크 실행
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python aeo_checker.py
+
+      - name: 결과 커밋 & 푸시
+        run: |
+          git config --global user.name "AEO Bot"
+          git config --global user.email "aeo-bot@tryground.co.kr"
+          git add aeo_results/
+          git diff --staged --quiet || git commit -m "AEO 체크 결과 업데이트 $(date +%Y-%m-%d)"
+          git push
