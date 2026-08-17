@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>트라이그라운드 AEO 인용률 대시보드</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }
+  .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  h1 { font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+  h2 { font-size: 16px; font-weight: 700; color: #1e293b; margin: 28px 0 12px; }
+  .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 10px 12px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; background: #f8fafc; }
+  td { border-bottom: 1px solid #f1f5f9; }
+  tr:hover td { background: #fafbfc; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .table-wrap { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>트라이그라운드 AEO 인용률 대시보드</h1>
+  <div class="subtitle">마지막 업데이트: 2026-08-17 | 매주 월요일 자동 실행 (GitHub Actions)</div>
+
+  <div class="grid3">
+            <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
+              <div style="font-size:13px;font-weight:700;color:#6366f1;margin-bottom:6px">Claude</div>
+              <div style="font-size:32px;font-weight:800;color:#dc2626">0.0%</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:2px">2026-08-17 기준 (0/10)</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
+              <div style="font-size:13px;font-weight:700;color:#10a37f;margin-bottom:6px">ChatGPT</div>
+              <div style="font-size:32px;font-weight:800;color:#059669">40.0%</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:2px">2026-08-17 기준 (4/10)</div>
+            </div>
+            <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
+              <div style="font-size:13px;font-weight:700;color:#4285f4;margin-bottom:6px">Gemini</div>
+              <div style="font-size:32px;font-weight:800;color:#dc2626">0.0%</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:2px">2026-08-17 기준 (0/10)</div>
+            </div></div>
+
+  <h2>실행 기록 (최근 순)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>날짜</th><th style="text-align:center">엔진</th><th style="text-align:center">인용률</th><th style="text-align:center">인용/전체</th><th>지점별</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-08-17</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
+          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-08-17</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#059669">40.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">4/10</td>
+          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 33% · 홍대 33% · 영등포 50%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-08-17</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
+          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
+        </tr></tbody>
+    </table>
+  </div>
+
+  <h2>분기별 요약</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>분기</th><th style="text-align:center">엔진</th><th style="text-align:center">평균 인용률</th><th style="text-align:center">실행 횟수</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026 Q3</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">1회</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026 Q3</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">1회</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026 Q3</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#059669">40.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">1회</td>
+        </tr></tbody>
+    </table>
+  </div>
+
+  <div style="margin-top:24px;padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
+    <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ AI 엔진 간 인용 소스 겹침은 약 25%입니다. 같은 질문도 매번 결과가 달라질 수 있으므로 개별 실행보다 추세를 보세요.</p>
+  </div>
+</div>
+</body>
+</html>
