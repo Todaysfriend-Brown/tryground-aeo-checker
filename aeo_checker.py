@@ -128,8 +128,8 @@ def call_openai(question: str) -> str:
     from openai import OpenAI
     client = OpenAI(api_key=API_KEYS["openai"])
     response = client.chat.completions.create(
-        model="gpt-4o-search-preview",
-        web_search_options={"search_context_size": "medium"},
+        model="gpt-4o-mini-search-preview",
+        web_search_options={"search_context_size": "low"},
         messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": question},
