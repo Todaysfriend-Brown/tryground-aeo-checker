@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롬프트별 전체 추이표 - 트라이그라운드 AEO</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }
+  .container { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  h1 { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
+  .back-link { display: inline-block; margin-bottom: 16px; font-size: 13px; color: #2563eb; text-decoration: none; }
+  .table-wrap { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+  td, th { border-bottom: 1px solid #f1f5f9; }
+  tr:hover td { background: #fafbfc !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">← 대시보드로 돌아가기</a>
+  <h1>프롬프트별 전체 추이표</h1>
+  <div class="subtitle">최근 2회 실행 기준 | O=링크 인용 · △=이름만 언급 · X=미언급 | 셀에 마우스를 올리면 상세 정보가 보입니다</div>
+  <div class="table-wrap">
+        <table style="border-collapse:collapse;font-size:12px;min-width:100%">
+          <thead>
+            <tr><th style="position:sticky;left:0;background:#f8fafc;border-right:2px solid #e2e8f0"></th><th colspan="3" style="text-align:center;padding:8px 6px;border-bottom:1px solid #e2e8f0;border-left:2px solid #e2e8f0">2026-09-05</th><th colspan="3" style="text-align:center;padding:8px 6px;border-bottom:1px solid #e2e8f0;border-left:2px solid #e2e8f0">2026-08-17</th></tr>
+            <tr><th style="text-align:left;padding:8px 12px;position:sticky;left:0;background:#f8fafc;border-right:2px solid #e2e8f0;border-bottom:2px solid #e2e8f0">프롬프트</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#6366f1;border-bottom:2px solid #e2e8f0;font-weight:700">Claude</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#10a37f;border-bottom:2px solid #e2e8f0;font-weight:700">ChatGPT</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#4285f4;border-bottom:2px solid #e2e8f0;font-weight:700">Gemini</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#6366f1;border-bottom:2px solid #e2e8f0;font-weight:700">Claude</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#10a37f;border-bottom:2px solid #e2e8f0;font-weight:700">ChatGPT</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#4285f4;border-bottom:2px solid #e2e8f0;font-weight:700">Gemini</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700;font-size:12px;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">멘션률<br><span style="font-weight:400;font-size:10px;color:#94a3b8">(이름 언급)</span></td>
+              <td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">20%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">10%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">0%</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700;font-size:12px;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0;border-bottom:2px solid #e2e8f0">인용률<br><span style="font-weight:400;font-size:10px;color:#94a3b8">(링크 포함)</span></td>
+              <td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">20%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">10%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">0%</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#059669;margin-right:6px"></span>관악 공유오피스
+              </td><td title="홈페이지 링크 (1위)" style="text-align:center;padding:6px 8px;font-weight:700;color:#059669">O</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="블로그 링크 (3위)" style="text-align:center;padding:6px 8px;font-weight:700;color:#059669">O</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#059669;margin-right:6px"></span>서울대입구 비상주
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#059669;margin-right:6px"></span>관악 가상오피스
+              </td><td title="홈페이지 링크 (2위)" style="text-align:center;padding:6px 8px;font-weight:700;color:#059669">O</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#d97706;margin-right:6px"></span>홍대 공유오피스
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#d97706;margin-right:6px"></span>마포 비상주
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#d97706;margin-right:6px"></span>합정 사무실
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7c3aed;margin-right:6px"></span>영등포 소호
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7c3aed;margin-right:6px"></span>영등포구청 공유
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7c3aed;margin-right:6px"></span>당산 사무실
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#7c3aed;margin-right:6px"></span>영등포 비상주
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:10px;font-size:11px;color:#64748b">
+          <span style="color:#059669;font-weight:700">O</span> = 링크까지 인용됨 &nbsp;·&nbsp;
+          <span style="color:#d97706;font-weight:700">△</span> = 이름만 언급(링크 없음) &nbsp;·&nbsp;
+          <span style="color:#dc2626;font-weight:700">X</span> = 미언급
+        </div></div>
+  <div style="margin-top:20px;padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
+    <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ 날짜별 상세(경쟁사, 인용 유형 등)는 대시보드의 실행 기록에서 날짜를 클릭하면 볼 수 있습니다.</p>
+  </div>
+</div>
+</body>
+</html>

@@ -10,7 +10,8 @@
   .container { max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
   h1 { font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
   h2 { font-size: 16px; font-weight: 700; color: #1e293b; margin: 28px 0 12px; }
-  .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
+  .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 8px; }
+  .nav-link { display: inline-block; font-size: 13px; color: #2563eb; text-decoration: none; margin-bottom: 20px; font-weight: 600; }
   table { width: 100%; border-collapse: collapse; font-size: 13px; }
   th { text-align: left; padding: 10px 12px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; background: #f8fafc; }
   td { border-bottom: 1px solid #f1f5f9; }
@@ -22,36 +23,98 @@
 <body>
 <div class="container">
   <h1>트라이그라운드 AEO 인용률 대시보드</h1>
-  <div class="subtitle">마지막 업데이트: 2026-08-17 | 매주 월요일 자동 실행 (GitHub Actions)</div>
+  <div class="subtitle">마지막 업데이트: 2026-09-05 | 매주 월요일 자동 실행 (GitHub Actions)</div>
+  <a class="nav-link" href="matrix.html">📋 프롬프트별 전체 추이표 보기 →</a>
 
   <div class="grid3">
             <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
-              <div style="font-size:13px;font-weight:700;color:#6366f1;margin-bottom:6px">Claude</div>
-              <div style="font-size:32px;font-weight:800;color:#dc2626">0.0%</div>
-              <div style="font-size:11px;color:#94a3b8;margin-top:2px">2026-08-17 기준 (0/10)</div>
+              <div style="font-size:13px;font-weight:700;color:#6366f1;margin-bottom:8px">Claude</div>
+              <div style="display:flex;justify-content:center;gap:14px">
+                <div>
+                  <div style="font-size:24px;font-weight:800;color:#dc2626">20%</div>
+                  <div style="font-size:10px;color:#94a3b8">멘션률</div>
+                </div>
+                <div style="width:1px;background:#e2e8f0"></div>
+                <div>
+                  <div style="font-size:24px;font-weight:800;color:#dc2626">20%</div>
+                  <div style="font-size:10px;color:#94a3b8">인용률</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:8px">2026-09-05 기준 (2/10)</div>
             </div>
             <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
-              <div style="font-size:13px;font-weight:700;color:#10a37f;margin-bottom:6px">ChatGPT</div>
-              <div style="font-size:32px;font-weight:800;color:#dc2626">0.0%</div>
-              <div style="font-size:11px;color:#94a3b8;margin-top:2px">2026-08-17 기준 (0/10)</div>
+              <div style="font-size:13px;font-weight:700;color:#10a37f;margin-bottom:8px">ChatGPT</div>
+              <div style="display:flex;justify-content:center;gap:14px">
+                <div>
+                  <div style="font-size:24px;font-weight:800;color:#dc2626">0%</div>
+                  <div style="font-size:10px;color:#94a3b8">멘션률</div>
+                </div>
+                <div style="width:1px;background:#e2e8f0"></div>
+                <div>
+                  <div style="font-size:24px;font-weight:800;color:#dc2626">0%</div>
+                  <div style="font-size:10px;color:#94a3b8">인용률</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:8px">2026-09-05 기준 (0/10)</div>
             </div>
             <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
-              <div style="font-size:13px;font-weight:700;color:#4285f4;margin-bottom:6px">Gemini</div>
-              <div style="font-size:32px;font-weight:800;color:#dc2626">0.0%</div>
-              <div style="font-size:11px;color:#94a3b8;margin-top:2px">2026-08-17 기준 (0/10)</div>
+              <div style="font-size:13px;font-weight:700;color:#4285f4;margin-bottom:8px">Gemini</div>
+              <div style="display:flex;justify-content:center;gap:14px">
+                <div>
+                  <div style="font-size:24px;font-weight:800;color:#dc2626">10%</div>
+                  <div style="font-size:10px;color:#94a3b8">멘션률</div>
+                </div>
+                <div style="width:1px;background:#e2e8f0"></div>
+                <div>
+                  <div style="font-size:24px;font-weight:800;color:#dc2626">10%</div>
+                  <div style="font-size:10px;color:#94a3b8">인용률</div>
+                </div>
+              </div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:8px">2026-09-05 기준 (1/10)</div>
             </div></div>
 
   <h2>실행 기록 (최근 순)</h2>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>날짜</th><th style="text-align:center">엔진</th><th style="text-align:center">인용률</th><th style="text-align:center">인용/전체</th><th>지점별</th></tr></thead>
+      <thead><tr><th>날짜</th><th style="text-align:center">엔진</th><th style="text-align:center">멘션률</th><th style="text-align:center">인용률</th><th style="text-align:center">인용/전체</th><th>지점별</th></tr></thead>
       <tbody>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600">
+            <a href="reports/2026-09-05.html" style="color:#2563eb;text-decoration:none">2026-09-05 →</a>
+          </td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">10%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">10%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">1/10</td>
+          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 33% · 홍대 0% · 영등포 0%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600">
+            <a href="reports/2026-09-05.html" style="color:#2563eb;text-decoration:none">2026-09-05 →</a>
+          </td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
+          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600">
+            <a href="reports/2026-09-05.html" style="color:#2563eb;text-decoration:none">2026-09-05 →</a>
+          </td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">20%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">20%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">2/10</td>
+          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 67% · 홍대 0% · 영등포 0%</td>
+        </tr>
         <tr>
           <td style="padding:10px 12px;font-weight:600">
             <a href="reports/2026-08-17.html" style="color:#2563eb;text-decoration:none">2026-08-17 →</a>
           </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
         </tr>
@@ -60,7 +123,8 @@
             <a href="reports/2026-08-17.html" style="color:#2563eb;text-decoration:none">2026-08-17 →</a>
           </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
         </tr>
@@ -69,7 +133,8 @@
             <a href="reports/2026-08-17.html" style="color:#2563eb;text-decoration:none">2026-08-17 →</a>
           </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
         </tr>
@@ -78,7 +143,8 @@
             <a href="reports/2026-08-17.html" style="color:#2563eb;text-decoration:none">2026-08-17 →</a>
           </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
         </tr>
@@ -87,7 +153,8 @@
             <a href="reports/2026-08-17.html" style="color:#2563eb;text-decoration:none">2026-08-17 →</a>
           </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#059669">40.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#059669">40%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">4/10</td>
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 33% · 홍대 33% · 영등포 50%</td>
         </tr>
@@ -96,34 +163,59 @@
             <a href="reports/2026-08-17.html" style="color:#2563eb;text-decoration:none">2026-08-17 →</a>
           </td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:15px;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:#dc2626">0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">0/10</td>
           <td style="padding:10px 12px;color:#94a3b8;font-size:11px">낙성대 0% · 홍대 0% · 영등포 0%</td>
         </tr></tbody>
     </table>
   </div>
 
-  <h2>분기별 요약</h2>
+  <h2>월별 요약</h2>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>분기</th><th style="text-align:center">엔진</th><th style="text-align:center">평균 인용률</th><th style="text-align:center">실행 횟수</th></tr></thead>
+      <thead><tr><th>월</th><th style="text-align:center">엔진</th><th style="text-align:center">평균 멘션률</th><th style="text-align:center">평균 인용률</th><th style="text-align:center">실행 횟수</th></tr></thead>
       <tbody>
         <tr>
-          <td style="padding:10px 12px;font-weight:600;color:#334155">2026 Q3</td>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-09</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">10.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">10.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">1회</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-09</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">20.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">20.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">1회</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-09</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">1회</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-08</td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#4285f4;background:#4285f415;padding:3px 10px;border-radius:8px">Gemini</span></td>
           <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
-          <td style="padding:10px 12px;text-align:center;color:#64748b">2회</td>
-        </tr>
-        <tr>
-          <td style="padding:10px 12px;font-weight:600;color:#334155">2026 Q3</td>
-          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
           <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b">2회</td>
         </tr>
         <tr>
-          <td style="padding:10px 12px;font-weight:600;color:#334155">2026 Q3</td>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-08</td>
+          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#6366f1;background:#6366f115;padding:3px 10px;border-radius:8px">Claude</span></td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
+          <td style="padding:10px 12px;text-align:center;color:#64748b">2회</td>
+        </tr>
+        <tr>
+          <td style="padding:10px 12px;font-weight:600;color:#334155">2026-08</td>
           <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:#10a37f;background:#10a37f15;padding:3px 10px;border-radius:8px">ChatGPT</span></td>
           <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">20.0%</td>
+          <td style="padding:10px 12px;text-align:center;font-weight:800;color:#dc2626">0.0%</td>
           <td style="padding:10px 12px;text-align:center;color:#64748b">2회</td>
         </tr></tbody>
     </table>
