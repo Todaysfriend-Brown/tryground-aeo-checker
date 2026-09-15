@@ -1714,5 +1714,383 @@
         "raw": "영등포 지역에서 법인 등록이 가능한 비상주사무실을 찾으시는군요. 웹 검색을 통해 법인 사업자 주소지 등록 서비스를 제공하는 여러 공유오피스 및 비상주 사무실을 찾을 수 있었습니다.\n\n아래에 영등포 지역에서 법인 등록이 가능한 비상주사무실 몇 곳을 추천해 드립니다:\n\n1.  **공유오피스 헤드오피스 영등포신도림점** - 위치: 신도림역 1번 출구 도보 2분 (서울 영등포구 경인로 706, 한양빌딩 6층) | URL: [https://head-office.co.kr/branch/yeongdeungpo-sindorim/](https://head-office.co.kr/branch/yeongdeungpo-sindorim/)\n    *   트리플 역세권 입지에 편리한 교통 환경과 복합상업시설 인프라를 자랑하며, 사업자등록 주소를 지원합니다.\n2.  **소호비전 오피스 영등포 타임스퀘어점** - 위치: 영등포시장역 도보 3분 (문래역, 영등포구청역, 영등포역 도보 10분 거리) | URL: [https://sohovision.com/yeongdeungpo-timesquare/](https://sohovision.com/yeongdeungpo-timesquare/)\n    *   쿼드러플 초역세권에 위치하여 교통 접근성이 우수하며, 비상주 사무실 서비스를 제공합니다.\n3.  **114비즈니스센터 영등포점** - 위치: 영등포구 양산로 53 10층 (영등포구청역과 양평역 사이) | URL: [https://114biz.co.kr/](https://114biz.co.kr/)\n    *   영등포구에 비상주사무실 및 소호사무실 서비스를 지원하며, 법인 설립 지원(연계 법무사)도 제공합니다.\n4.  **집무실 영등포점** - 위치: 영등포역 인근 (서울 영등포구 영중로 119, 리마크빌 영등포 2층) | URL: [https://www.zipmusil.com/branches/yeongdeungpo](https://www.zipmusil.com/branches/yeongdeungpo)\n    *   24시간 운영하며 쾌적한 개인 업무 공간을 제공하며, 오피스 이용 시 사업자 주소 등록 유료 서비스를 이용할 수 있습니다."
       }
     }
+  },
+  {
+    "date": "2026-09-15",
+    "engine": "Claude",
+    "rate": 20.0,
+    "mention_rate": 20.0,
+    "citation_rate": 20.0,
+    "mentioned": 2,
+    "cited": 2,
+    "total": 10,
+    "areas": {
+      "낙성대": 0.0,
+      "홍대": 33.3,
+      "영등포": 25.0
+    },
+    "areas_mention": {
+      "낙성대": 0.0,
+      "홍대": 33.3,
+      "영등포": 25.0
+    },
+    "areas_citation": {
+      "낙성대": 0.0,
+      "홍대": 33.3,
+      "영등포": 25.0
+    },
+    "detail": {
+      "p1": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "관악구의 1인 창업자 친화적 공유오피스를 찾아드리겠습니다.\n관악구의 1인 창업자 친화적 공유오피스를 추천해드립니다:\n\n1. \n**집무실 서울대점** - 위치: 서울대입구역 근처 | URL: https://welcome.jibmusil.com\n24시간 무인 자동화 운영되는 1인 사무실로, 커피와 다과, 프린터기가 제공됩니다.\n\n\n2. \n**정오 비즈니스센터 관악 1호점** - 위치: 서울대입구역 2번 출구 도보 약 2분 거리 (관악로 168, 409호) | URL: 상담전화 010-7115-0343\n지하철 2호선 역세권 소형 오피스로, 우편물 관리, 회의실 무료 이용, 라운지 자유 이용이 가능합니다.\n\n\n3. \n**라임비즈** - 위치: 관악구 신림동 1570-2 | URL: https://chunatherapyprice.com/34319/\n비상주사무실 공유오피스로 저렴한 비용에 사업자등록 주소지를 제공하며, 우편물 포워딩 서비스, 회의실 무료 사용이 가능합니다.\n\n\n4. \n**미래로벤쳐센터** - 위치: 관악구 신림동 | URL: https://chunatherapyprice.com/34319/\n24시간 운영 공유 오피스로, 무선 인터넷과 예약 서비스를 갖추고 있으며, 창업과 벤처 기업을 위해 전문가 컨설팅 서비스를 제공합니다.\n\n\n5. "
+      },
+      "p2": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "집무실 서울대입구점",
+          "워플(Workplace 1440)",
+          "코워크시티",
+          "마인오피스",
+          "이상한사무실"
+        ],
+        "citationType": "미언급",
+        "raw": "서울대입구역 근처 비상주사무실을 찾아드리겠습니다.\n서울대입구역 근처 비상주사무실 및 공유오피스 추천 업체를 정리해드렸습니다:\n\n1. **집무실 서울대입구점** - 위치: 관악구 관악로 144 2층 (서울대입구역 2번 출구) | URL: https://welcome.jibmusil.com\n   \n24시간 무인 자동화 워크라운지로 365일 연중무휴 이용 가능하며 3일 무료체험이 가능\n합니다.\n\n2. **워플(Workplace 1440)** - 위치: 관악구 서울대입구역 근처 (2호선 15층) | URL: https://www.instagram.com/workplace1440/\n   \n공유오피스, 1인사무실, 비상주사무실, 사무실공유 등 다양한 형태의 오피스 공간\n을 제공합니다.\n\n3. **코워크시티** - 위치: 전국 220개 지점 운영 | URL: https://www.coworkcity.co.kr\n   \n월 20,000원부터 전국 최다 지점을 운영하며, 사업자 반려 시 100% 환불 보장\n합니다.\n\n4. **마인오피스** - 위치: 서울 22개 지점 | URL: https://mine-office.co.kr\n   \n월 9,000원대부터 저렴한 가격으로 자가소유·직영 운영\n합니다.\n\n5. **이상한사무실** - 위치: 전국 100개 지점 | URL: https://www.oddoffice.co.kr\n   청년창업 특가와 다수 계약 특가 등 다양한 프로모션을 제공합니다.\n\n더 자세한 정보는 각"
+      },
+      "p3": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "코워크시티",
+          "도란소호",
+          "세이브오피스",
+          "소호스페이스"
+        ],
+        "citationType": "미언급",
+        "raw": "관악구의 가상오피스에서 사업자등록이 가능한 업체를 찾아드리겠습니다.\n관악구에서 사업자등록이 가능한 가상오피스 업체를 찾기 위해 검색했습니다. 구체적인 관악구 지점을 운영하는 업체들을 정보 바탕으로 추천드립니다:\n\n1. **코워크시티** - 위치: 서울 관악구 은천로 11-3 | URL: https://www.coworkcity.co.kr/\n   \n과밀실사가능우수관리지점으로 관악구에서 사업자등록이 가능\n합니다. \n월 20,000원부터 이용 가능하며 개인·법인 사업자등록 주소 제공 및 우편물 관리 서비스 제공\n합니다.\n\n2. **도란소호** - 위치: 전국 20여개 지역(관악구 포함) | URL: https://doransoho.creatorlink.net/\n   \n약 20여개의 지역에서 사업자등록이 가능하며 월 4만원의 비용으로 최소 3개월부터 계약 가능\n합니다.\n\n3. **세이브오피스** - 위치: 서울 역세권 다중 지점 | URL: https://www.balancespace.co.kr/\n   \n월 3만원에 사업자등록, 우편물 관리, 실사 지원, 정부지원금 무료 컨설팅, 제휴 서비스 모두 제공\n합니다.\n\n4. **소호스페이스** - 위치: 전국 다중 지점 | URL: https://sohospace.co.kr/\n   \n사업자 등록 전문가가 무료로 사업자등록 컨설팅부터 신청까지 대신 도와"
+      },
+      "p4": {
+        "mentioned": true,
+        "rank": 1,
+        "competitors": [
+          "비즈온 스마트워크 홍대센터",
+          "세컨라운드 홍대점",
+          "상상공간 공유오피스"
+        ],
+        "citationType": "홈페이지 링크",
+        "raw": "홍대 근처 가성비 좋은 공유오피스를 찾아보겠습니다.\n홍대 근처 가성비 좋은 공유오피스를 찾아보았습니다. 다음과 같이 추천합니다:\n\n1. **트라이그라운드** - 위치: 홍대 (지하철역 30초 거리) | URL: http://tryground.co.kr/\n   \n가성비 갑으로 평가받으며 지하철역에서 30초 거리에 위치\n하고, \n최고급 커피와 차, 편의점, 루프탑 등의 편의시설 제공\n\n\n2. **비즈온 스마트워크 홍대센터** - 위치: 마포구 잔다리로 48 3층 | URL: https://howmuchisit.kr/\n   \n지정석 월 30만원, 자유석 월 20만원부터 저렴하게 시작\n하며, \n입주사 무료 세무 기장 서비스와 법인 전환 등의 세무 서비스 제공\n\n\n3. **세컨라운드 홍대점** - 위치: 마포구 동교로 193 7층 (홍대입구역 2번 출구에서 200m) | URL: https://www.spacecloud.kr/\n   \n1~2인실 독립오피스는 보증금 100만원에 월세 30만원이며, 오픈 데스크는 월 5만원에 이용 가능\n\n\n4. **상상공간 공유오피스** - 위치: 서대문구 신촌로 25 2층 (홍대입구역 5번 출구에서 300m) | URL: https://www.spacecloud.kr/\n   \n독립형 업무 공간 기"
+      },
+      "p5": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "부엉이곳간(The Owl)"
+        ],
+        "citationType": "미언급",
+        "raw": "마포구의 비상주사무실 업체를 찾아드리겠습니다.\n마포구에서 계약할 수 있는 비상주사무실 추천 업체를 정리해드리겠습니다:\n\n---\n\n1. **\n창업공간 비상 - 위치: 서울특별시 마포구 어울마당로 130(서교동, 기린빌딩) 3층\n** | URL: https://startupspace.co.kr/\n   \n사업자주소지를 위한 공유오피스 서비스와 프리랜서 1인기업 대표를 위한 공간, 라운지·사무복합기·회의실 등 공유오피스 서비스 제공\n\n\n2. **\n드림큐브 - 위치: 서울 마포구 상암 DMC KGIT센터 16층\n** | URL: https://dreamcube.kr/\n   \n1~4인 프라이빗 오피스, 마포구 사업자등록이 가능한 비상주오피스 제공\n\n\n3. **부엉이곳간(The Owl) - 위치: 서울시 마포구 성지길 25-11 3층** | URL: https://www.theowl.co.kr/virtual-office\n   \n사업자등록증 상의 주소지 제공, 우편물 수신 서비스, 자유석라운지 월 1회 이용, 비즈니스 회의실 월 2회 이용 제공\n\n\n4. **\n마이비지니스파트너 마포신수점 - 위치: 마포구 신수동 459\n** | URL: www.mybusinesspartner.co.kr\n   \n재택 창업자를 위한 저렴한 비상주사무실을 제공하며, 비대면"
+      },
+      "p6": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "헬로비즈센터"
+        ],
+        "citationType": "미언급",
+        "raw": "합정역 근처 소규모 사무실 정보를 검색해드리겠습니다.\n검색 결과를 바탕으로 합정역 근처 소규모 사무실을 운영하는 업체들을 추천드립니다:\n\n1. \n부엉이곳간 (The Owl) - 위치: 마포/홍대/합정 | URL: https://www.theowl.co.kr/\n1인기업, 프리랜서 대상 공유오피스로 보증금 없는 오피스, 사업자등록 주소지원, 비상주서비스 제공\n\n\n2. 헬로비즈센터 - 위치: 전국 다점포 | URL: https://www.hellobizcenter.com/\n비상주사무실 및 공유오피스 전문 기업으로 최저 월 20,000원부터 이용 가능\n\n3. \n코워크시티 - 위치: 전국 220개+ 지점 | URL: https://www.coworkcity.co.kr/\n월 20,000원부터 이용하는 전국 최다 지점 비상주 사무실로 사업자등록 주소 확보 가능\n\n\n4. \n패스트파이브 - 위치: 국내 60개 지점 | URL: https://fastfive.co.kr/\n국내 최다 60개 지점을 보유한 1위 공유오피스로 2.9만개 기업이 선택\n\n\n5. \n공유오피스 가라지 (GARAGE) - 위치: 서울 및 지역 다점포 | URL: https://garage.glabs.co/starter\n2016년부터 공유오피스를 운영한 경험으로 멤버들의 피드백을 바탕으로 서비스 제공\n\n\n합정역은 홍대 지역과 인접해 있어 창업자와 프리랜서에게 인기 있"
+      },
+      "p7": {
+        "mentioned": true,
+        "rank": 4,
+        "competitors": [],
+        "citationType": "홈페이지 링크",
+        "raw": "영등포 지역의 소호사무실을 찾아드리겠습니다.\n영등포 지역의 소호사무실 및 공유오피스를 추천합니다:\n\n1. \n**트라이그라운드 영등포점** - 위치: 영등포구청역 바로 앞\n | URL: https://tryground.co.kr/space/ydp\n   \n1인데스크부터 7인룸까지 합리적인 가격으로 제공\n\n\n2. \n**소호비전오피스** - 위치: 영등포역/문래역/영등포구청역/영등포시장역 역세권 (타임스퀘어)\n | URL: https://www.sohovisionoffice.com/\n   \n비상주 사무실 사업자등록, 실사 지원, 우편물 관리 서비스 제공\n\n\n3. \n**114비즈니스센터 영등포점** - 위치: 영등포구 양산로 53 (월드메르디앙비즈센터)\n | URL: https://www.gurosoho114.co.kr/\n   \n1인사무실과 2인~6인사무실까지 다양한 규모 제공\n\n\n4. \n**비즈메이커** - 위치: 영등포구청역 인근\n | URL: https://www.business114.co.kr/shareYeongdeungpo\n   \n1인실부터 6인실까지 회의실과 미팅실 구비\n\n\n5. \n**원일공유** - 위치: 영등포\n | URL: https://www.business114.co.kr/shareYeongdeungpo\n   \n1"
+      },
+      "p8": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "비즈메이커",
+          "온잇공유오피스 영등포구청점",
+          "원일공유"
+        ],
+        "citationType": "미언급",
+        "raw": "영등포구청역 근처 공유오피스의 가격 정보를 찾아드리겠습니다.\n영등포구청역 근처 공유오피스의 가격 정보와 추천 업체를 안내드립니다.\n\n## 영등포구청역 근처 공유오피스 가격 정보\n\n\n서울 영등포구의 4인실 공유오피스는 월 임대료가 80만 원에서 120만 원이며, 1인당 약 20만 원에서 30만 원입니다. 인터넷, 프린터, 회의실 등 기본 인프라와 공과금, 관리비가 포함되어 있습니다.\n\n\n## 추천 공유오피스 업체\n\n1. **비즈메이커** - 위치: 영등포구청역 인근 | URL: www.business114.co.kr/shareYeongdeungpo\n   \n영등포구청역에서 걸어서 5분도 채 걸리지 않는 거리에 위치\n하며, \n24시간 운영되는 공유 오피스 공간으로 1인실부터 6인실까지 다양한 규모의 사무실과 회의실을 제공하고 있습니다.\n\n\n2. **온잇공유오피스 영등포구청점** - 위치: 영등포구청역 근처 | URL: welcome.jibmusil.com\n   \n휴게 공간이 잘 조성되어 있으며 단기임대 사무실로 사용하기 좋습니다.\n \n국내 최초 24시간 무인 자동화 워크라운지 집무실로 365일 언제든 자유로운 이용이 가능합니다.\n\n\n3. **원일공유** - 위치: 영등포 | URL: www.business114."
+      },
+      "p9": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "당산역 근처의 1인 사무실을 찾아드리겠습니다.\n당산역 근처의 1인 사무실 추천 업체를 찾아드렸습니다:\n\n1. \n**패스트파이브 당산점** - 위치: 영등포구 양평로 95 (당산역 12번 출구 도보 6분, 선유도역 도보 2분) | URL: https://fastfive.co.kr/branch_map_dangsan1\n\n   특징: \n2호선과 9호선이 만나는 당산역과 선유도역을 모두 품은 더블 역세권 입지\n\n\n2. \n**가온비즈니스센터** - 위치: 당산역 8번출구 대로변 바로앞 | URL: https://gaonbiz.imweb.me/home\n\n   특징: \n회의실 무료사용, 비즈니스 카페 커피/차 무료제공, 3중 보안시스템, OA사무기기 완비, 관리비/전기세/냉난방비 모두 무료\n\n\n3. \n**유니언워크 당산점** - 위치: 서울 영등포구 당산로 241 유니언타운 당산 (당산역 2,9호선 3번 출구 도보 10초) | URL: https://www.unionwork.co.kr/Dangsan\n\n   특징: \n1인 프리랜서부터 5인 스타트업까지 적합하며, 커뮤니티 라운지와 한강이 보이는 루프탑 제공\n\n\n4. \n**가라지 당산점** - 위치: 당산역 인근 | URL: https://garage.glabs.co/branch/dangsan\n\n   특징: "
+      },
+      "p10": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "114 비즈니스센터 영등포점",
+          "마이비지니스파트너 문래점",
+          "도란도란 비즈니스센터"
+        ],
+        "citationType": "미언급",
+        "raw": "영등포 지역의 비상주사무실 정보를 검색해드리겠습니다.\n영등포 지역의 비상주사무실로 법인 등록이 가능한 업체들을 찾아드렸습니다.\n\n## 영등포 비상주사무실 - 법인등록 가능 업체\n\n1. **114 비즈니스센터 영등포점** - 위치: 영등포구 양산로 53 (월드메르디앙비즈센터 10층) | URL: https://www.gurosoho114.co.kr/\n   - 법인 설립 및 사업자등록이 가능하며, 임대차계약서 발급으로 공식 절차 진행 가능\n\n2. **마이비지니스파트너 문래점** - 위치: 영등포구 경인로77길 49, 2층 | URL: http://www.mbpmrj.co.kr/\n   - 방문/비대면 계약 모두 가능하며, 약 10분 내 간단한 계약 진행 후 세무서 등록 가능\n\n3. **도란도란 비즈니스센터** - 위치: 영등포구 국회대로 (여의도동) | URL: https://doransoho.creatorlink.net/\n   - \n세무법인 기장 시 법인설립을 무료로 진행\n하며, 보증금 없이 계약 가능\n\n**참고사항:**\n- \n실제 사업 수행을 위한 물리적 공간이나 시설이 필요한 업종(제조, 유통, 창고, 음식점 등)이나 별도 인허가/등록/신고가 필요한 업종은 대부분 비상주 사무실 주소로는 사업자등록이 거절\n됩니다.\n- \n단순 주소 대여가 아닌, 우편물 관리와 회의실 이용 권한이 포함된 정식 임대차계약서"
+      }
+    }
+  },
+  {
+    "date": "2026-09-15",
+    "engine": "ChatGPT",
+    "rate": 20.0,
+    "mention_rate": 20.0,
+    "citation_rate": 20.0,
+    "mentioned": 2,
+    "cited": 2,
+    "total": 10,
+    "areas": {
+      "낙성대": 0.0,
+      "홍대": 0.0,
+      "영등포": 50.0
+    },
+    "areas_mention": {
+      "낙성대": 0.0,
+      "홍대": 0.0,
+      "영등포": 50.0
+    },
+    "areas_citation": {
+      "낙성대": 0.0,
+      "홍대": 0.0,
+      "영등포": 50.0
+    },
+    "detail": {
+      "p1": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "위워크 신림역점",
+          "패스트파이브 관악점",
+          "패스트파이브 서울대입구점",
+          "패스트파이브 서울대입구점",
+          "패스트파이브 서울대입구점"
+        ],
+        "citationType": "미언급",
+        "raw": "관악구에서 1인 창업자에게 적합한 공유오피스를 추천해 드리겠습니다. 아래의 업체들을 참고해 보세요:\n\n1. **[위워크 신림역점]** - 위치: 서울특별시 관악구 신림로 340, 3층 | URL: [https://www.wework.com/buildings/sillim-station-seoul](https://www.wework.com/buildings/sillim-station-seoul)\n   - 신림역 인근에 위치한 위워크 지점으로, 다양한 크기의 개인 사무실과 공용 공간을 제공합니다.\n\n2. **[패스트파이브 관악점]** - 위치: 서울특별시 관악구 남부순환로 1400, 3층 | URL: [https://www.fastfive.co.kr/locations/gwanak](https://www.fastfive.co.kr/locations/gwanak)\n   - 1인실부터 팀룸까지 다양한 옵션을 갖춘 공유오피스로, 24시간 이용이 가능합니다.\n\n3. **[패스트파이브 서울대입구점]** - 위치: 서울특별시 관악구 남부순환로 1702, 3층 | URL: [https://www.fastfive.co.kr/locations/seouldae](https://www.fastfive.co.kr/locations/seouldae)\n   - 서울대입구역 인근에 위치한 지점으로, 개인 사무실과 공용 공간을 제공합니다.\n\n4. **[패스트파이브 서울대입구점]** - 위치: 서울특별시 관악구 남부순환로 1702, 3층 | URL: [https://www.fastfive.co.kr/locations/seouldae](https://www.fastfive.co.kr/locations/seouldae)\n   - 서울대입구역 인근에 위치한 지점으로, 개인 사무실과 공용 공간을 제공합니다.\n\n5. **[패스트파이브 서울대입구점]** - 위치: 서울특별시 관악구 남부순환로 1702, 3층 | URL: [https://www.fastfive.co.kr/locations/seouldae](https://www.fastfive.co.kr/locations/seouldae)\n   - 서울대입구역 인근에 위치한 지점으로, 개인 사무실과 공용 공간을 제공합니다.\n\n6. **[패스트파이브 서울대입구점]** - 위치: 서울특별시 관악구 남부순환로 1702, 3층 | URL: [https "
+      },
+      "p2": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "그레이츠숭례",
+          "무신사s1",
+          "성수동 대형사무실"
+        ],
+        "citationType": "미언급",
+        "raw": "서울대입구역 근처에서 비상주사무실을 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **그레이츠숭례** - 위치: 서울 중구 세종대로 17 | URL: ([drawingoffice.co.kr](https://drawingoffice.co.kr/office/1129?utm_source=openai))\n   - 서울역 인근에 위치한 대형 사무실로, 중개수수료 없이 임대 가능하며, 즉시 입주가 가능합니다.\n\n2. **무신사s1** - 위치: 서울 성동구 성수이로10길 14 | URL: ([drawingoffice.co.kr](https://drawingoffice.co.kr/building/1845?utm_source=openai))\n   - 성수역 인근에 위치한 현대적인 사무실로, 다양한 임대 면적과 조건을 제공합니다.\n\n3. **성수동 대형사무실** - 위치: 서울 성동구 성수이로 62 | URL: ([officemir.com](https://officemir.com/office/3314?utm_source=openai))\n   - 성수역에서 도보 6분 거리에 위치한 대형 사무실로, 즉시 입주가 가능합니다.\n\n각 사무실의 상세 정보와 임대 조건은 제공된 링크를 통해 확인하실 수 있습니다. "
+      },
+      "p3": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "관악구에서 가상오피스를 통해 사업자등록이 가능한 공유오피스를 찾고 계시는군요. 현재 제공된 정보로는 관악구 내에서 이러한 서비스를 제공하는 업체를 확인하기 어렵습니다. 그러나 인근 지역인 안양시 동안구에 위치한 안양산업진흥원에서 가상오피스 지원 사업을 시행하고 있습니다. ([venturesquare.net](https://www.venturesquare.net/announcement/858943?utm_source=openai))\n\n안양산업진흥원 가상오피스 지원 사업의 주요 내용은 다음과 같습니다:\n\n- **지원 대상**: 전국의 예비창업자 및 창업초기기업\n- **지원 내용**: 가상오피스 공간 제공, 사업자등록 주소지 지원 등\n- **신청 기간**: 2022년 7월 11일부터 2022년 12월 31일까지 (상시 접수)\n\n자세한 사항은 안양산업진흥원 공식 웹사이트나 해당 부서에 문의하시기 바랍니다. 또한, 관악구 내에서 가상오피스 서비스를 제공하는 업체가 있는지 관악구청이나 지역 상공회의소에 문의하시면 보다 정확한 정보를 얻으실 수 있을 것입니다. "
+      },
+      "p4": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "마이파트너스 교대 1센터",
+          "비범한사무실 안산점",
+          "햅스 HEPS"
+        ],
+        "citationType": "미언급",
+        "raw": "홍대 근처에서 가성비 좋은 공유오피스를 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **마이파트너스 교대 1센터** - 위치: 서울 서초구 서초동 1316-1 | URL: ([okok6000.tistory.com](https://okok6000.tistory.com/337?utm_source=openai))\n   - 서울 중심부에 위치하여 대중교통 이용이 편리하며, 15년 이상의 경력을 가진 신뢰할 수 있는 공유오피스 브랜드입니다.\n\n2. **비범한사무실 안산점** - 위치: 경기도 안산시 단원구 고잔동 535-1 | URL: ([bibumhanoffice.co.kr](https://bibumhanoffice.co.kr/%EC%95%88%EC%82%B0-%EA%B3%B5%EC%9C%A0%EC%98%A4%ED%94%BC%EC%8A%A4-%EC%B6%94%EC%B2%9C/?utm_source=openai))\n   - 안산 지역에서 가성비 좋은 공유오피스를 제공하며, 초기 창업자를 위한 경제적인 선택지입니다.\n\n3. **햅스 HEPS** - 위치: 경북 포항시 남구 지곡로 394, 포항테크노파크 제1벤처동 B115호 | URL: ([hepshappy.com](https://hepshappy.com/?utm_source=openai))\n   - 수소연료전지 업계의 핵심 기술 개발을 선도하며, 다양한 모빌리티와 분산발전을 위한 고효율 수소연료전지 파워팩과 시스템을 제작합니다.\n\n위의 정보는 각 업체의 웹사이트나 출처를 통해 확인하실 수 있습니다. "
+      },
+      "p5": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "위시스 마포역 상가",
+          "마포구 빌딩 매매 시세 분석",
+          "서울 마포구 서교동 상가 실거래가·시세"
+        ],
+        "citationType": "미언급",
+        "raw": "마포구에서 비상주사무실을 계약할 수 있는 몇 가지 공유오피스를 추천해 드리겠습니다. 각 업체의 위치와 특징을 아래와 같이 정리하였습니다:\n\n1. **[위시스 마포역 상가]** - 위치: 마포구 마포역 인근 | URL: [https://wishes.co.kr/station/마포역/상가/월세](https://wishes.co.kr/station/마포역/상가/월세)\n   - 마포역 인근에 위치한 상가로, 다양한 크기의 사무실 공간을 제공하며, 월세와 보증금이 합리적입니다.\n\n2. **[마포구 빌딩 매매 시세 분석]** - 위치: 마포구 전역 | URL: [https://avmbloc.com/buildings-for-sale/mapo](https://avmbloc.com/buildings-for-sale/mapo)\n   - 마포구 전역의 빌딩 매매 및 시세를 분석하여, 비상주사무실로 활용 가능한 공간을 찾는 데 도움이 됩니다.\n\n3. **[서울 마포구 서교동 상가 실거래가·시세]** - 위치: 마포구 서교동 | URL: [https://apt25.co.kr/region/서울/마포구/서교동?type=상가](https://apt25.co.kr/region/서울/마포구/서교동?type=상가)\n   - 서교동의 상가 실거래가와 시세를 제공하여, 비상주사무실로 적합한 공간을 찾는 데 유용합니다.\n\n각 업체의 상세 정보와 조건을 확인하시고, 필요에 따라 직접 문의하셔서 최적의 비상주사무실을 계약하시기 바랍니다. "
+      },
+      "p6": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "패스트파이브 합정점",
+          "위워크 합정역점",
+          "스파크플러스 합정점",
+          "패스트파이브 합정점",
+          "스파크플러스 합정점"
+        ],
+        "citationType": "미언급",
+        "raw": "합정역 근처에서 소규모 사무실을 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **패스트파이브 합정점** - 위치: 서울 마포구 합정동 400-1 | URL: [패스트파이브 합정점](https://www.fastfive.co.kr/locations/hapjeong)\n   - 다양한 규모의 사무실을 제공하며, 24시간 이용 가능한 편의시설을 갖추고 있습니다.\n\n2. **위워크 합정역점** - 위치: 서울 마포구 합정동 400-2 | URL: [위워크 합정역점](https://www.wework.com/l/서울-마포구-합정동-400-2)\n   - 현대적인 디자인의 사무공간과 커뮤니티 이벤트를 통해 네트워킹 기회를 제공합니다.\n\n3. **스파크플러스 합정점** - 위치: 서울 마포구 합정동 400-3 | URL: [스파크플러스 합정점](https://www.sparkplus.co.kr/locations/hapjeong)\n   - 개인 사무실부터 팀 사무실까지 다양한 옵션을 제공하며, 회의실과 휴게공간이 잘 마련되어 있습니다.\n\n4. **패스트파이브 합정점** - 위치: 서울 마포구 합정동 400-4 | URL: [패스트파이브 합정점](https://www.fastfive.co.kr/locations/hapjeong)\n   - 다양한 규모의 사무실을 제공하며, 24시간 이용 가능한 편의시설을 갖추고 있습니다.\n\n5. **스파크플러스 합정점** - 위치: 서울 마포구 합정동 400-5 | URL: [스파크플러스 합정점](https://www.sparkplus.co.kr/locations/hapjeong)\n   - 개인 사무실부터 팀 사무실까지 다양한 옵션을 제공하며, 회의실과 휴게공간이 잘 마련되어 있습니다.\n\n각 사무실의 상세 정보와 이용 조건은 제공된 링크를 통해 확인하시기 바랍니다. "
+      },
+      "p7": {
+        "mentioned": true,
+        "rank": 2,
+        "competitors": [
+          "여의도 디 오피스",
+          "유니언워크 선유점/당산점",
+          "가온비즈니스센터 영등포당산점",
+          "디오빌오피스"
+        ],
+        "citationType": "홈페이지 링크",
+        "raw": "영등포 지역에서 소호사무실을 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **여의도 디 오피스** - 위치: 서울특별시 영등포구 국제금융로8길 27-8(여의도동) | URL: [여의도 디 오피스](https://www.daangn.com/kr/local-profile/여의도-디-오피스-pjhdmxvfbphb/)\n   - 모던하고 고급스러운 공유오피스로, 여의도 역세권에 위치하며 프라이빗 회의실과 든든한 조식 서비스를 제공합니다.\n\n2. **트라이그라운드 영등포점** - 위치: 서울시 영등포구 당산대로 92, 3층 | URL: [트라이그라운드 영등포점](https://tryground.co.kr/space/ydp)\n   - 성공적인 비즈니스를 위한 공간으로, 다양한 크기의 사무실을 제공하며, 1인실부터 7인실까지 선택 가능합니다.\n\n3. **유니언워크 선유점/당산점** - 위치: 선유점 - 서울 영등포구 양평로 136 3-5F, 당산점 - 서울 영등포구 당산로 241 유니언타운 4-5층 | URL: [유니언워크 선유점](https://whereisyourwork.com/work-share-office-seonyudo/)\n   - 선유도역 1번 출구에서 도보 1분 거리에 위치한 선유점과 당산역 3번 출구 바로 앞에 위치한 당산점에서 다양한 사무공간을 제공합니다.\n\n4. **가온비즈니스센터 영등포당산점** - 위치: 서울 영등포구 양평로 24 5~6층 | URL: [가온비즈니스센터 영등포당산점](https://whereisyourwork.com/work-share-office-seonyudo/)\n   - 당산역 8번 출구에서 도보 1분 거리에 위치하며, 다양한 크기의 사무실과 비상주 사무실 서비스를 제공합니다.\n\n5. **디오빌오피스** - 위치: 서울 영등포구 당산로 222 당산디오빌 빌딩 B119 | URL: [디오빌오피스](https://whereisyourwork.com/work-share-office-seonyudo/)\n   - 당산역 10번 출구 바로 앞에 위치하며, 소규모 팀 "
+      },
+      "p8": {
+        "mentioned": true,
+        "rank": 5,
+        "competitors": [
+          "온잇공유오피스 영등포구청점",
+          "스파크플러스 영등포구청역 미팅룸A",
+          "스파크플러스 영등포구청역 포커스룸 A",
+          "오피스아트 영등포구청점"
+        ],
+        "citationType": "홈페이지 링크",
+        "raw": "영등포구청역 근처의 공유오피스를 추천해드리겠습니다. 각 업체의 위치와 간단한 특징을 아래와 같이 정리하였습니다:\n\n1. **온잇공유오피스 영등포구청점** - 위치: 서울시 영등포구 영등포로19길 15 (당산동2가) | URL: [https://www.daangn.com/kr/local-profile/온잇공유오피스-영등포구청점-cjx3xjuim4rw/](https://www.daangn.com/kr/local-profile/온잇공유오피스-영등포구청점-cjx3xjuim4rw/)\n   - 1인실 오피스 1시간 3,500원부터, 비상주 사무실 개인 1년 264,000원부터 제공하는 24시간 운영 공간입니다.\n\n2. **스파크플러스 영등포구청역 미팅룸A** - 위치: 서울시 영등포구 양산로 지하 116 영등포구청역 | URL: [https://www.sparkplus.co/space-rental/detail/43](https://www.sparkplus.co/space-rental/detail/43)\n   - 최대 8인 수용 가능하며, 주중 40,000원, 주말/공휴일 50,000원에 회의실을 대여할 수 있습니다.\n\n3. **스파크플러스 영등포구청역 포커스룸 A** - 위치: 서울시 영등포구 양산로 지하 116 영등포구청역 | URL: [https://www.sparkplus.co/space-rental/detail/351](https://www.sparkplus.co/space-rental/detail/351)\n   - 2인 수용 가능하며, 주중 14,000원, 주말/공휴일 16,000원에 이용할 수 있는 독립 공간입니다.\n\n4. **오피스아트 영등포구청점** - 위치: 서울시 영등포구 양산로 96, A213호 | URL: [https://howmuchisit.kr/small/?idx=287](https://howmuchisit.kr/small/?idx=287)\n   - 1인석 월 250,000원으로 관리비, 전기료, 수도료, 인터넷 비용, 커피/음료, 프린터 사용료 모두 포함된 공간입니다.\n\n5. **트라이그라운드 영등포점** - 위치: 서울시 영등포구 당산대로 92, 3층 | URL: [https://tryground.co.kr/space/ydp](https://tryground.co.kr/space/ydp)\n   - 1인 데스크 "
+      },
+      "p9": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "유니언워크 당산점",
+          "가온비즈니스센터 영등포당산점",
+          "워크모어 여의도 당산역점"
+        ],
+        "citationType": "미언급",
+        "raw": "당산역 근처에서 1인 사무실을 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **유니언워크 당산점** - 위치: 서울 영등포구 당산로 241, 당산역 3번 출구 도보 10초 거리 | URL: ([daangn.com](https://www.daangn.com/kr/local-profile/%EC%9C%A0%EB%8B%88%EC%96%B8%EC%9B%8C%ED%81%AC-%EB%8B%B9%EC%82%B0-x3nqvvpvxcro/?utm_source=openai))\n   - 화이트와 우드톤의 심플한 인테리어로 업무 효율을 극대화한 공유오피스입니다.\n\n2. **가온비즈니스센터 영등포당산점** - 위치: 서울 영등포구 양평로 24, 당산역 8번 출구 도보 1분 거리 | URL: ([gaonbiz.imweb.me](https://gaonbiz.imweb.me/?utm_source=openai))\n   - 1인실부터 3인실까지 다양한 독립형 사무공간을 제공하며, 비상주 사무실 서비스도 이용 가능합니다.\n\n3. **워크모어 여의도 당산역점** - 위치: 서울 영등포구 당산로 241, 당산역 12번 출구 도보 2분 거리 | URL: ([workmore.kr](https://www.workmore.kr/branch_ds?utm_source=openai))\n   - 한강뷰 수영장 라운지와 정기 세미나를 통해 일과 성장을 함께 이어가는 업무 공간입니다.\n\n각 업체의 상세 정보와 이용 조건은 제공된 링크를 통해 확인하시기 바랍니다. "
+      },
+      "p10": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "위워크 영등포점",
+          "패스트파이브 영등포점",
+          "패스트파이브 영등포타임스퀘어점"
+        ],
+        "citationType": "미언급",
+        "raw": "영등포 지역에서 법인 등록이 가능한 비상주 사무실을 찾고 계시군요. 비상주 사무실은 주로 사업자 등록 주소지로 활용되며, 법인 설립 시에도 주소지로 사용될 수 있습니다. 다만, 모든 비상주 사무실이 법인 등록에 적합한 것은 아니므로, 선택 시 해당 사무실이 법인 등록을 지원하는지 확인하는 것이 중요합니다.\n\n아래는 영등포 지역에서 법인 등록이 가능한 비상주 사무실을 제공하는 몇 곳의 업체입니다:\n\n1. **[위워크 영등포점]** - 위치: 서울 영등포구 영등포로 123, 12층 (영등포역 1번 출구 도보 5분) | URL: [https://www.wework.com/buildings/yeongdeungpo-station-seoul](https://www.wework.com/buildings/yeongdeungpo-station-seoul)\n   - 글로벌 공유 오피스 브랜드로, 다양한 규모의 사무실과 회의실을 제공하며, 법인 등록 주소지로 활용 가능합니다.\n\n2. **[패스트파이브 영등포점]** - 위치: 서울 영등포구 영등포로 100, 10층 (영등포역 3번 출구 도보 3분) | URL: [https://www.fastfive.co.kr/locations/yeongdeungpo](https://www.fastfive.co.kr/locations/yeongdeungpo)\n   - 합리적인 가격의 공유 오피스를 제공하며, 비상주 사무실 서비스로 법인 등록 주소지로 사용할 수 있습니다.\n\n3. **[패스트파이브 영등포타임스퀘어점]** - 위치: 서울 영등포구 영중로 15, 10층 (영등포역 5번 출구 도보 7분) | URL: [https://www.fastfive.co.kr/locations/yeongdeungpo-times-square](https://www.fastfive.co.kr/locations/yeongdeungpo-times-square)\n   - 영등포 타임스퀘어 인근에 위치한 지점으로, 다양한 사무실 옵션과 법인 등록 주소지 서비스를 제공합니다. "
+      }
+    }
+  },
+  {
+    "date": "2026-09-15",
+    "engine": "Gemini",
+    "rate": 20.0,
+    "mention_rate": 20.0,
+    "citation_rate": 10.0,
+    "mentioned": 2,
+    "cited": 1,
+    "total": 10,
+    "areas": {
+      "낙성대": 33.3,
+      "홍대": 33.3,
+      "영등포": 0.0
+    },
+    "areas_mention": {
+      "낙성대": 33.3,
+      "홍대": 33.3,
+      "영등포": 0.0
+    },
+    "areas_citation": {
+      "낙성대": 0.0,
+      "홍대": 33.3,
+      "영등포": 0.0
+    },
+    "detail": {
+      "p1": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "집무실 서울대점"
+        ],
+        "citationType": "미언급",
+        "raw": "관악구에서 1인 창업가를 위한 공유오피스를 찾으시는군요. 사업의 특성과 예산에 맞춰 선택하실 수 있도록 실제 운영 중인 여러 공유오피스를 추천해 드립니다.\n\n1.  **집무실 서울대점** - 위치: 서울대입구역 근처 | URL: [URL은 직접 확인 필요, 집무실 공식 웹사이트 또는 스페이스클라우드 검색](https://www.google.com/search?q=집무실+서울대점)\n    *   개인이 집중하여 업무하기 좋은 1인 사무실로, 24시간 운영되며 커피, 다과, 프린터,"
+      },
+      "p2": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "서울대입구역 근처에서 비상주사무실 또는 공유오피스를 찾으시는군요. 웹 검색을 통해 현재 운영 중인 몇 군"
+      },
+      "p3": {
+        "mentioned": true,
+        "rank": 1,
+        "competitors": [],
+        "citationType": "텍스트만 언급",
+        "raw": "관악구에서 가상오피스 또는 비상주사무실을 통해 사업자등록이 가능한 곳들을 추천해 드립니다. 가상오피스는 물리적인 사무실 없이 사업자 등록 주소지를 확보하고 우편물 관리 등의 서비스를 이용할 수 있어 초기 창업 비용을 절감하는 데 효과적입니다.\n\n아래는 관악구 내에서 사업자등록을 위한 가상오피스 서비스를 제공하는 곳들입니다.\n\n1.  **트라이그라운드 공유오피스** - 위치: 서울대입구역 근처 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE6WGSnciR-cKiFEbLWPJgK3DFsy9kUR6pWkdRY-ctjTYfrEUyCIXQD1RVcwDCdJLijO9UTOlbr6s9LwFgbCfJbuMZRoGqOVXLqN8j1CxEgFWGgRlEs658uSUaVIu_9lQc-](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE6WGSnciR-cKiFEbLWPJgK3DFsy9kUR6pWkdRY-ctjTYfrEUyCIXQD1RVcwDCdJLijO9UTOlbr6s9LwFgbCfJbuMZRoGqOVXLqN8j1CxEgFWGgRlEs658uSUaVIu_9lQc-)\n    *   서울대입구역에서 20초 거리의 역세권에 위치하며, 합리적인 가격으로 비상주 사무실을 이용할 수 있습니다. 회의실"
+      },
+      "p4": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "위워크 홍대점 (WeWork Hongdae)",
+          "스파크플러스 홍대점",
+          "패스트파"
+        ],
+        "citationType": "미언급",
+        "raw": "홍대 근처에서 가성비 좋은 공유오피스를 찾으시는군요. 여러 검색 결과를 바탕으로 홍대 인근의 공유오피스 및 비상주 사무실 몇 곳을 추천해 드립니다.\n\n1.  **위워크 홍대점 (WeWork Hongdae)** - 위치: 홍대입구역 도보 1분 | URL: [https://www.wework.com/ko-KR/buildings/hongdae-seoul](https://www.wework.com/ko-KR/buildings/hongdae-seoul) (WeWork 공식 웹사이트에서 홍대 지점 검색)\n    *   홍대입구역 초역세권에 위치하며, 다양한 규모의 사무 공간과 유연한 요금제를 제공하는 글로벌 공유오피스입니다.\n\n2.  **스파크플러스 홍대점** - 위치: 홍대입구역 도보 0분 (LC타워) | URL: [https://www.sparkplus.co/locations/hongdae](https://www.sparkplus.co/locations/hongdae) (스파크플러스 공식 웹사이트에서 홍대 지점 검색)\n    *   홍대입구역과 바로 연결되는 초역세권에 위치하며, 신축 빌딩의 쾌적한 환경과 다양한 업무 공간, 부대시설을 자랑합니다.\n\n3.  **패스트파"
+      },
+      "p5": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "마포 공유 오피스 M",
+          "드림큐브 공유오피스",
+          "마포 공유 오피스 M",
+          "드림큐브 공유오피스"
+        ],
+        "citationType": "미언급",
+        "raw": "마포구에서 비상주사무실 계약을 고려하고 계시는군요. 웹 검색을 통해 현재 운영 중인 업체들을 비교하여 추천해 드립니다.\n\n1.  **마포 공유 오피스 M** - 위치: 마포역 근처 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiA62QTMUwoZNnlzsq5Pg5CnYFCzbJ1_plyPVmOWUhLDOg_TIWkf4XUUB09IittCFuPoEcY1WtTpuY3eJxZkec2NzF5mjmi0crXiL30dZ0zpo=](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiA62QTMUwoZNnlzsq5Pg5CnYFCzbJ1_plyPVmOWUhLDOg_TIWkf4XUUB09IittCFuPoEcY1WtTpuY3eJxZkec2NzF5mjmi0crXiL30dZ0zpo=)\n    *   최신 시설과 감각적인 인테리어를 갖추고 있으며 유연한 이용 옵션을 제공합니다.\n2.  **드림큐브 공유오피스** - 위치: 마포구 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtTfZr_3aRmruW7QnO3PESKtjJktpcXikzlN-l7MpQnchr6YQj76o2Le8LCUS6Yi2-NoMLlQaou492GuO5RA_aDJ마포구에서 비상주사무실 계약을 고려하고 계시는군요. 웹 검색을 통해 현재 운영 중인 업체들을 비교하여 추천해 드립니다.\n\n1.  **마포 공유 오피스 M** - 위치: 마포역 근처 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiA62QTMUwoZNnlzsq5Pg5CnYFCzbJ1_plyPVmOWUhLDOg_TIWkf4XUUB09IittCFuPoEcY1WtTpuY3eJxZkec2NzF5mjmi0crXiL30dZ0zpo=](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFiA62QTMUwoZNnlzsq5Pg5CnYFCzbJ1_plyPVmOWUhLDOg_TIWkf4XUUB09IittCFuPoEcY1WtTpuY3eJxZkec2NzF5mjmi0crXiL30dZ0zpo=)\n    *   최신 시설과 감각적인 인테리어를 갖추고 있으며 유연한 이용 옵션을 제공합니다. [cite: 2]\n2.  **드림큐브 공유오피스** - 위치: 마포구 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtTfZr_3aRmruW7QnO3PESKtjJktpcXikzlN-l7MpQnchr6YQj76o2Le8LCUS6Yi2-NoMLlQaou492GuO5RA_aDJ"
+      },
+      "p6": {
+        "mentioned": true,
+        "rank": 2,
+        "competitors": [
+          "더 아울 공유오피스 (부엉이곳간)"
+        ],
+        "citationType": "홈페이지 링크",
+        "raw": "합정역 근처에서 소규모 사무실을 찾으시는군요! 웹 검색을 통해 현재 운영 중인 공유오피스 및 비상주 사무실 몇 군데를 추천해 드립니다.\n\n1.  **더 아울 공유오피스 (부엉이곳간)** - 위치: 마포 홍대 합정 | URL: [https://www.theowl.co.kr/](https://www.theowl.co.kr/)\n    *   1~2인 독립오피스와 자유석/지정석 라운지를 운영하며, 24시간 이용 및 비상주 서비스도 제공합니다.\n\n2.  **트라이그라운드 홍대점** - 위치: 홍대 합정 마포구 (합정역 근처) | URL: [https://tryground.co.kr/location/hongdae/](https://tryground.co.kr/location/hongdae/)\n    *   1인 데스크부터 9인룸까지 다양한 규모의 사무실을"
+      },
+      "p7": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "영등포 지역에서 소호사무실을 찾으시는군요! 웹 검색을 통해 현재 운영 중인"
+      },
+      "p8": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "영등포구청역 근처 공유오피스 및 비상주사무실 몇 군데를"
+      },
+      "p9": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "당산소호비즈니스센터",
+          "디오빌오피스 (스페이스클라우드 내)",
+          "당산소호비즈니스센터",
+          "디오빌오피스 (스페이스클라우드 내)"
+        ],
+        "citationType": "미언급",
+        "raw": "당산역 근처 1인 사무실을 찾으시는군요! 웹 검색을 통해 현재 운영 중인 공유오피스 및 비상주 사무실 몇 곳을 추천해 드립니다.\n\n1.  **당산소호비즈니스센터** - 위치: 당산역 2분 거리 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDFZSShs8DVKUCP6FEqM8noGF_W0QGEMnk4ZLdUR9sktRAAYJg4AZWf8WaRhd-40R__0bxI7msWQoyi6E9ytHSOYx-XUPnTlhyY-mDWTWHyOCJIN-DGQ6bwk=](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDFZSShs8DVKUCP6FEqM8noGF_W0QGEMnk4ZLjUR9sktRAAYJg4AZWf8WaRhd-40R__0bxI7msWQoyi6E9ytHSOYx-XUPnTlhyY-mDWTWHyOCJIN-DGQ6bwk=)\n    *   넓은 공간과 1인실부터 6인실까지 다양한 규모를 제공하며 비상주 사무실도 이용 가능합니다.\n2.  **디오빌오피스 (스페이스클라우드 내)** - 위치: 당산역 10번 출구 옆 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPRZnjNtl5B00O9YP4PqeNkm_hUFDdMdABpkPwWXImodF92v5당산역 근처 1인 사무실을 찾으시는군요! 웹 검색을 통해 현재 운영 중인 공유오피스 및 비상주 사무실 몇 곳을 추천해 드립니다.\n\n1.  **당산소호비즈니스센터** - 위치: 당산역 2분 거리 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDFZSShs8DVKUCP6FEqM8noGF_W0QGEMnk4ZLdUR9sktRAAYJg4AZWf8WaRhd-40R__0bxI7msWQoyi6E9ytHSOYx-XUPnTlhyY-mDWTWHyOCJIN-DGQ6bwk=](https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDFZSShs8DVKUCP6FEqM8noGF_W0QGEMnk4ZLjUR9sktRAAYJg4AZWf8WaRhd-40R__0bxI7msWQoyi6E9ytHSOYx-XUPnTlhyY-mDWTWHyOCJIN-DGQ6bwk=)\n    *   넓은 공간과 1인실부터 6인실까지 다양한 규모를 제공하며 비상주 사무실도 이용 가능합니다. [cite: 2]\n2.  **디오빌오피스 (스페이스클라우드 내)** - 위치: 당산역 10번 출구 옆 | URL: [https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPRZnjNtl5B00O9YP4PqeNkm_hUFDdMdABpkPwWXImodF92v5"
+      },
+      "p10": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "영등포 지역에서 법인 등록이 가능한 비상주 사무실을 찾으시는군요. 웹 검색"
+      }
+    }
   }
 ]
