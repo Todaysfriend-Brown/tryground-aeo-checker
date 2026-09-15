@@ -808,6 +808,9 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
 
 
 def main():
+    import sys
+    rebuild_only = "--rebuild-only" in sys.argv
+
     date = datetime.now().strftime("%Y-%m-%d")
     print(f"\n{'='*50}\n  트라이그라운드 AEO 인용률 체커\n  {date}\n{'='*50}\n")
 
@@ -816,45 +819,49 @@ def main():
     history_path = output_dir / "history.json"
     history = json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else []
 
-    engines_to_run = []
-    for key, engine_name in [("anthropic", "Claude"), ("openai", "ChatGPT"), ("gemini", "Gemini")]:
-        val = API_KEYS.get(key, "")
-        if val:
-            engines_to_run.append(engine_name)
-        else:
-            print(f"⚠ {engine_name} API 키가 없어 건너뜁니다.")
+    if rebuild_only:
+        print("🔧 재빌드 전용 모드 — API를 호출하지 않고 기존 history.json으로만 페이지를 다시 생성합니다. (비용 0원)\n")
+        if not history:
+            print("⚠ history.json에 데이터가 없습니다. 먼저 한 번은 정상 실행이 필요합니다.")
+    else:
+        engines_to_run = []
+        for key, engine_name in [("anthropic", "Claude"), ("openai", "ChatGPT"), ("gemini", "Gemini")]:
+            val = API_KEYS.get(key, "")
+            if val:
+                engines_to_run.append(engine_name)
+            else:
+                print(f"⚠ {engine_name} API 키가 없어 건너뜁니다.")
 
-    if not engines_to_run:
-        print("\n❌ 실행할 엔진이 없습니다. API 키를 설정해주세요.")
-        return
+        if not engines_to_run:
+            print("\n❌ 실행할 엔진이 없습니다. API 키를 설정해주세요.")
+            return
 
-    raw_results = {}
-    for engine in engines_to_run:
-        print(f"\n▶ {engine} 체크 시작...")
-        results = run_engine(engine)
-        raw_results[engine] = results
-        s = calc_stats(results)
-        print(f"  → 멘션률: {s['mention_rate']:.1f}% ({s['mentioned']}/{s['total']}) | 인용률: {s['citation_rate']:.1f}% ({s['cited']}/{s['total']})")
+        for engine in engines_to_run:
+            print(f"\n▶ {engine} 체크 시작...")
+            results = run_engine(engine)
+            s = calc_stats(results)
+            print(f"  → 멘션률: {s['mention_rate']:.1f}% ({s['mentioned']}/{s['total']}) | 인용률: {s['citation_rate']:.1f}% ({s['cited']}/{s['total']})")
 
-        history.append({
-            "date": date,
-            "engine": engine,
-            "rate": round(s["mention_rate"], 1),           # 하위호환
-            "mention_rate": round(s["mention_rate"], 1),
-            "citation_rate": round(s["citation_rate"], 1),
-            "mentioned": s["mentioned"],
-            "cited": s["cited"],
-            "total": s["total"],
-            "areas": {a: round(v["rate"], 1) for a, v in s["areas"].items()},               # 하위호환: 멘션률
-            "areas_mention": {a: round(v["mention_rate"], 1) for a, v in s["areas"].items()},
-            "areas_citation": {a: round(v["citation_rate"], 1) for a, v in s["areas"].items()},
-            "detail": results,
-        })
+            history.append({
+                "date": date,
+                "engine": engine,
+                "rate": round(s["mention_rate"], 1),           # 하위호환
+                "mention_rate": round(s["mention_rate"], 1),
+                "citation_rate": round(s["citation_rate"], 1),
+                "mentioned": s["mentioned"],
+                "cited": s["cited"],
+                "total": s["total"],
+                "areas": {a: round(v["rate"], 1) for a, v in s["areas"].items()},               # 하위호환: 멘션률
+                "areas_mention": {a: round(v["mention_rate"], 1) for a, v in s["areas"].items()},
+                "areas_citation": {a: round(v["citation_rate"], 1) for a, v in s["areas"].items()},
+                "detail": results,
+            })
 
-    # 저장
-    history_path.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"\n✅ 히스토리 저장: {history_path}")
+        # 저장 (재빌드 전용 모드에서는 새 데이터가 없으니 저장 생략)
+        history_path.write_text(json.dumps(history, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"\n✅ 히스토리 저장: {history_path}")
 
+    # ── 아래는 rebuild_only 여부와 무관하게 항상 실행 (페이지 재생성) ──
     dashboard_path = output_dir / "index.html"
     dashboard_path.write_text(generate_dashboard(history), encoding="utf-8")
     print(f"✅ 통합 대시보드 저장: {dashboard_path}")
