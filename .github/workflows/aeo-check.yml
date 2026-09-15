@@ -4,7 +4,13 @@ on:
   schedule:
     # 매주 월요일 오전 9시 (KST) = UTC 기준 일요일 00:00 (한국이 UTC+9)
     - cron: '0 0 * * 1'
-  workflow_dispatch: {}  # 수동 실행 버튼도 사용 가능
+  workflow_dispatch:
+    inputs:
+      rebuild_only:
+        description: '재빌드 전용 (API 호출 없이 기존 데이터로 페이지만 다시 생성 - 비용 0원)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   check-aeo:
@@ -26,7 +32,12 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python aeo_checker.py
+        run: |
+          if [ "${{ inputs.rebuild_only }}" = "true" ]; then
+            python aeo_checker.py --rebuild-only
+          else
+            python aeo_checker.py
+          fi
 
       - name: 결과 커밋 & 푸시
         run: |
