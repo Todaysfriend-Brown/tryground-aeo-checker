@@ -232,90 +232,163 @@ def calc_stats(results: dict) -> dict:
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 def generate_dashboard(history: list) -> str:
-    # 최신 실행 (오늘 날짜) 찾기 - 엔진별 최신
-    latest_by_engine = {}
-    for entry in history:
-        latest_by_engine[entry["engine"]] = entry  # 뒤에서부터 덮어쓰므로 마지막이 최신
+    OVERALL_COLOR = "#1e293b"
 
-    # 최신 3개 엔진 요약 카드
-    summary_cards = ""
-    for eng in ENGINES:
-        e = latest_by_engine.get(eng)
-        color = ENGINE_COLORS[eng]
-        if e:
-            m_rate = e.get("mention_rate", e["rate"])
-            c_rate = e.get("citation_rate", 0)
-            m_color = "#059669" if m_rate >= 30 else "#dc2626"
-            c_color = "#059669" if c_rate >= 30 else "#dc2626"
-            summary_cards += f"""
+    if not history:
+        current_month = None
+    else:
+        current_month = sorted(e["date"] for e in history)[-1][:7]
+
+    def engine_month_avg(eng, month):
+        ents = [e for e in history if e["engine"] == eng and month and e["date"][:7] == month]
+        if not ents:
+            return None
+        m = sum(e.get("mention_rate", e["rate"]) for e in ents) / len(ents)
+        c = sum(e.get("citation_rate", 0) for e in ents) / len(ents)
+        return {"mention_rate": m, "citation_rate": c, "count": len(ents)}
+
+    engine_month_stats = {eng: engine_month_avg(eng, current_month) for eng in ENGINES}
+    valid_month_stats = [v for v in engine_month_stats.values() if v]
+    overall_month = None
+    if valid_month_stats:
+        overall_month = {
+            "mention_rate": sum(v["mention_rate"] for v in valid_month_stats) / len(valid_month_stats),
+            "citation_rate": sum(v["citation_rate"] for v in valid_month_stats) / len(valid_month_stats),
+            "count": sum(v["count"] for v in valid_month_stats),
+        }
+
+    def render_card(label, color, stats):
+        if not stats:
+            return f"""
             <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
-              <div style="font-size:13px;font-weight:700;color:{color};margin-bottom:8px">{eng}</div>
-              <div style="display:flex;justify-content:center;gap:14px">
-                <div>
-                  <div style="font-size:24px;font-weight:800;color:{m_color}">{m_rate:.0f}%</div>
-                  <div style="font-size:10px;color:#94a3b8">멘션률</div>
-                </div>
-                <div style="width:1px;background:#e2e8f0"></div>
-                <div>
-                  <div style="font-size:24px;font-weight:800;color:{c_color}">{c_rate:.0f}%</div>
-                  <div style="font-size:10px;color:#94a3b8">인용률</div>
-                </div>
-              </div>
-              <div style="font-size:11px;color:#94a3b8;margin-top:8px">{e['date']} 기준 ({e['mentioned']}/{e['total']})</div>
-            </div>"""
-        else:
-            summary_cards += f"""
-            <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
-              <div style="font-size:13px;font-weight:700;color:{color};margin-bottom:6px">{eng}</div>
+              <div style="font-size:13px;font-weight:700;color:{color};margin-bottom:6px">{label}</div>
               <div style="font-size:32px;font-weight:800;color:#d1d5db">–</div>
-              <div style="font-size:11px;color:#94a3b8;margin-top:2px">미실행</div>
+              <div style="font-size:11px;color:#94a3b8;margin-top:2px">이번 달 데이터 없음</div>
             </div>"""
-
-    # 주간 추이 테이블 (날짜별, 엔진별 행) - 날짜를 누르면 상세 서브페이지로 이동
-    rows = ""
-    for entry in reversed(history[-60:]):  # 최근 60개 실행
-        color = ENGINE_COLORS.get(entry["engine"], "#64748b")
-        m_rate = entry.get("mention_rate", entry["rate"])
-        c_rate = entry.get("citation_rate", 0)
+        m_rate = stats["mention_rate"]
+        c_rate = stats["citation_rate"]
         m_color = "#059669" if m_rate >= 30 else "#dc2626"
         c_color = "#059669" if c_rate >= 30 else "#dc2626"
-        areas = entry.get("areas", {})
-        area_str = " · ".join([f'{a} {areas.get(a, 0):.0f}%' for a in AREAS])
-        rows += f"""
-        <tr>
-          <td style="padding:10px 12px;font-weight:600">
-            <a href="reports/{entry['date']}.html" style="color:#2563eb;text-decoration:none">{entry['date']} →</a>
-          </td>
-          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{color};background:{color}15;padding:3px 10px;border-radius:8px">{entry['engine']}</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:{m_color}">{m_rate:.0f}%</td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:{c_color}">{c_rate:.0f}%</td>
-          <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">{entry['mentioned']}/{entry['total']}</td>
-          <td style="padding:10px 12px;color:#94a3b8;font-size:11px">{area_str}</td>
-        </tr>"""
+        return f"""
+        <div style="background:#f8fafc;border-radius:12px;padding:16px;border:1px solid #e2e8f0;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:{color};margin-bottom:8px">{label}</div>
+          <div style="display:flex;justify-content:center;gap:14px">
+            <div>
+              <div style="font-size:24px;font-weight:800;color:{m_color}">{m_rate:.0f}%</div>
+              <div style="font-size:10px;color:#94a3b8">멘션률</div>
+            </div>
+            <div style="width:1px;background:#e2e8f0"></div>
+            <div>
+              <div style="font-size:24px;font-weight:800;color:{c_color}">{c_rate:.0f}%</div>
+              <div style="font-size:10px;color:#94a3b8">인용률</div>
+            </div>
+          </div>
+          <div style="font-size:11px;color:#94a3b8;margin-top:8px">{current_month} 평균 ({stats['count']}회 실행)</div>
+        </div>"""
 
-    # 월별 요약
-    months = {}
+    summary_cards = render_card("전체 (3개 평균)", OVERALL_COLOR, overall_month)
+    for eng in ENGINES:
+        summary_cards += render_card(eng, ENGINE_COLORS[eng], engine_month_stats[eng])
+
+    # ── 실행 기록: 날짜별로 엔진 묶고, 날짜마다 "전체"(3개 평균) 행 + 엔진별 행 ──
+    by_date = {}
+    for e in history:
+        by_date.setdefault(e["date"], {})[e["engine"]] = e
+
+    rows = ""
+    for d in sorted(by_date.keys(), reverse=True)[:60]:
+        engines_here = by_date[d]
+        present = [eng for eng in ENGINES if eng in engines_here]
+        m_vals = [engines_here[eng].get("mention_rate", engines_here[eng]["rate"]) for eng in present]
+        c_vals = [engines_here[eng].get("citation_rate", 0) for eng in present]
+        if m_vals:
+            avg_m = sum(m_vals) / len(m_vals)
+            avg_c = sum(c_vals) / len(c_vals)
+            am_color = "#059669" if avg_m >= 30 else "#dc2626"
+            ac_color = "#059669" if avg_c >= 30 else "#dc2626"
+            area_avg = {}
+            for a in AREAS:
+                a_vals = [engines_here[eng].get("areas", {}).get(a, 0) for eng in present]
+                area_avg[a] = sum(a_vals) / len(a_vals) if a_vals else 0
+            area_str = " · ".join([f'{a} {area_avg[a]:.0f}%' for a in AREAS])
+            rows += f"""
+            <tr data-engine="전체">
+              <td style="padding:10px 12px;font-weight:600">
+                <a href="reports/{d}.html" style="color:#2563eb;text-decoration:none">{d} →</a>
+              </td>
+              <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{OVERALL_COLOR};background:#1e293b15;padding:3px 10px;border-radius:8px">전체</span></td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:{am_color}">{avg_m:.0f}%</td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:{ac_color}">{avg_c:.0f}%</td>
+              <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">{len(present)}개 엔진 평균</td>
+              <td style="padding:10px 12px;color:#94a3b8;font-size:11px">{area_str}</td>
+            </tr>"""
+        for eng in present:
+            entry = engines_here[eng]
+            color = ENGINE_COLORS.get(eng, "#64748b")
+            m_rate = entry.get("mention_rate", entry["rate"])
+            c_rate = entry.get("citation_rate", 0)
+            m_color = "#059669" if m_rate >= 30 else "#dc2626"
+            c_color = "#059669" if c_rate >= 30 else "#dc2626"
+            areas = entry.get("areas", {})
+            area_str = " · ".join([f'{a} {areas.get(a, 0):.0f}%' for a in AREAS])
+            rows += f"""
+            <tr data-engine="{eng}">
+              <td style="padding:10px 12px;font-weight:600">
+                <a href="reports/{d}.html" style="color:#2563eb;text-decoration:none">{d} →</a>
+              </td>
+              <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{color};background:{color}15;padding:3px 10px;border-radius:8px">{eng}</span></td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:{m_color}">{m_rate:.0f}%</td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;font-size:14px;color:{c_color}">{c_rate:.0f}%</td>
+              <td style="padding:10px 12px;text-align:center;color:#64748b;font-size:12px">{entry['mentioned']}/{entry['total']}</td>
+              <td style="padding:10px 12px;color:#94a3b8;font-size:11px">{area_str}</td>
+            </tr>"""
+
+    # ── 월별 요약: 월마다 "전체"(3개 평균) 행 + 엔진별 행 ──
+    months_data = {}
     for entry in history:
-        d = datetime.strptime(entry["date"], "%Y-%m-%d")
-        mk = f"{d.year}-{d.month:02d}"
-        key = (mk, entry["engine"])
-        months.setdefault(key, []).append(entry)
+        mk = entry["date"][:7]
+        months_data.setdefault(mk, {}).setdefault(entry["engine"], []).append(entry)
 
     m_rows = ""
-    for (mk, eng), entries in sorted(months.items(), key=lambda x: (x[0][0], x[0][1]), reverse=True):
-        avg_m = sum(e.get("mention_rate", e["rate"]) for e in entries) / len(entries)
-        avg_c = sum(e.get("citation_rate", 0) for e in entries) / len(entries)
-        color = ENGINE_COLORS.get(eng, "#64748b")
-        m_color = "#059669" if avg_m >= 30 else "#dc2626"
-        c_color = "#059669" if avg_c >= 30 else "#dc2626"
-        m_rows += f"""
-        <tr>
-          <td style="padding:10px 12px;font-weight:600;color:#334155">{mk}</td>
-          <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{color};background:{color}15;padding:3px 10px;border-radius:8px">{eng}</span></td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;color:{m_color}">{avg_m:.1f}%</td>
-          <td style="padding:10px 12px;text-align:center;font-weight:800;color:{c_color}">{avg_c:.1f}%</td>
-          <td style="padding:10px 12px;text-align:center;color:#64748b">{len(entries)}회</td>
-        </tr>"""
+    for mk in sorted(months_data.keys(), reverse=True):
+        eng_avgs = {}
+        for eng in ENGINES:
+            ents = months_data[mk].get(eng, [])
+            if ents:
+                eng_avgs[eng] = {
+                    "m": sum(e.get("mention_rate", e["rate"]) for e in ents) / len(ents),
+                    "c": sum(e.get("citation_rate", 0) for e in ents) / len(ents),
+                    "n": len(ents),
+                }
+        if eng_avgs:
+            overall_m = sum(v["m"] for v in eng_avgs.values()) / len(eng_avgs)
+            overall_c = sum(v["c"] for v in eng_avgs.values()) / len(eng_avgs)
+            om_color = "#059669" if overall_m >= 30 else "#dc2626"
+            oc_color = "#059669" if overall_c >= 30 else "#dc2626"
+            total_n = sum(v["n"] for v in eng_avgs.values())
+            m_rows += f"""
+            <tr data-engine="전체">
+              <td style="padding:10px 12px;font-weight:600;color:#334155">{mk}</td>
+              <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{OVERALL_COLOR};background:#1e293b15;padding:3px 10px;border-radius:8px">전체</span></td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;color:{om_color}">{overall_m:.1f}%</td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;color:{oc_color}">{overall_c:.1f}%</td>
+              <td style="padding:10px 12px;text-align:center;color:#64748b">{total_n}회</td>
+            </tr>"""
+        for eng in ENGINES:
+            if eng not in eng_avgs:
+                continue
+            v = eng_avgs[eng]
+            color = ENGINE_COLORS.get(eng, "#64748b")
+            m_color = "#059669" if v["m"] >= 30 else "#dc2626"
+            c_color = "#059669" if v["c"] >= 30 else "#dc2626"
+            m_rows += f"""
+            <tr data-engine="{eng}">
+              <td style="padding:10px 12px;font-weight:600;color:#334155">{mk}</td>
+              <td style="padding:10px 12px;text-align:center"><span style="font-size:11px;font-weight:700;color:{color};background:{color}15;padding:3px 10px;border-radius:8px">{eng}</span></td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;color:{m_color}">{v['m']:.1f}%</td>
+              <td style="padding:10px 12px;text-align:center;font-weight:800;color:{c_color}">{v['c']:.1f}%</td>
+              <td style="padding:10px 12px;text-align:center;color:#64748b">{v['n']}회</td>
+            </tr>"""
 
     last_updated = history[-1]["date"] if history else "–"
 
@@ -331,7 +404,7 @@ def generate_dashboard(history: list) -> str:
 <style>
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
   body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
-  .container {{ max-width: 900px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
+  .container {{ max-width: 960px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
   h1 {{ font-size: 22px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }}
   h2 {{ font-size: 16px; font-weight: 700; color: #1e293b; margin: 28px 0 12px; }}
   .subtitle {{ font-size: 13px; color: #94a3b8; margin-bottom: 8px; }}
@@ -340,8 +413,12 @@ def generate_dashboard(history: list) -> str:
   th {{ text-align: left; padding: 10px 12px; color: #64748b; font-weight: 600; border-bottom: 2px solid #e2e8f0; background: #f8fafc; }}
   td {{ border-bottom: 1px solid #f1f5f9; }}
   tr:hover td {{ background: #fafbfc; }}
-  .grid3 {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }}
+  .grid4 {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }}
   .table-wrap {{ overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }}
+  .filter-tabs {{ display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }}
+  .filter-btn {{ padding: 6px 14px; border-radius: 20px; border: 1px solid #e2e8f0; background: #fff; color: #64748b; font-size: 12px; font-weight: 600; cursor: pointer; }}
+  .filter-btn.active {{ background: #1e293b; color: #fff; border-color: #1e293b; }}
+  @media (max-width: 700px) {{ .grid4 {{ grid-template-columns: repeat(2, 1fr); }} }}
 </style>
 </head>
 <body>
@@ -350,21 +427,33 @@ def generate_dashboard(history: list) -> str:
   <div class="subtitle">마지막 업데이트: {last_updated} | 매주 월요일 자동 실행 (GitHub Actions)</div>
   <a class="nav-link" href="matrix.html">📋 프롬프트별 전체 추이표 보기 →</a>
 
-  <div class="grid3">{summary_cards}</div>
+  <div class="grid4">{summary_cards}</div>
 
   <h2>실행 기록 (최근 순)</h2>
+  <div class="filter-tabs" id="history-filter">
+    <button class="filter-btn active" data-engine="전체">전체</button>
+    <button class="filter-btn" data-engine="Claude">클로드</button>
+    <button class="filter-btn" data-engine="ChatGPT">챗지피티</button>
+    <button class="filter-btn" data-engine="Gemini">제미나이</button>
+  </div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>날짜</th><th style="text-align:center">엔진</th><th style="text-align:center">멘션률</th><th style="text-align:center">인용률</th><th style="text-align:center">인용/전체</th><th>지점별</th></tr></thead>
-      <tbody>{rows_html}</tbody>
+      <tbody id="history-tbody">{rows_html}</tbody>
     </table>
   </div>
 
   <h2>월별 요약</h2>
+  <div class="filter-tabs" id="monthly-filter">
+    <button class="filter-btn active" data-engine="전체">전체</button>
+    <button class="filter-btn" data-engine="Claude">클로드</button>
+    <button class="filter-btn" data-engine="Gemini">제미나이</button>
+    <button class="filter-btn" data-engine="ChatGPT">챗지피티</button>
+  </div>
   <div class="table-wrap">
     <table>
       <thead><tr><th>월</th><th style="text-align:center">엔진</th><th style="text-align:center">평균 멘션률</th><th style="text-align:center">평균 인용률</th><th style="text-align:center">실행 횟수</th></tr></thead>
-      <tbody>{m_rows_html}</tbody>
+      <tbody id="monthly-tbody">{m_rows_html}</tbody>
     </table>
   </div>
 
@@ -372,6 +461,27 @@ def generate_dashboard(history: list) -> str:
     <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ AI 엔진 간 인용 소스 겹침은 약 25%입니다. 같은 질문도 매번 결과가 달라질 수 있으므로 개별 실행보다 추세를 보세요.</p>
   </div>
 </div>
+<script>
+function setupFilter(filterId, tbodyId) {{
+  var container = document.getElementById(filterId);
+  if (!container) return;
+  var buttons = container.querySelectorAll('.filter-btn');
+  buttons.forEach(function(btn) {{
+    btn.addEventListener('click', function() {{
+      buttons.forEach(function(b) {{ b.classList.remove('active'); }});
+      btn.classList.add('active');
+      var eng = btn.getAttribute('data-engine');
+      var rows = document.querySelectorAll('#' + tbodyId + ' tr[data-engine]');
+      rows.forEach(function(tr) {{
+        var match = (eng === '전체') || (tr.getAttribute('data-engine') === eng);
+        tr.style.display = match ? '' : 'none';
+      }});
+    }});
+  }});
+}}
+setupFilter('history-filter', 'history-tbody');
+setupFilter('monthly-filter', 'monthly-tbody');
+</script>
 </body>
 </html>"""
 
@@ -589,6 +699,80 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
           <span style="color:#dc2626;font-weight:700">X</span> = 미언급
         </div>"""
 
+    # ── 변화 추이 차트 데이터 (전체 히스토리 기준, 오름차순) ──
+    all_dates_sorted = sorted(by_date.keys())
+    trend_all = []
+    trend_by_prompt = {p["id"]: [] for p in PROMPTS}
+    for d in all_dates_sorted:
+        engines_here = by_date[d]
+        m_vals = [e.get("mention_rate", e["rate"]) for e in engines_here.values()]
+        trend_all.append(round(sum(m_vals) / len(m_vals), 1) if m_vals else None)
+        for p in PROMPTS:
+            hits = []
+            for e in engines_here.values():
+                r = e.get("detail", {}).get(p["id"])
+                if r is not None:
+                    hits.append(1 if r.get("mentioned") else 0)
+            trend_by_prompt[p["id"]].append(round(sum(hits) / len(hits) * 100, 1) if hits else None)
+
+    trend_datasets = {"__all__": trend_all}
+    trend_datasets.update(trend_by_prompt)
+    trend_labels_json = json.dumps(all_dates_sorted, ensure_ascii=False)
+    trend_datasets_json = json.dumps(trend_datasets, ensure_ascii=False)
+
+    prompt_buttons_html = '<button class="filter-btn active" data-key="__all__">전체</button>'
+    for p in PROMPTS:
+        prompt_buttons_html += f'<button class="filter-btn" data-key="{p["id"]}">{p["short"]}</button>'
+
+    trend_section = f"""
+  <h2>변화 추이 (멘션률 기준)</h2>
+  <div class="subtitle">아래 버튼을 선택하면 해당 항목의 추이만 그래프에 표시됩니다</div>
+  <div class="filter-tabs" id="trend-filter">{prompt_buttons_html}</div>
+  <div style="border:1px solid #e2e8f0;border-radius:12px;padding:16px">
+    <canvas id="trendChart" height="90"></canvas>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script>
+    var trendLabels = {trend_labels_json};
+    var trendDatasets = {trend_datasets_json};
+    var trendCtx = document.getElementById('trendChart').getContext('2d');
+    var trendChart = new Chart(trendCtx, {{
+      type: 'line',
+      data: {{
+        labels: trendLabels,
+        datasets: [{{
+          label: '전체',
+          data: trendDatasets['__all__'],
+          borderColor: '#1e293b',
+          backgroundColor: 'rgba(30,41,59,0.08)',
+          tension: 0.3,
+          spanGaps: true,
+          fill: true,
+        }}]
+      }},
+      options: {{
+        responsive: true,
+        scales: {{ y: {{ min: 0, max: 100, ticks: {{ callback: function(v) {{ return v + '%'; }} }} }} }},
+        plugins: {{ legend: {{ display: false }} }}
+      }}
+    }});
+    document.querySelectorAll('#trend-filter .filter-btn').forEach(function(btn) {{
+      btn.addEventListener('click', function() {{
+        document.querySelectorAll('#trend-filter .filter-btn').forEach(function(b) {{ b.classList.remove('active'); }});
+        btn.classList.add('active');
+        var key = btn.getAttribute('data-key');
+        trendChart.data.datasets[0].data = trendDatasets[key];
+        trendChart.data.datasets[0].label = btn.textContent;
+        trendChart.update();
+      }});
+    }});
+  </script>"""
+
+    trend_filter_css = """
+  .filter-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #e2e8f0; background: #fff; color: #64748b; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .filter-btn.active { background: #1e293b; color: #fff; border-color: #1e293b; }"""
+
     return f"""<!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -600,11 +784,12 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
   body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
   .container {{ max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }}
   h1 {{ font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }}
+  h2 {{ font-size: 16px; font-weight: 700; color: #1e293b; margin: 28px 0 8px; }}
   .subtitle {{ font-size: 13px; color: #94a3b8; margin-bottom: 16px; }}
   .back-link {{ display: inline-block; margin-bottom: 16px; font-size: 13px; color: #2563eb; text-decoration: none; }}
   .table-wrap {{ overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }}
   td, th {{ border-bottom: 1px solid #f1f5f9; }}
-  tr:hover td {{ background: #fafbfc !important; }}
+  tr:hover td {{ background: #fafbfc !important; }}{trend_filter_css}
 </style>
 </head>
 <body>
@@ -613,6 +798,7 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
   <h1>프롬프트별 전체 추이표</h1>
   <div class="subtitle">최근 {len(dates) if dates else 0}회 실행 기준 | O=링크 인용 · △=이름만 언급 · X=미언급 | 셀에 마우스를 올리면 상세 정보가 보입니다</div>
   <div class="table-wrap">{table_html}</div>
+  {trend_section}
   <div style="margin-top:20px;padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
     <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ 날짜별 상세(경쟁사, 인용 유형 등)는 대시보드의 실행 기록에서 날짜를 클릭하면 볼 수 있습니다.</p>
   </div>
