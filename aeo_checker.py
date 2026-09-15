@@ -127,15 +127,14 @@ def parse_result(text: str) -> dict:
 def call_openai(question: str) -> str:
     from openai import OpenAI
     client = OpenAI(api_key=API_KEYS["openai"])
-    response = client.chat.completions.create(
-        model="gpt-4o-mini-search-preview",
-        web_search_options={"search_context_size": "low"},
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": question},
-        ],
+    response = client.responses.create(
+        model="gpt-4o-mini",   # 검색 1회당 8,000토큰 고정 청구 - 입력단가 낮은 모델일수록 저렴 (4.1-mini 대비 약 1/2.7)
+        instructions=SYSTEM_PROMPT + "\n\n비용 절감을 위해 웹검색은 최대 2회까지만 사용해줘.",
+        tools=[{"type": "web_search"}],
+        input=question,
+        max_output_tokens=600,   # 업체 리스트 용도로 충분, 출력 폭주 방지
     )
-    return response.choices[0].message.content or ""
+    return response.output_text or ""
 
 
 def call_gemini(question: str) -> str:
@@ -146,6 +145,7 @@ def call_gemini(question: str) -> str:
     config = types.GenerateContentConfig(
         system_instruction=SYSTEM_PROMPT,
         tools=[grounding_tool],
+        max_output_tokens=600,   # 업체 리스트 용도로 충분, 출력 비용 상한
     )
     response = client.models.generate_content(
         model="gemini-2.5-flash",
@@ -159,10 +159,10 @@ def call_claude(question: str) -> str:
     import anthropic
     client = anthropic.Anthropic(api_key=API_KEYS["anthropic"])
     response = client.messages.create(
-        model="claude-sonnet-5",
-        max_tokens=1000,
+        model="claude-haiku-4-5-20251001",   # Sonnet보다 훨씬 저렴 - 업체명/URL 추출 용도로 충분
+        max_tokens=600,   # 업체 리스트 용도로 충분, 출력 비용 상한
         system=SYSTEM_PROMPT,
-        tools=[{"type": "web_search_20250305", "name": "web_search"}],
+        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 2}],  # 검색 횟수 상한 - 비용 폭주 방지
         messages=[{"role": "user", "content": question}],
     )
     text_blocks = [b.text for b in response.content if b.type == "text"]
