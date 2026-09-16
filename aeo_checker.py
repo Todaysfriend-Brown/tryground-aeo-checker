@@ -401,6 +401,9 @@ def generate_dashboard(history: list) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>트라이그라운드 AEO 인용률 대시보드</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
   body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
@@ -466,18 +469,21 @@ function setupFilter(filterId, tbodyId) {{
   var container = document.getElementById(filterId);
   if (!container) return;
   var buttons = container.querySelectorAll('.filter-btn');
+  function applyFilter(eng) {{
+    var rows = document.querySelectorAll('#' + tbodyId + ' tr[data-engine]');
+    rows.forEach(function(tr) {{
+      tr.style.display = (tr.getAttribute('data-engine') === eng) ? '' : 'none';
+    }});
+  }}
   buttons.forEach(function(btn) {{
     btn.addEventListener('click', function() {{
       buttons.forEach(function(b) {{ b.classList.remove('active'); }});
       btn.classList.add('active');
-      var eng = btn.getAttribute('data-engine');
-      var rows = document.querySelectorAll('#' + tbodyId + ' tr[data-engine]');
-      rows.forEach(function(tr) {{
-        var match = (eng === '전체') || (tr.getAttribute('data-engine') === eng);
-        tr.style.display = match ? '' : 'none';
-      }});
+      applyFilter(btn.getAttribute('data-engine'));
     }});
   }});
+  var activeBtn = container.querySelector('.filter-btn.active') || buttons[0];
+  if (activeBtn) applyFilter(activeBtn.getAttribute('data-engine'));
 }}
 setupFilter('history-filter', 'history-tbody');
 setupFilter('monthly-filter', 'monthly-tbody');
@@ -567,6 +573,9 @@ def generate_report_page(date: str, entries_for_date: list) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{date} 상세 리포트 - 트라이그라운드 AEO</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" href="../favicon.ico">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <style>
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
   body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
@@ -779,6 +788,9 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>프롬프트별 전체 추이표 - 트라이그라운드 AEO</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
   body {{ font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }}
