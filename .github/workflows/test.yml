@@ -1,0 +1,29 @@
+name: 자동 검증 테스트
+
+# 코드나 데이터를 푸시할 때마다 API 호출 없이 검증한다.
+# (주간 실행 워크플로도 실행 직전에 test_quality.py 를 자동으로 돌린다)
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'aeo_checker.py'
+      - 'tests/**'
+      - 'aeo_results/history.json'
+      - '.github/workflows/test.yml'
+  pull_request:
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Python 설치
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 코드·데이터 자동 검증
+        run: python -m unittest discover -s tests -v

@@ -27,6 +27,9 @@ jobs:
       - name: 패키지 설치
         run: pip install openai google-genai anthropic
 
+      - name: 자동 검증 테스트 (API 호출 없음 - 로직이 깨졌으면 비용을 쓰기 전에 여기서 중단)
+        run: python -m unittest discover -s tests -p "test_quality.py" -v
+
       - name: AEO 체크 실행
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -40,9 +43,22 @@ jobs:
           fi
 
       - name: 결과 커밋 & 푸시
+        if: ${{ !cancelled() }}   # 위 단계가 '통계 제외'로 실패(exit 1)해도 이미 저장된 결과는 커밋
         run: |
           git config --global user.name "AEO Bot"
           git config --global user.email "aeo-bot@tryground.co.kr"
           git add aeo_results/
           git diff --staged --quiet || git commit -m "AEO 체크 결과 업데이트 $(date +%Y-%m-%d)"
           git push
+
+      - name: Slack 알림 전송
+        if: ${{ !cancelled() }}   # 위 단계들이 실패해도 결과를 알 수 있도록 항상 시도
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "ℹ SLACK_WEBHOOK_URL 시크릿이 없어 Slack 알림을 건너뜁니다. (설정 방법은 README 참고)"
+            exit 0
+          fi
+          python aeo_checker.py --slack-payload > slack_payload.json
+          curl -sf -X POST -H 'Content-type: application/json' --data @slack_payload.json "$SLACK_WEBHOOK_URL"
