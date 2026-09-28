@@ -290,7 +290,11 @@ class SlackPayload(unittest.TestCase):
         self.assertIn("재빌드", payload["blocks"][0]["text"]["text"])
 
     def test_links_included_only_with_github_env(self):
-        without = ac.build_slack_payload({"date": "2026-09-21", "mode": "check"}, [])
+        # GitHub Actions 안에서 이 테스트를 돌리면 GITHUB_REPOSITORY 등이 이미 채워져 있으므로,
+        # '환경변수가 없는 경우'를 실제로 재현하려면 명시적으로 지워야 한다.
+        env_keys = ("GITHUB_REPOSITORY", "GITHUB_RUN_ID", "GITHUB_SERVER_URL")
+        with mock.patch.dict(ac.os.environ, {k: "" for k in env_keys}):
+            without = ac.build_slack_payload({"date": "2026-09-21", "mode": "check"}, [])
         self.assertNotIn("context", [b["type"] for b in without["blocks"]])
 
         with mock.patch.dict(ac.os.environ, {"GITHUB_REPOSITORY": "owner/repo", "GITHUB_RUN_ID": "123", "GITHUB_SERVER_URL": "https://github.com"}):
