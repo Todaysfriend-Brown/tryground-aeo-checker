@@ -212,8 +212,23 @@ RETRY_DELAYS = [10, 30, 60]         # 일시적 오류(429/5xx/타임아웃) 재
 MIN_CALL_INTERVAL = {"Gemini": 13}  # 무료 티어 분당 5회 제한(GenerateRequestsPerMinute=5) → 호출 시작 간격(초)
 
 
+class BillingError(Exception):
+    """API 결제 잔액 부족 — 기다린다고 풀리지 않으므로 재시도하지 않고 해당 엔진을 즉시 멈춘다."""
+
+
+# 결제 잔액 소진을 알리는 실제 API 응답 문구 (OpenAI: insufficient_quota / credit_balance_exhausted, Anthropic: credit balance too low)
+BILLING_PATTERNS = ("insufficient_quota", "credit_balance_exhausted", "no credits remaining", "credit balance is too low")
+
+
+def is_billing_error(e: Exception) -> bool:
+    text = str(e).lower()
+    return any(p in text for p in BILLING_PATTERNS)
+
+
 def is_transient_error(e: Exception) -> bool:
-    """재시도하면 성공할 수 있는 오류인가 (한도 초과·서버 오류·타임아웃). 모델명 오류(404)·잔액 부족(400)은 재시도해도 소용없음."""
+    """재시도하면 성공할 수 있는 오류인가 (한도 초과·서버 오류·타임아웃). 모델명 오류(404)·잔액 부족은 재시도해도 소용없음."""
+    if is_billing_error(e):   # 잔액 부족은 HTTP 429로도 오므로 상태 코드보다 먼저 걸러야 한다
+        return False
     status = getattr(e, "status_code", None) or getattr(e, "code", None)
     if isinstance(status, int):
         return status in (408, 429) or status >= 500
@@ -233,6 +248,8 @@ def call_with_retry(engine: str, question: str) -> str:
         try:
             text = CALL_FN[engine](question)
         except Exception as e:
+            if is_billing_error(e):
+                raise BillingError(str(e)) from e
             if attempt == len(RETRY_DELAYS) or not is_transient_error(e):
                 raise
             wait = retry_wait(e, RETRY_DELAYS[attempt])
@@ -249,7 +266,12 @@ def call_with_retry(engine: str, question: str) -> str:
 def run_engine(engine: str) -> dict:
     results = {}
     last_call = None
+    billing_stop = None   # 잔액 부족으로 멈춘 경우 그 에러 문구
     for i, p in enumerate(PROMPTS):
+        if billing_stop is not None:
+            # 잔액이 없으면 남은 프롬프트를 호출해도 전부 실패하므로 건너뛴다 (시간·재시도 낭비 방지)
+            results[p["id"]] = {"mentioned": False, "rank": None, "competitors": [], "citationType": "미언급", "raw": billing_stop, "error": True, "billing": True}
+            continue
         print(f"  [{engine}] {i+1}/{len(PROMPTS)}: {p['short']}...", end=" ", flush=True)
         interval = MIN_CALL_INTERVAL.get(engine, 0)
         if last_call is not None and interval:
@@ -263,10 +285,21 @@ def run_engine(engine: str) -> dict:
             else:
                 print(f"→ 오류: 응답이 비었거나 잘림 ({len((text or '').strip())}자)")
                 results[p["id"]] = {"mentioned": False, "rank": None, "competitors": [], "citationType": "미언급", "raw": text or "(응답 없음)", "error": True}
+        except BillingError as e:
+            print(f"→ 💳 잔액 부족: 나머지 프롬프트는 건너뜀")
+            billing_stop = str(e)
+            results[p["id"]] = {"mentioned": False, "rank": None, "competitors": [], "citationType": "미언급", "raw": str(e), "error": True, "billing": True}
         except Exception as e:
             print(f"→ 에러: {e}")
             results[p["id"]] = {"mentioned": False, "rank": None, "competitors": [], "citationType": "미언급", "raw": str(e), "error": True}
     return results
+
+
+BILLING_LINKS = {
+    "ChatGPT": "https://platform.openai.com/settings/organization/billing",
+    "Claude": "https://console.anthropic.com/settings/billing",
+    "Gemini": "https://aistudio.google.com/",
+}
 
 
 LINK_CITATION_TYPES = {"홈페이지 링크", "블로그 링크", "contractup 링크"}
@@ -1069,9 +1102,16 @@ def main():
         for engine in engines_to_run:
             print(f"\n▶ {engine} 체크 시작...")
             results = run_engine(engine)
+            billing = [r for r in results.values() if r.get("billing")]
+            if billing:
+                msg = f"💳 {engine} 결제 잔액 부족 — 충전 필요 ({BILLING_LINKS.get(engine, '')}) · 원문: {billing[0]['raw'][:120]}"
+                print(f"  ❌ {msg}")
+                problems.append(msg)
             s = calc_stats(results)
             print(f"  → 멘션률: {s['mention_rate']:.1f}% ({s['mentioned']}/{s['total']}) | 인용률: {s['citation_rate']:.1f}% ({s['cited']}/{s['total']})")
-            if s["total"] == 0:
+            if s["total"] == 0 and billing:
+                pass   # 잔액 부족 메시지를 위에서 이미 남겼으므로 중복 알림하지 않음
+            elif s["total"] == 0:
                 msg = f"{engine}: 유효 응답이 {len(results) - s['errors']}/{len(results)}개뿐이라 이번 실행이 통계에서 제외됨 (API 키/모델명/결제·한도 확인 필요)"
                 print(f"  ⚠ {msg}")
                 problems.append(msg)

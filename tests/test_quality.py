@@ -8,7 +8,10 @@
 import contextlib
 import io
 import json
+import os
+import shutil
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest import mock
@@ -173,6 +176,80 @@ class RetryAndPacing(unittest.TestCase):
         _, _, sleeps = self.run_engine(lambda n: GOOD, engine="Gemini", prompts=3)
         self.assertEqual(len(sleeps), 2)
         self.assertTrue(all(12 <= s <= 13 for s in sleeps), sleeps)
+
+
+OPENAI_BILLING = "Error code: 429 - {'error': {'message': 'You have no credits remaining. Add credits to continue using the API', 'type': 'insufficient_quota', 'code': 'credit_balance_exhausted'}}"
+ANTHROPIC_BILLING = "Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API.'}}"
+GEMINI_QUOTA = "429 RESOURCE_EXHAUSTED. {'error': {'message': 'You exceeded your current quota', 'status': 'RESOURCE_EXHAUSTED'}}"
+
+
+class BillingError(unittest.TestCase):
+    def test_real_billing_messages_are_detected(self):
+        self.assertTrue(ac.is_billing_error(Exception(OPENAI_BILLING)))
+        self.assertTrue(ac.is_billing_error(Exception(ANTHROPIC_BILLING)))
+
+    def test_billing_is_not_transient_even_though_http_429(self):
+        e = ApiError(429, OPENAI_BILLING)
+        self.assertTrue(ac.is_billing_error(e))
+        self.assertFalse(ac.is_transient_error(e))
+
+    def test_gemini_rate_quota_is_still_retried(self):
+        e = ApiError(429, GEMINI_QUOTA)
+        self.assertFalse(ac.is_billing_error(e))
+        self.assertTrue(ac.is_transient_error(e))
+
+    def run_engine(self, fn, engine="ChatGPT", prompts=10):
+        calls = {"n": 0}
+
+        def wrapped(question):
+            calls["n"] += 1
+            return fn(calls["n"])
+
+        sleeps = []
+        with mock.patch.object(ac.time, "sleep", side_effect=lambda s: sleeps.append(round(s))), \
+                mock.patch.dict(ac.CALL_FN, {engine: wrapped}), \
+                mock.patch.object(ac, "PROMPTS", ac.PROMPTS[:prompts]), \
+                contextlib.redirect_stdout(io.StringIO()):
+            results = ac.run_engine(engine)
+        return results, calls["n"], sleeps
+
+    def test_billing_error_is_not_retried(self):
+        def fn(n):
+            raise ApiError(429, OPENAI_BILLING)
+        results, calls, sleeps = self.run_engine(fn, prompts=1)
+        self.assertEqual((calls, sleeps), (1, []))
+        self.assertTrue(results["p1"]["billing"])
+
+    def test_remaining_prompts_are_skipped_after_billing_error(self):
+        def fn(n):
+            if n == 2:
+                raise ApiError(429, OPENAI_BILLING)
+            return GOOD
+        results, calls, _ = self.run_engine(fn)
+        self.assertEqual(calls, 2)                       # 2번째에서 멈추고 나머지 8개는 호출하지 않음
+        self.assertTrue(all(results[p["id"]].get("billing") for p in ac.PROMPTS[1:]))
+        self.assertFalse(results["p1"].get("billing"))
+
+    def test_main_reports_billing_as_a_problem_with_link(self):
+        tmp = tempfile.mkdtemp()
+        cwd = Path.cwd()
+        try:
+            os.chdir(tmp)
+            def boom(q):
+                raise ApiError(429, OPENAI_BILLING)
+            with mock.patch.dict(ac.API_KEYS, {"openai": "x", "anthropic": "", "gemini": ""}), \
+                    mock.patch.dict(ac.CALL_FN, {"ChatGPT": boom}), \
+                    mock.patch.object(ac.time, "sleep", lambda s: None), \
+                    contextlib.redirect_stdout(io.StringIO()) as buf:
+                with self.assertRaises(SystemExit) as cm:
+                    ac.main()
+            self.assertEqual(cm.exception.code, 1)
+            status = json.loads(Path("last_run_status.json").read_text(encoding="utf-8"))
+            self.assertTrue(any("잔액 부족" in p and "platform.openai.com" in p for p in status["problems"]), status["problems"])
+            self.assertIn("::error", buf.getvalue())
+        finally:
+            os.chdir(cwd)
+            shutil.rmtree(tmp, ignore_errors=True)
 
 
 class MeasurementConditions(unittest.TestCase):
