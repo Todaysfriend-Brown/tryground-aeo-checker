@@ -143,7 +143,9 @@ def parse_result(text: str) -> dict:
 # 엔진별 호출 조건. 호출 함수와 history.json 기록이 같은 값을 쓰므로, 여기를 바꾸면 '측정 조건 변경'으로 대시보드에 자동 표시된다.
 # (조건이 다른 실행끼리는 추세를 그대로 비교하면 안 되기 때문)
 CALL_SETTINGS = {
-    "ChatGPT": {"model": "gpt-4o-mini", "max_output_tokens": 600, "max_searches": 2},   # 검색 1회당 8,000토큰 고정 청구 - 입력단가 낮은 모델일수록 저렴
+    "ChatGPT": {"model": "gpt-4o-mini", "max_output_tokens": 600, "max_searches": 5},   # 검색 1회당 8,000토큰 고정 청구 - 입력단가 낮은 모델일수록 저렴
+    # max_searches 2 -> 5 (2026-10-23): 9/15 이후 검색 2회 제한 구간에서 트라이그라운드 인용이 4주 연속 0~20%로 낮아 원인 분리용으로 늘림.
+    # 위워크·패스트파이브처럼 이미 유명한 체인 위주로만 찾고 로컬 업체까지 못 가는 게 아닌지 확인하는 실험 — 몇 주 지켜보고 효과 없으면 되돌릴 것
     "Gemini": {"model": "gemini-2.5-flash", "max_output_tokens": 600, "thinking_budget": 0},
     "Claude": {"model": "claude-haiku-4-5-20251001", "max_output_tokens": 600, "max_searches": 2},   # Sonnet보다 훨씬 저렴 - 업체명/URL 추출 용도로 충분
 }
