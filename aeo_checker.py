@@ -1,17 +1,22 @@
 """
-트라이그라운드 AEO 인용률 자동 체커 (통합판)
+AEO 인용률 자동 체커 (트라이그라운드 · 스페이스업)
 ================================================
-Claude + ChatGPT + Gemini 3개 엔진을 한 번에 체크하고
-하나의 통합 대시보드(index.html)로 누적 기록합니다.
+Claude + ChatGPT + Gemini 3개 엔진에 프로젝트별 질문을 던지고
+브랜드가 언급·인용되는지 프로젝트마다 대시보드로 누적 기록합니다.
+
+프로젝트 (PROJECTS 참고):
+  - tryground : 공유오피스/비상주사무실 질문 10개 → aeo_results/
+  - spaceup   : 공간대여 예약관리 SaaS 질문 10개 → spaceup_results/
 
 사용법 (로컬에서 직접 실행할 때):
   1. 터미널에서 API 키를 환경변수로 등록 (아래 3줄, 매번 새 터미널마다 필요)
        export OPENAI_API_KEY="sk-..."
        export GEMINI_API_KEY="AIza..."
        export ANTHROPIC_API_KEY="sk-ant-..."
-  2. python aeo_checker.py
-  3. 결과: aeo_results/index.html (통합 대시보드, 항상 최신)
-          aeo_results/history.json (전체 누적 데이터)
+  2. python aeo_checker.py                      # 전체 프로젝트
+     python aeo_checker.py --project=spaceup    # 특정 프로젝트만
+     python aeo_checker.py --rebuild-only       # API 호출 없이 페이지만 재생성
+  3. 결과: <프로젝트 폴더>/index.html (대시보드), <프로젝트 폴더>/history.json (누적 데이터)
 
 GitHub Actions로 자동 실행할 때:
   - 코드에 키를 직접 쓰지 않음. 대신 저장소 Settings → Secrets and
@@ -48,7 +53,7 @@ API_KEYS = {
     "anthropic": os.environ.get("ANTHROPIC_API_KEY", ""),
 }
 
-PROMPTS = [
+TRYGROUND_PROMPTS = [
     {"id": "p1",  "area": "낙성대", "short": "관악 공유오피스",   "q": "관악구에서 1인 창업자가 쓰기 좋은 공유오피스 추천해줘"},
     {"id": "p2",  "area": "낙성대", "short": "서울대입구 비상주", "q": "서울대입구역 근처 비상주사무실 어디가 좋아?"},
     {"id": "p3",  "area": "낙성대", "short": "관악 가상오피스",   "q": "관악구 가상오피스로 사업자등록 할 수 있는 곳 알려줘"},
@@ -60,14 +65,11 @@ PROMPTS = [
     {"id": "p9",  "area": "영등포", "short": "당산 사무실",       "q": "당산역 근처 1인 사무실 추천해줘"},
     {"id": "p10", "area": "영등포", "short": "영등포 비상주",     "q": "영등포 비상주사무실로 법인 등록 가능한 곳 알려줘"},
 ]
-
-BRAND_VARIANTS = ["트라이그라운드", "tryground", "트그", "TRYGROUND", "Tryground", "contractup", "계약온"]
-AREAS = ["낙성대", "홍대", "영등포"]
-ENGINES = ["Claude", "ChatGPT", "Gemini"]
-ENGINE_COLORS = {"Claude": "#6366f1", "ChatGPT": "#10a37f", "Gemini": "#4285f4"}
-AREA_COLORS = {"낙성대": "#059669", "홍대": "#d97706", "영등포": "#7c3aed"}
-
-SYSTEM_PROMPT = """당신은 서울 지역 공유오피스 및 비상주사무실 전문가입니다. 사용자의 질문에 대해 웹검색을 통해 실제 운영 중인 업체를 추천해주세요.
+TRYGROUND_BRAND_VARIANTS = ["트라이그라운드", "tryground", "트그", "TRYGROUND", "Tryground", "contractup", "계약온"]
+TRYGROUND_AREAS = ["낙성대", "홍대", "영등포"]
+TRYGROUND_AREA_COLORS = {"낙성대": "#059669", "홍대": "#d97706", "영등포": "#7c3aed"}
+TRYGROUND_LINK_RULES = [("tryground.co.kr", "홈페이지 링크"), ("contractup", "contractup 링크")]   # 먼저 매칭되는 쪽이 우선
+TRYGROUND_SYSTEM_PROMPT = """당신은 서울 지역 공유오피스 및 비상주사무실 전문가입니다. 사용자의 질문에 대해 웹검색을 통해 실제 운영 중인 업체를 추천해주세요.
 
 반드시 아래 형식으로 답변해주세요:
 1. [업체명] - 위치: [주소/역 근처] | URL: [웹사이트 또는 출처 URL]
@@ -75,6 +77,81 @@ SYSTEM_PROMPT = """당신은 서울 지역 공유오피스 및 비상주사무�
 ...
 
 최소 3개, 최대 7개 업체를 추천하고, 각 업체의 간단한 특징도 한 줄로 설명해주세요."""
+
+# 2026-11-06 추가: 스페이스업(space-up.co.kr, 공간대여 운영자용 예약·정산 SaaS)은 트라이그라운드와 시장이 달라
+# ("공유오피스 추천해줘" 질문에는 등장할 일이 없음) 별도 질문 세트·브랜드 별칭으로 추적한다. 지역 구분이 없는
+# 서비스라 AREAS는 "전체" 하나만 둔다.
+SPACEUP_PROMPTS = [
+    {"id": "sp1",  "area": "전체", "short": "예약관리 프로그램",   "q": "공간대여 예약 관리 프로그램 추천해줘"},
+    {"id": "sp2",  "area": "전체", "short": "연습실 예약·결제",    "q": "연습실 운영하는데 예약이랑 결제 한 번에 관리할 수 있는 솔루션 있어?"},
+    {"id": "sp3",  "area": "전체", "short": "파티룸·스튜디오",     "q": "파티룸·스튜디오 같은 시간제 대여 공간 예약 시스템 뭐 쓰면 좋아?"},
+    {"id": "sp4",  "area": "전체", "short": "중복예약 방지",       "q": "공간대여 중복 예약 막는 방법 알려줘"},
+    {"id": "sp5",  "area": "전체", "short": "예약 문자 자동발송",  "q": "스터디룸 예약 들어오면 고객한테 문자 자동으로 보내는 방법 있어?"},
+    {"id": "sp6",  "area": "전체", "short": "예약금·입금 자동화",  "q": "공유오피스 회의실 예약금이랑 입금 확인을 자동으로 관리하고 싶은데 어떻게 해?"},
+    {"id": "sp7",  "area": "전체", "short": "네이버예약 대안",     "q": "네이버 예약 말고 공간대여 사장님들이 쓰는 예약 관리 툴은 뭐가 있어?"},
+    {"id": "sp8",  "area": "전체", "short": "솔루션 비교",         "q": "공간대여 예약 관리 솔루션 비교해줘, 가격이랑 기능 위주로"},
+    {"id": "sp9",  "area": "전체", "short": "스페이스업 직접질문", "q": "스페이스업(space-up) 공간대여 예약 관리 서비스 어때?"},
+    {"id": "sp10", "area": "전체", "short": "연습실 창업 자동화",  "q": "연습실 창업 준비 중인데 운영 자동화 어떻게 해야 돼?"},
+]
+SPACEUP_BRAND_VARIANTS = ["스페이스업", "SPACE UP", "space-up", "Space-Up", "spaceup", "공간비서", "gongbiseo"]
+SPACEUP_AREAS = ["전체"]
+SPACEUP_AREA_COLORS = {"전체": "#2563eb"}
+SPACEUP_LINK_RULES = [("space-up.co.kr", "홈페이지 링크")]
+SPACEUP_SYSTEM_PROMPT = """당신은 공간대여(스터디룸·연습실·파티룸·스튜디오·공유오피스 등) 운영자를 위한 예약·결제·고객관리 솔루션 전문가입니다. 사용자의 질문에 대해 웹검색을 통해 실제 서비스 중인 예약 관리 프로그램을 추천해주세요.
+
+반드시 아래 형식으로 답변해주세요:
+1. [서비스명] - 특징: [핵심 기능 한 줄] | URL: [웹사이트 또는 출처 URL]
+2. [서비스명] - 특징: [핵심 기능 한 줄] | URL: [웹사이트 또는 출처 URL]
+...
+
+최소 3개, 최대 7개 서비스를 추천하고, 가격대나 대상 고객도 간단히 언급해주세요."""
+
+ENGINES = ["Claude", "ChatGPT", "Gemini"]
+ENGINE_COLORS = {"Claude": "#6366f1", "ChatGPT": "#10a37f", "Gemini": "#4285f4"}
+
+# 프로젝트(추적 대상 브랜드) 레지스트리. main()은 기본적으로 이 전체를 순회해서 매주 둘 다 체크한다.
+PROJECTS = {
+    "tryground": {
+        "label": "트라이그라운드",
+        "output_dir": "aeo_results",
+        "prompts": TRYGROUND_PROMPTS,
+        "brand_variants": TRYGROUND_BRAND_VARIANTS,
+        "areas": TRYGROUND_AREAS,
+        "area_colors": TRYGROUND_AREA_COLORS,
+        "link_rules": TRYGROUND_LINK_RULES,
+        "system_prompt": TRYGROUND_SYSTEM_PROMPT,
+    },
+    "spaceup": {
+        "label": "스페이스업",
+        "output_dir": "spaceup_results",
+        "prompts": SPACEUP_PROMPTS,
+        "brand_variants": SPACEUP_BRAND_VARIANTS,
+        "areas": SPACEUP_AREAS,
+        "area_colors": SPACEUP_AREA_COLORS,
+        "link_rules": SPACEUP_LINK_RULES,
+        "system_prompt": SPACEUP_SYSTEM_PROMPT,
+    },
+}
+
+
+def load_project(key: str) -> None:
+    """활성 프로젝트를 전역 상태(PROMPTS/BRAND_VARIANTS/AREAS/AREA_COLORS/LINK_RULES/SYSTEM_PROMPT)로 바꾼다.
+    클래스나 매개변수로 들고 다니지 않고 '보통 모듈 전역'을 그대로 쓰는 이유는, 기존 테스트가
+    mock.patch.object(ac, "PROMPTS", ...) 식으로 이미 이 전역들을 직접 덮어쓰고 있어서다."""
+    global PROJECT_KEY, PROJECT_LABEL, OUTPUT_DIR, PROMPTS, BRAND_VARIANTS, AREAS, AREA_COLORS, LINK_RULES, SYSTEM_PROMPT
+    cfg = PROJECTS[key]
+    PROJECT_KEY = key
+    PROJECT_LABEL = cfg["label"]
+    OUTPUT_DIR = cfg["output_dir"]
+    PROMPTS = cfg["prompts"]
+    BRAND_VARIANTS = cfg["brand_variants"]
+    AREAS = cfg["areas"]
+    AREA_COLORS = cfg["area_colors"]
+    LINK_RULES = cfg["link_rules"]
+    SYSTEM_PROMPT = cfg["system_prompt"]
+
+
+load_project("tryground")   # 모듈을 그냥 임포트하면 기존과 동일하게 트라이그라운드 상태로 시작한다
 
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -118,14 +195,14 @@ def parse_result(text: str) -> dict:
 
     cite_type = "미언급"
     if mentioned:
-        if "tryground.co.kr" in lower:
-            cite_type = "홈페이지 링크"
-        elif "contractup" in lower:
-            cite_type = "contractup 링크"
-        elif "blog.naver" in lower or "블로그" in lower:
-            cite_type = "블로그 링크"
+        cite_type = "텍스트만 언급"
+        for substr, label in LINK_RULES:   # 현재 프로젝트의 자사 도메인 규칙 (먼저 매칭되는 쪽 우선)
+            if substr in lower:
+                cite_type = label
+                break
         else:
-            cite_type = "텍스트만 언급"
+            if "blog.naver" in lower or "블로그" in lower:
+                cite_type = "블로그 링크"
 
     return {
         "mentioned": mentioned,
@@ -304,7 +381,7 @@ BILLING_LINKS = {
 }
 
 
-LINK_CITATION_TYPES = {"홈페이지 링크", "블로그 링크", "contractup 링크"}
+LINK_CITATION_TYPES = {"홈페이지 링크", "블로그 링크", "contractup 링크"}   # 모든 프로젝트 LINK_RULES 라벨 + 블로그의 합집합
 
 # 에러 원문 패턴 — error 플래그가 없던 예전 history.json 기록도 에러로 판별하기 위함
 ERROR_RAW_PATTERN = re.compile(r"^(Error code: \d+|\d{3} [A-Z_]+\.)")
@@ -636,7 +713,7 @@ def generate_dashboard(history: list) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>트라이그라운드 AEO 인용률 대시보드</title>
+<title>{PROJECT_LABEL} AEO 인용률 대시보드</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -662,7 +739,7 @@ def generate_dashboard(history: list) -> str:
 </head>
 <body>
 <div class="container">
-  <h1>트라이그라운드 AEO 인용률 대시보드</h1>
+  <h1>{PROJECT_LABEL} AEO 인용률 대시보드</h1>
   <div class="subtitle">마지막 업데이트: {last_updated} | 매주 월요일 자동 실행 (GitHub Actions)</div>
   <a class="nav-link" href="matrix.html">📋 프롬프트별 전체 추이표 보기 →</a>
 
@@ -803,7 +880,7 @@ def generate_report_page(date: str, entries_for_date: list) -> str:
             {error_note}
           </div>
           <div style="font-size:10px;color:#94a3b8;margin:-6px 0 12px">지점별 박스: 멘션률 / 인용률</div>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">{area_boxes}</div>
+          <div style="display:grid;grid-template-columns:repeat({len(AREAS)},1fr);gap:8px;margin-bottom:16px">{area_boxes}</div>
           <table style="width:100%;border-collapse:collapse;font-size:13px">
             <thead><tr style="border-bottom:2px solid #e2e8f0;background:#f8fafc">
               <th style="text-align:left;padding:10px 12px;color:#64748b">프롬프트</th>
@@ -820,7 +897,7 @@ def generate_report_page(date: str, entries_for_date: list) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{date} 상세 리포트 - 트라이그라운드 AEO</title>
+<title>{date} 상세 리포트 - {PROJECT_LABEL} AEO</title>
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="alternate icon" href="../favicon.ico">
 <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -1039,7 +1116,7 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>프롬프트별 전체 추이표 - 트라이그라운드 AEO</title>
+<title>프롬프트별 전체 추이표 - {PROJECT_LABEL} AEO</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="alternate icon" href="favicon.ico">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -1071,13 +1148,13 @@ def generate_matrix_page(history: list, max_dates: int = 12) -> str:
 </html>"""
 
 
-def main():
-    rebuild_only = "--rebuild-only" in sys.argv
+def run_project(key: str, rebuild_only: bool, date: str) -> dict:
+    """프로젝트 하나를 처음부터 끝까지 처리한다 (API 호출 → history 저장 → 무결성 검사 → 페이지 생성).
+    sys.exit하지 않고 경고/문제 목록을 돌려주며, 종료 코드·Slack 요약은 main()이 프로젝트 전체를 모아서 정한다."""
+    load_project(key)
+    print(f"\n{'='*50}\n  {PROJECT_LABEL} AEO 인용률 체커\n  {date}\n{'='*50}\n")
 
-    date = datetime.now().strftime("%Y-%m-%d")
-    print(f"\n{'='*50}\n  트라이그라운드 AEO 인용률 체커\n  {date}\n{'='*50}\n")
-
-    output_dir = Path("aeo_results")
+    output_dir = Path(OUTPUT_DIR)
     output_dir.mkdir(exist_ok=True)
     history_path = output_dir / "history.json"
     history = json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else []
@@ -1170,21 +1247,45 @@ def main():
     matrix_path.write_text(generate_matrix_page(history), encoding="utf-8")
     print(f"✅ 프롬프트별 전체 추이표 저장: {matrix_path}")
 
-    print(f"\n{'='*50}\n  완료! aeo_results/index.html 을 브라우저로 여세요.\n{'='*50}\n")
+    print(f"\n{'='*50}\n  완료! {OUTPUT_DIR}/index.html 을 브라우저로 여세요.\n{'='*50}\n")
+    return {"warnings": warnings, "problems": problems}
 
-    # 이번 실행 요약 저장 (Slack 알림용). aeo_results/ 밖(저장소 루트)에 둬서 커밋 대상(`git add aeo_results/`)에 안 걸리는 실행 시점 임시 파일.
-    status_path = Path("last_run_status.json")
-    status_path.write_text(
-        json.dumps({"date": date, "mode": "rebuild-only" if rebuild_only else "check", "warnings": warnings, "problems": problems}, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+
+def main():
+    """기본: PROJECTS 전체를 순서대로 실행. `--project=spaceup` 또는 `--project=tryground,spaceup`으로 골라서 실행할 수 있다."""
+    rebuild_only = "--rebuild-only" in sys.argv
+    picked = [a.split("=", 1)[1] for a in sys.argv if a.startswith("--project=")]
+    keys = [k.strip() for k in picked[0].split(",") if k.strip()] if picked else list(PROJECTS)
+    unknown = [k for k in keys if k not in PROJECTS]
+    if unknown:
+        print(f"❌ 알 수 없는 프로젝트: {unknown} (가능: {list(PROJECTS)})")
+        sys.exit(2)
+
+    date = datetime.now().strftime("%Y-%m-%d")
+    started_as = PROJECT_KEY
+    try:
+        results = {k: run_project(k, rebuild_only, date) for k in keys}
+    finally:
+        load_project(started_as)   # run_project가 바꾼 활성 프로젝트를 원래대로 — 호출한 쪽(테스트 등)에 상태가 새지 않게
+
+    # 이번 실행 요약 저장 (Slack 알림용). 결과 폴더 밖(저장소 루트)에 둬서 커밋 대상에 안 걸리는 실행 시점 임시 파일.
+    Path("last_run_status.json").write_text(json.dumps({
+        "date": date,
+        "mode": "rebuild-only" if rebuild_only else "check",
+        "projects": {
+            k: {"label": PROJECTS[k]["label"], "output_dir": PROJECTS[k]["output_dir"], **r}
+            for k, r in results.items()
+        },
+    }, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # GitHub Actions 주석 문법 — 결측이 있어도 초록불로 조용히 지나가지 않게 한다 (로컬에선 그냥 텍스트로 출력됨)
-    for w in warnings:
-        print(f"::warning title=AEO 데이터 일부 결측::{w}")
-    for pb in problems:
-        print(f"::error title=AEO 실행 통계 제외::{pb}")
-    if problems:
+    for k, r in results.items():
+        label = PROJECTS[k]["label"]
+        for w in r["warnings"]:
+            print(f"::warning title=AEO 데이터 일부 결측::[{label}] {w}")
+        for pb in r["problems"]:
+            print(f"::error title=AEO 실행 통계 제외::[{label}] {pb}")
+    if any(r["problems"] for r in results.values()):
         sys.exit(1)   # 결과 저장·페이지 생성은 끝난 뒤이므로 데이터는 남고, Actions 실행만 실패로 표시됨
 
 
@@ -1192,71 +1293,83 @@ def main():
 # Slack 알림 (GitHub Actions 실행 뒤 결과 전송용)
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-def build_slack_payload(status: dict, history: list) -> dict:
-    """실행 요약(status) + 히스토리를 Slack Block Kit 메시지로 변환한다. Webhook 전송은 워크플로의 curl이 담당하고,
-    이 함수는 순수하게 payload dict만 만들어서(네트워크 호출 없음) 테스트하기 쉽게 한다."""
-    date = status.get("date", "-")
-    mode = status.get("mode", "check")
-    warnings_ = status.get("warnings", [])
-    problems = status.get("problems", [])
-    todays = {e["engine"]: e for e in history if e["date"] == date}
+def build_slack_payload(date: str, mode: str, projects: list) -> dict:
+    """실행 요약을 Slack Block Kit 메시지로 변환한다. projects는 [{"label", "output_dir", "history", "warnings", "problems"}, ...].
+    Webhook 전송은 워크플로의 curl이 담당하고, 이 함수는 payload dict만 만든다(파일·네트워크 I/O 없음 → 테스트 용이)."""
+    title = ("🔧 AEO 페이지 재빌드" if mode == "rebuild-only" else "📊 AEO 체크") + f" - {date}"
+    blocks = [{"type": "header", "text": {"type": "plain_text", "text": title, "emoji": True}}]
+    any_problem = any_warning = False
 
-    title = f"🔧 AEO 페이지 재빌드 - {date}" if mode == "rebuild-only" else f"📊 트라이그라운드 AEO 체크 - {date}"
+    for i, proj in enumerate(projects):
+        if i:
+            blocks.append({"type": "divider"})
+        todays = {e["engine"]: e for e in proj.get("history", []) if e["date"] == date}
+        fields = []
+        for eng in ENGINES:
+            e = todays.get(eng)
+            if e is None:
+                fields.append({"type": "mrkdwn", "text": f"*{eng}*\n(이번 실행에 없음)"})
+            elif e.get("total", 0) == 0:
+                fields.append({"type": "mrkdwn", "text": f"*{eng}*\n:warning: 전부 오류·잘림으로 제외됨"})
+            else:
+                err_note = f" · 오류 {e['errors']}건 제외" if e.get("errors") else ""
+                fields.append({
+                    "type": "mrkdwn",
+                    "text": f"*{eng}*\n멘션 {e['mention_rate']:.0f}% · 인용 {e['citation_rate']:.0f}% ({e['mentioned']}/{e['total']}){err_note}",
+                })
+        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f"*{proj['label']}*"}})
+        blocks.append({"type": "section", "fields": fields})
+        if proj.get("problems"):
+            any_problem = True
+            text = "\n".join(f"• {p}" for p in proj["problems"])
+            blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f":red_circle: *문제*\n{text}"}})
+        if proj.get("warnings"):
+            any_warning = True
+            text = "\n".join(f"• {w}" for w in proj["warnings"])
+            blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f":warning: *주의*\n{text}"}})
 
-    fields = []
-    for eng in ENGINES:
-        e = todays.get(eng)
-        if e is None:
-            fields.append({"type": "mrkdwn", "text": f"*{eng}*\n(이번 실행에 없음)"})
-        elif e.get("total", 0) == 0:
-            fields.append({"type": "mrkdwn", "text": f"*{eng}*\n:warning: 전부 오류·잘림으로 제외됨"})
-        else:
-            err_note = f" · 오류 {e['errors']}건 제외" if e.get("errors") else ""
-            fields.append({
-                "type": "mrkdwn",
-                "text": f"*{eng}*\n멘션 {e['mention_rate']:.0f}% · 인용 {e['citation_rate']:.0f}% ({e['mentioned']}/{e['total']}){err_note}",
-            })
-
-    blocks = [
-        {"type": "header", "text": {"type": "plain_text", "text": title, "emoji": True}},
-        {"type": "section", "fields": fields},
-    ]
-    if problems:
-        text = "\n".join(f"• {p}" for p in problems)
-        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f":red_circle: *문제*\n{text}"}})
-    if warnings_:
-        text = "\n".join(f"• {w}" for w in warnings_)
-        blocks.append({"type": "section", "text": {"type": "mrkdwn", "text": f":warning: *주의*\n{text}"}})
-
-    # GitHub Actions 환경변수가 있으면 대시보드·실행 로그 링크를 붙인다 (로컬 실행 시엔 조용히 생략)
+    # GitHub Actions 환경변수가 있으면 프로젝트별 대시보드·실행 로그 링크를 붙인다 (로컬 실행 시엔 조용히 생략)
     repo = os.environ.get("GITHUB_REPOSITORY", "")
     server = os.environ.get("GITHUB_SERVER_URL", "https://github.com")
     run_id = os.environ.get("GITHUB_RUN_ID", "")
     links = []
     if repo:
         # htmlpreview.github.io: GitHub Pages 설정 없이도 저장소의 raw HTML을 렌더링해서 보여주는 무료 서비스
-        dash_url = f"https://htmlpreview.github.io/?{server}/{repo}/blob/main/aeo_results/index.html"
-        links.append(f"<{dash_url}|대시보드 보기>")
+        for proj in projects:
+            dash_url = f"https://htmlpreview.github.io/?{server}/{repo}/blob/main/{proj.get('output_dir', 'aeo_results')}/index.html"
+            links.append(f"<{dash_url}|{proj['label']} 대시보드>")
     if repo and run_id:
         links.append(f"<{server}/{repo}/actions/runs/{run_id}|실행 로그>")
     if links:
         blocks.append({"type": "context", "elements": [{"type": "mrkdwn", "text": " · ".join(links)}]})
 
-    fallback = title + (" - 문제 있음" if problems else " - 주의 필요" if warnings_ else " - 정상")
+    fallback = title + (" - 문제 있음" if any_problem else " - 주의 필요" if any_warning else " - 정상")
     return {"text": fallback, "blocks": blocks}
 
 
 def print_slack_payload() -> None:
     """`python aeo_checker.py --slack-payload` — API를 호출하지 않고, 직전 main() 실행이 남긴
-    last_run_status.json + history.json으로 Slack 메시지 JSON을 stdout에 출력한다."""
+    last_run_status.json + 각 프로젝트의 history.json으로 Slack 메시지 JSON을 stdout에 출력한다."""
     status_path = Path("last_run_status.json")
-    history_path = Path("aeo_results") / "history.json"
     if status_path.exists():
         status = json.loads(status_path.read_text(encoding="utf-8"))
     else:
-        status = {"date": datetime.now().strftime("%Y-%m-%d"), "mode": "check", "warnings": [], "problems": ["last_run_status.json이 없음 — main()이 먼저 실행되어야 함"]}
-    history = json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else []
-    print(json.dumps(build_slack_payload(status, history), ensure_ascii=False))
+        status = {"date": datetime.now().strftime("%Y-%m-%d"), "mode": "check", "projects": {
+            "_": {"label": "AEO 체커", "output_dir": "aeo_results", "warnings": [],
+                  "problems": ["last_run_status.json이 없음 — main()이 먼저 실행되어야 함"]},
+        }}
+    projects = []
+    for key, p in status.get("projects", {}).items():
+        out = p.get("output_dir") or PROJECTS.get(key, {}).get("output_dir", "aeo_results")
+        hp = Path(out) / "history.json"
+        projects.append({
+            "label": p.get("label", key),
+            "output_dir": out,
+            "history": json.loads(hp.read_text(encoding="utf-8")) if hp.exists() else [],
+            "warnings": p.get("warnings", []),
+            "problems": p.get("problems", []),
+        })
+    print(json.dumps(build_slack_payload(status.get("date", "-"), status.get("mode", "check"), projects), ensure_ascii=False))
 
 
 if __name__ == "__main__":

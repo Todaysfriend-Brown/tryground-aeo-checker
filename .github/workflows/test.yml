@@ -9,6 +9,7 @@ on:
       - 'aeo_checker.py'
       - 'tests/**'
       - 'aeo_results/history.json'
+      - 'spaceup_results/history.json'
       - '.github/workflows/test.yml'
   pull_request:
   workflow_dispatch: {}

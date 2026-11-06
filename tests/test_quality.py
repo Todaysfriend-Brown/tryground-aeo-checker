@@ -240,12 +240,14 @@ class BillingError(unittest.TestCase):
             with mock.patch.dict(ac.API_KEYS, {"openai": "x", "anthropic": "", "gemini": ""}), \
                     mock.patch.dict(ac.CALL_FN, {"ChatGPT": boom}), \
                     mock.patch.object(ac.time, "sleep", lambda s: None), \
+                    mock.patch.object(ac.sys, "argv", ["aeo_checker.py", "--project=tryground"]), \
                     contextlib.redirect_stdout(io.StringIO()) as buf:
                 with self.assertRaises(SystemExit) as cm:
                     ac.main()
             self.assertEqual(cm.exception.code, 1)
             status = json.loads(Path("last_run_status.json").read_text(encoding="utf-8"))
-            self.assertTrue(any("잔액 부족" in p and "platform.openai.com" in p for p in status["problems"]), status["problems"])
+            problems = status["projects"]["tryground"]["problems"]
+            self.assertTrue(any("잔액 부족" in p and "platform.openai.com" in p for p in problems), problems)
             self.assertIn("::error", buf.getvalue())
         finally:
             os.chdir(cwd)
@@ -339,8 +341,11 @@ class SlackPayload(unittest.TestCase):
             {**entry_for("2026-09-21", "ChatGPT", {p["id"]: {"mentioned": False, "raw": "Error code: 400 - x", "error": True} for p in ac.PROMPTS}), "settings": {"model": "gpt-4o-mini"}},
         ]
 
+    def proj(self, label="트라이그라운드", out="aeo_results", history=None, warnings=None, problems=None):
+        return {"label": label, "output_dir": out, "history": history or [], "warnings": warnings or [], "problems": problems or []}
+
     def test_includes_all_engines_and_rates(self):
-        payload = ac.build_slack_payload({"date": "2026-09-21", "mode": "check", "warnings": [], "problems": []}, self.make_history())
+        payload = ac.build_slack_payload("2026-09-21", "check", [self.proj(history=self.make_history())])
         text = json.dumps(payload, ensure_ascii=False)
         self.assertIn("2026-09-21", text)
         for eng in ac.ENGINES:
@@ -349,8 +354,7 @@ class SlackPayload(unittest.TestCase):
         self.assertIn("전부 오류", text)      # ChatGPT: total=0
 
     def test_problems_and_warnings_are_rendered(self):
-        status = {"date": "2026-09-21", "mode": "check", "warnings": ["측정 조건이 바뀜"], "problems": ["Gemini: 유효 응답 부족"]}
-        payload = ac.build_slack_payload(status, [])
+        payload = ac.build_slack_payload("2026-09-21", "check", [self.proj(warnings=["측정 조건이 바뀜"], problems=["Gemini: 유효 응답 부족"])])
         text = json.dumps(payload, ensure_ascii=False)
         self.assertIn("문제", text)
         self.assertIn("Gemini: 유효 응답 부족", text)
@@ -359,30 +363,136 @@ class SlackPayload(unittest.TestCase):
         self.assertIn("문제 있음", payload["text"])   # 문제가 있으면 fallback 텍스트에도 반영
 
     def test_no_issues_gives_clean_fallback_text(self):
-        payload = ac.build_slack_payload({"date": "2026-09-21", "mode": "check", "warnings": [], "problems": []}, [])
+        payload = ac.build_slack_payload("2026-09-21", "check", [self.proj()])
         self.assertIn("정상", payload["text"])
 
     def test_rebuild_only_mode_has_different_title(self):
-        payload = ac.build_slack_payload({"date": "2026-09-21", "mode": "rebuild-only", "warnings": [], "problems": []}, [])
+        payload = ac.build_slack_payload("2026-09-21", "rebuild-only", [self.proj()])
         self.assertIn("재빌드", payload["blocks"][0]["text"]["text"])
+
+    def test_one_message_covers_every_project_and_worst_status_wins(self):
+        payload = ac.build_slack_payload("2026-09-21", "check", [
+            self.proj(label="트라이그라운드"),
+            self.proj(label="스페이스업", out="spaceup_results", problems=["ChatGPT 잔액 부족"]),
+        ])
+        text = json.dumps(payload, ensure_ascii=False)
+        self.assertEqual(sum(1 for b in payload["blocks"] if b["type"] == "header"), 1)
+        self.assertIn("트라이그라운드", text)
+        self.assertIn("스페이스업", text)
+        self.assertIn("divider", [b["type"] for b in payload["blocks"]])
+        self.assertIn("문제 있음", payload["text"])   # 한 프로젝트만 문제여도 전체 요약은 '문제 있음'
 
     def test_links_included_only_with_github_env(self):
         # GitHub Actions 안에서 이 테스트를 돌리면 GITHUB_REPOSITORY 등이 이미 채워져 있으므로,
         # '환경변수가 없는 경우'를 실제로 재현하려면 명시적으로 지워야 한다.
         env_keys = ("GITHUB_REPOSITORY", "GITHUB_RUN_ID", "GITHUB_SERVER_URL")
+        projects = [self.proj(), self.proj(label="스페이스업", out="spaceup_results")]
         with mock.patch.dict(ac.os.environ, {k: "" for k in env_keys}):
-            without = ac.build_slack_payload({"date": "2026-09-21", "mode": "check"}, [])
+            without = ac.build_slack_payload("2026-09-21", "check", projects)
         self.assertNotIn("context", [b["type"] for b in without["blocks"]])
 
         with mock.patch.dict(ac.os.environ, {"GITHUB_REPOSITORY": "owner/repo", "GITHUB_RUN_ID": "123", "GITHUB_SERVER_URL": "https://github.com"}):
-            with_env = ac.build_slack_payload({"date": "2026-09-21", "mode": "check"}, [])
-        ctx = next(b for b in with_env["blocks"] if b["type"] == "context")
-        self.assertIn("htmlpreview.github.io", ctx["elements"][0]["text"])
-        self.assertIn("actions/runs/123", ctx["elements"][0]["text"])
+            with_env = ac.build_slack_payload("2026-09-21", "check", projects)
+        ctx = next(b for b in with_env["blocks"] if b["type"] == "context")["elements"][0]["text"]
+        self.assertIn("htmlpreview.github.io", ctx)
+        self.assertIn("aeo_results/index.html", ctx)        # 프로젝트마다 자기 대시보드 링크
+        self.assertIn("spaceup_results/index.html", ctx)
+        self.assertIn("actions/runs/123", ctx)
 
     def test_payload_is_json_serializable(self):
-        payload = ac.build_slack_payload({"date": "2026-09-21", "mode": "check", "warnings": ["w"], "problems": ["p"]}, self.make_history())
+        payload = ac.build_slack_payload("2026-09-21", "check", [self.proj(history=self.make_history(), warnings=["w"], problems=["p"])])
         json.dumps(payload)   # 예외 없이 직렬화되어야 curl로 그대로 보낼 수 있음
+
+
+class MultiProject(unittest.TestCase):
+    def tearDown(self):
+        ac.load_project("tryground")
+
+    def test_registry_has_both_projects_with_ten_unique_prompts(self):
+        self.assertEqual(set(ac.PROJECTS), {"tryground", "spaceup"})
+        for key, cfg in ac.PROJECTS.items():
+            ids = [p["id"] for p in cfg["prompts"]]
+            self.assertEqual(len(ids), 10, key)
+            self.assertEqual(len(set(ids)), 10, key)
+            self.assertTrue(all(p["area"] in cfg["areas"] for p in cfg["prompts"]), key)
+        out_dirs = [cfg["output_dir"] for cfg in ac.PROJECTS.values()]
+        self.assertEqual(len(set(out_dirs)), len(out_dirs))   # 프로젝트끼리 결과 폴더가 겹치면 history가 섞인다
+
+    def test_spaceup_prompts_match_requested_questions(self):
+        qs = [p["q"] for p in ac.PROJECTS["spaceup"]["prompts"]]
+        self.assertEqual(qs[0], "공간대여 예약 관리 프로그램 추천해줘")
+        self.assertEqual(qs[8], "스페이스업(space-up) 공간대여 예약 관리 서비스 어때?")
+        self.assertEqual(qs[9], "연습실 창업 준비 중인데 운영 자동화 어떻게 해야 돼?")
+
+    def test_import_default_is_tryground(self):
+        self.assertEqual(ac.PROJECT_KEY, "tryground")
+        self.assertEqual(ac.OUTPUT_DIR, "aeo_results")
+
+    def test_load_project_switches_brand_detection_and_link_rules(self):
+        ac.load_project("spaceup")
+        self.assertTrue(ac.has_brand("1. 스페이스업 - 특징: 통합 예약 캘린더"))
+        self.assertTrue(ac.has_brand("이전 이름은 공간비서입니다"))
+        self.assertFalse(ac.has_brand("1. 트라이그라운드 낙성대점"))            # 다른 프로젝트 브랜드는 안 잡힘
+        self.assertFalse(ac.has_brand("1. 스페이스클라우드 - 공간 예약 플랫폼"))  # '스페이스' 들어간 경쟁사 오탐 방지
+        linked = "1. 스페이스업 | URL: https://www.space-up.co.kr/\n" + "설명 " * 60
+        self.assertEqual(ac.parse_result(linked)["citationType"], "홈페이지 링크")
+        ac.load_project("tryground")
+        self.assertTrue(ac.has_brand("1. 트라이그라운드 낙성대점"))
+        self.assertEqual(ac.parse_result(BRAND)["citationType"], "홈페이지 링크")
+
+    def run_main(self, argv):
+        tmp = tempfile.mkdtemp()
+        cwd = Path.cwd()
+        try:
+            os.chdir(tmp)
+            seen = []
+
+            def fake(q):
+                seen.append((ac.PROJECT_KEY, q))
+                brand = "스페이스업" if ac.PROJECT_KEY == "spaceup" else "트라이그라운드"
+                return f"1. {brand} - 특징: 예시 | URL: https://example.com\n" + "설명 " * 60
+
+            with mock.patch.dict(ac.API_KEYS, {"openai": "", "anthropic": "x", "gemini": ""}), \
+                    mock.patch.dict(ac.CALL_FN, {"Claude": fake}), \
+                    mock.patch.object(ac.time, "sleep", lambda s: None), \
+                    mock.patch.object(ac.sys, "argv", ["aeo_checker.py", *argv]), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                ac.main()
+            dirs = {d: Path(d, "history.json").exists() for d in ("aeo_results", "spaceup_results")}
+            status = json.loads(Path("last_run_status.json").read_text(encoding="utf-8"))
+            hist = {d: json.loads(Path(d, "history.json").read_text(encoding="utf-8")) for d, ok in dirs.items() if ok}
+            return seen, dirs, status, hist
+        finally:
+            os.chdir(cwd)
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_default_run_checks_both_projects_into_separate_folders(self):
+        seen, dirs, status, hist = self.run_main([])
+        self.assertEqual(dirs, {"aeo_results": True, "spaceup_results": True})
+        self.assertEqual(set(status["projects"]), {"tryground", "spaceup"})
+        # 각 프로젝트는 자기 질문만 보냈다
+        sp_qs = {p["q"] for p in ac.SPACEUP_PROMPTS}
+        self.assertTrue(all((key == "spaceup") == (q in sp_qs) for key, q in seen))
+        self.assertEqual(len(seen), 20)
+        # 각 history에는 자기 프롬프트 id만 있고, 자기 브랜드로 멘션이 잡혔다
+        sp = hist["spaceup_results"][0]
+        self.assertEqual(set(sp["detail"]), {p["id"] for p in ac.SPACEUP_PROMPTS})
+        self.assertEqual(sp["mention_rate"], 100.0)
+        self.assertEqual(set(hist["aeo_results"][0]["detail"]), {p["id"] for p in ac.TRYGROUND_PROMPTS})
+        self.assertEqual(ac.PROJECT_KEY, "tryground")   # main()이 끝나면 원래 프로젝트로 복원
+
+    def test_project_flag_runs_only_that_project(self):
+        seen, dirs, status, _ = self.run_main(["--project=spaceup"])
+        self.assertEqual(dirs, {"aeo_results": False, "spaceup_results": True})
+        self.assertEqual(set(status["projects"]), {"spaceup"})
+        self.assertTrue(all(key == "spaceup" for key, _ in seen))
+
+    def test_unknown_project_is_rejected(self):
+        with mock.patch.object(ac.sys, "argv", ["aeo_checker.py", "--project=bizspot"]), \
+                contextlib.redirect_stdout(io.StringIO()):
+            with self.assertRaises(SystemExit) as cm:
+                ac.main()
+        self.assertEqual(cm.exception.code, 2)
 
 
 if __name__ == "__main__":

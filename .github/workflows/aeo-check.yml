@@ -47,7 +47,7 @@ jobs:
         run: |
           git config --global user.name "AEO Bot"
           git config --global user.email "aeo-bot@tryground.co.kr"
-          git add aeo_results/
+          git add aeo_results/ spaceup_results/   # 프로젝트별 결과 폴더 (aeo_checker.py PROJECTS의 output_dir)
           git diff --staged --quiet || git commit -m "AEO 체크 결과 업데이트 $(date +%Y-%m-%d)"
           git push
 
