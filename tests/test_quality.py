@@ -408,12 +408,13 @@ class MultiProject(unittest.TestCase):
     def tearDown(self):
         ac.load_project("tryground")
 
-    def test_registry_has_both_projects_with_ten_unique_prompts(self):
+    def test_registry_has_both_projects_with_unique_prompts(self):
         self.assertEqual(set(ac.PROJECTS), {"tryground", "spaceup"})
+        self.assertEqual(len(ac.PROJECTS["tryground"]["prompts"]), 10)
+        self.assertEqual(len(ac.PROJECTS["spaceup"]["prompts"]), 9)
         for key, cfg in ac.PROJECTS.items():
             ids = [p["id"] for p in cfg["prompts"]]
-            self.assertEqual(len(ids), 10, key)
-            self.assertEqual(len(set(ids)), 10, key)
+            self.assertEqual(len(set(ids)), len(ids), key)
             self.assertTrue(all(p["area"] in cfg["areas"] for p in cfg["prompts"]), key)
         out_dirs = [cfg["output_dir"] for cfg in ac.PROJECTS.values()]
         self.assertEqual(len(set(out_dirs)), len(out_dirs))   # 프로젝트끼리 결과 폴더가 겹치면 history가 섞인다
@@ -421,8 +422,11 @@ class MultiProject(unittest.TestCase):
     def test_spaceup_prompts_match_requested_questions(self):
         qs = [p["q"] for p in ac.PROJECTS["spaceup"]["prompts"]]
         self.assertEqual(qs[0], "공간대여 예약 관리 프로그램 추천해줘")
-        self.assertEqual(qs[8], "스페이스업(space-up) 공간대여 예약 관리 서비스 어때?")
-        self.assertEqual(qs[9], "연습실 창업 준비 중인데 운영 자동화 어떻게 해야 돼?")
+        self.assertEqual(qs[-1], "연습실 창업 준비 중인데 운영 자동화 어떻게 해야 돼?")
+        # 브랜드를 직접 묻는 질문은 노출도를 부풀리므로 넣지 않는다
+        ac.load_project("spaceup")
+        self.assertEqual([q for q in qs if ac.has_brand(q)], [])
+        self.assertNotIn("sp9", [p["id"] for p in ac.PROJECTS["spaceup"]["prompts"]])
 
     def test_import_default_is_tryground(self):
         self.assertEqual(ac.PROJECT_KEY, "tryground")
@@ -473,7 +477,7 @@ class MultiProject(unittest.TestCase):
         # 각 프로젝트는 자기 질문만 보냈다
         sp_qs = {p["q"] for p in ac.SPACEUP_PROMPTS}
         self.assertTrue(all((key == "spaceup") == (q in sp_qs) for key, q in seen))
-        self.assertEqual(len(seen), 20)
+        self.assertEqual(len(seen), len(ac.TRYGROUND_PROMPTS) + len(ac.SPACEUP_PROMPTS))
         # 각 history에는 자기 프롬프트 id만 있고, 자기 브랜드로 멘션이 잡혔다
         sp = hist["spaceup_results"][0]
         self.assertEqual(set(sp["detail"]), {p["id"] for p in ac.SPACEUP_PROMPTS})
