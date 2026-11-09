@@ -1,0 +1,360 @@
+[
+  {
+    "date": "2026-11-09",
+    "engine": "Claude",
+    "settings": {
+      "model": "claude-haiku-4-5-20251001",
+      "max_output_tokens": 600,
+      "max_searches": 2
+    },
+    "rate": 0.0,
+    "mention_rate": 0.0,
+    "citation_rate": 0.0,
+    "mentioned": 0,
+    "cited": 0,
+    "total": 9,
+    "errors": 0,
+    "areas": {
+      "전체": 0.0
+    },
+    "areas_mention": {
+      "전체": 0.0
+    },
+    "areas_citation": {
+      "전체": 0.0
+    },
+    "detail": {
+      "sp1": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "FreeSpace"
+        ],
+        "citationType": "미언급",
+        "raw": "공간대여 예약 관리 프로그램을 찾기 위해 검색해드리겠습니다.\n공간대여 운영자를 위한 예약·결제·고객관리 솔루션을 추천드립니다:\n\n## 추천 서비스\n\n1. \n**공집사** - 특징: 국내 1위 공간대여 자동화 솔루션으로 실시간 예약 연동 및 중복예약 방지\n | URL: https://gongjipsa.com/\n\n2. **FreeSpace** - \n특징: 예약연동부터 문의 응대 자동화, 다채널 문의 일원화 및 예약취소 관리\n | URL: https://freespace.softr.app/\n\n3. \n**SSM(씀)** - 특징: SaaS 기반의 회의실/공간 예약 프로그램으로 가입 후 바로 사용 가능\n | URL: https://www.ourssm.com/\n\n4. \n**Handly** - 특징: 실시간 회의실 예약과 공간 일정 관리, 구글 캘린더 및 슬랙 연동\n | URL: https://handly.team/\n\n5. \n**아워플레이스** - 특징: 다양한 촬영 공간 검색 및 시간제 예약, 필터 및 바로결제 옵션 제공\n | URL: https://hourplace.co.kr/\n\n6. \n**와우플(WOWPLE)** - 특징: 스터디카페부터 파티룸·회의실·스튜디오까지 다양한 공간 최저가 예약\n | URL: https://www.wowple.com/\n\n---\n\n**가격대 및 대상 고객:**\n- **공집사, FreeSpace**: 무료 시작 가능, 다"
+      },
+      "sp2": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "연습실 운영자를 위한 예약·결제 통합 관리 솔루션을 찾아드리겠습니다.\n연습실 운영을 위한 예약·결제 통합 관리 솔루션들을 추천해드립니다:\n\n1. \n**토스플레이스 예약관리** - 특징: 결제단말기와 연동되어 예약부터 결제까지 한 번에 처리, 선불권과 횟수권 관리 가능 | URL: https://tossplace.com/product/booking\n\n   - 가격대: 무료 (타사 평균 월 30,000원), 결제단말기 상담문의\n   - 대상: 소규모~중규모 공간 운영자\n\n2. \n**MEW CMS** - 특징: 예약, 이용권, 결제, 회원관리 등 모든 운영 요소를 PC 기반의 통합 시스템으로 한 번에 관리 | URL: https://nvex.kr\n\n   - 가격대: 상담문의\n   - 대상: 음악·댄스 연습실 전문 운영자\n\n3. \n**클래스웍스** - 특징: 연습실 위치를 자유롭게 설정하고 시간 단위로 개방 예약, 예약 시 이용권에서 자동으로 횟수 차감 | URL: https://www.classworks.kr\n\n   - 가격대: 상담문의\n   - 대상: 클래스·연습실 운영자\n\n4. \n**세바스찬** - 특징: 음악·댄스 연습실 예약·출입·퇴실 안내 자동화, 네이버 예약과 자동 연동 | URL: https://about.sebastian-space.com/practice-rooms\n\n   - 가격대: 상담문의 (도어락 자동 오픈, 무인 운영 "
+      },
+      "sp3": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "시간제 대여 공간 예약 시스템에 대해 알아보겠습니다.\n시간제 대여 공간 예약 시스템 추천 결과입니다!\n\n1. \n**스페이스클라우드** - 특징: 연습실, 파티룸, 촬영스튜디오 등 다양한 공간을 위한 바로결제 예약 시스템\n | URL: https://www.spacecloud.kr/\n\n2. \n**공집사** - 특징: 공간대여 업체용 예약관리 자동화 서비스로 다채널 연동 및 중복예약 방지\n | URL: https://gongjipsa.com/\n\n3. \n**아워플레이스** - 특징: 스튜디오, 파티룸, 연습실 등을 시간제로 예약하는 플랫폼\n | URL: https://hourplace.co.kr/\n\n4. \n**노쇼핑(FreeSpace)** - 특징: 예약연동·문의 자동화·예약취소 통합 솔루션\n | URL: https://freespace.softr.app/\n\n5. \n**여기어때 공간대여** - 특징: 파티룸, 스튜디오, 연습실 등을 호스트 승인 없이 바로 예약 가능\n | URL: https://www.yeogi.com/space-rental\n\n6. \n**오토퍼스(AUTOPUS)** - 특징: 주방/사무실 등 공유공간의 예약 및 관리 프로그램\n | URL: https://www.autopus.co.kr/sharing\n\n7. \n**쉐어잇** - 특징: 팝업스토어, 파티룸, 강의실 등 비즈니스·개인모임 "
+      },
+      "sp4": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "공간대여 중복 예약을 방지하는 방법에 대해 알아보겠습니다.\n공간대여 중복 예약을 방지하는 방법을 정리해드리겠습니다.\n\n## 📌 중복 예약 방지의 핵심 원칙\n\n\n캘린더, 플랫폼, 입실 안내, 청소 시간, 정산 기준이 서로 연결되어야\n 합니다. \n중복 예약을 줄이는 핵심은 더 열심히 확인하는 것이 아니라, 덜 헷갈리게 만드는 구조\n입니다.\n\n## 🛠️ 실제 방지 방법\n\n### 1. **실시간 캘린더 동기화**\n\n단일 예약 원장(마스터 캘린더)에 모든 채널의 예약을 하나로 통합 관리하고, 예약 완료 즉시 해당 슬롯을 '불가' 상태로 자동 전환\n해야 합니다. \n이 처리가 1~2초 내에 이루어지지 않으면, 동시 접속 상황에서 중복예약이 뚫립니다.\n\n\n### 2. **동시 요청 처리 (데이터베이스 레벨)**\n\n비관적 쓰기 잠금으로 기자재 단위 예약 생성 순서를 직렬화하고, 잠금부터 중복 검사·저장까지 하나의 트랜잭션으로 묶음\n으로써 여러 서버 환경에서도 동시성 문제를 해결할 수 있습니다.\n\n### 3. **채널 매니저 연동**\n\n채널 매니저 연동 후 중복예약 발생"
+      },
+      "sp5": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "공집사",
+          "FreeSpace",
+          "오토퍼스 공유플랫폼",
+          "SMS AutoSend",
+          "Hellomsg + 구글 캘린더"
+        ],
+        "citationType": "미언급",
+        "raw": "스터디룸 예약 시스템에서 자동 문자 발송 기능을 찾고 있으신 거군요. 현재 서비스 중인 예약 관리 솔루션들을 확인해드리겠습니다.\n네, 예약 들어오면 고객에게 자동으로 문자를 보내는 방법이 있습니다! 현재 서비스 중인 스터디룸·공간대여 전문 솔루션들을 추천합니다:\n\n## 추천 서비스 (자동 문자 발송 기능 포함)\n\n1. **공집사** - 특징: \n예약이 확정되면 고객에게 안내 문자를 자동으로 보내드리는 실시간 예약 연동 솔루션\n | URL: https://gongjipsa.com/\n\n2. **FreeSpace** - 특징: \n예약 안내 알림톡 자동 전송 및 다중 플랫폼 연동을 통한 무인사업 운영 솔루션\n | URL: https://freespace.softr.app/\n\n3. **오토퍼스 공유플랫폼** - 특징: \n실시간 예약 및 조회 시 SMS/e-Voucher 자동 발송 기능\n | URL: https://www.autopus.co.kr/sharing\n\n4. **SMS AutoSend** - 특징: \n구글 캘린더 실시간 연동으로 3단계 자동 알림 시스템(이틀 전, 하루 전, 당일)\n | URL: https://sms.oot.kr/\n\n5. **Hellomsg + 구글 캘린더** - 특징: \n구글 폼에 예약 정보 입력하면 자동으로 캘린더 생성 및 예약 시간 1시간 전에 알림 문자 발송\n | URL: https://hellomsg.io\n\n---\n\n**선택 가이드:**\n- **공집사/FreeSpace**: 스터디룸·파티"
+      },
+      "sp6": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "앤카즈(Ancaz)",
+          "팅커뷰(ThinkerView)",
+          "오토퍼스(Autopus) 공유플랫폼",
+          "오피스플렉스(OfficeFlexs)",
+          "스마트오피스(Wisecode)"
+        ],
+        "citationType": "미언급",
+        "raw": "공유오피스 회의실의 예약금과 입금 확인을 자동으로 관리할 수 있는 솔루션을 찾아드리겠습니다.\n공유오피스 회의실의 예약금과 입금을 자동으로 관리할 수 있는 솔루션을 찾았습니다. 다음은 현재 서비스 중인 예약 관리 프로그램들입니다:\n\n1. **앤카즈(Ancaz)** - 특징: \n한국어 지원 및 카카오페이 등 간편 결제 연동, 회의실·데스크 예약과 결제 통합 관리\n | URL: coworking 공간 운영 전문 솔루션\n\n2. **팅커뷰(ThinkerView)** - 특징: \n입금계좌 연결로 예약금 입금을 자동 확인하고 예약과 연결\n | URL: https://www.thinkofyou.kr/ | 가격: \n월 9,900원의 부가서비스\n\n\n3. **오토퍼스(Autopus) 공유플랫폼** - 특징: \n실시간 예약·조회, 글로벌 결제(Paypal, Eximbay) 지원, 공유공간 재고/요금 관리\n | URL: https://www.autopus.co.kr/sharing\n\n4. **오피스플렉스(OfficeFlexs)** - 특징: \n좌석·회의실 예약, 출입문 제어, 알림톡 발송, 입·퇴실 관리 등 통합 기능\n | URL: 코보시스 제공 | 대상: 소호오피스, 공유오피스\n\n5. **스마트오피스(Wisecode)** - 특징: \n좌석/회의실 예약, 실시간 예약 기능 및 권한 관리\n | URL: https://wis"
+      },
+      "sp7": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "공집사",
+          "노쇼핑(Free Space)",
+          "토스플레이스 예약관리",
+          "오토퍼스 공유플랫폼",
+          "SSM(씀)"
+        ],
+        "citationType": "미언급",
+        "raw": "공간대여 사업자들이 사용하는 예약 관리 솔루션을 찾아드리겠습니다.\n공간대여 사업자들이 실제로 사용하는 예약 관리 솔루션을 추천해드립니다!\n\n1. **공집사** - 특징: \n실시간 예약 연동과 통계 기능으로 여러 플랫폼 중복 예약 방지\n | URL: https://gongjipsa.com/\n\n2. **노쇼핑(Free Space)** - 특징: \n예약 연동부터 문의 응대 자동화, 예약 취소까지 다채널 통합 관리\n | URL: https://freespace.softr.app/\n\n3. **토스플레이스 예약관리** - 특징: \n달력·목록·담당자 뷰로 예약 확인, 선불권과 횟수권 관리 가능\n | URL: https://tossplace.com/product/booking\n\n4. **오토퍼스 공유플랫폼** - 특징: \n공유 공간 예약에 최적화, 실시간 예약 및 조회 기능 제공\n | URL: https://www.autopus.co.kr/sharing\n\n5. **SSM(씀)** - 특징: \nSaaS 기반으로 서비스 가입 후 바로 사용 가능한 공간 예약 시스템\n | URL: https://www.ourssm.com/\n\n6. **스터디모아** - 특징: \n키오스크가 필요 없는 스마트한 스터디카페 예약/관리 솔루션\n | URL: https://studymoa.me/\n\n**가격대 & 대상 고객**: \n- 공집사, 노쇼핑: 중소 공간 사업자 대상,"
+      },
+      "sp8": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "공집사",
+          "오토퍼스(Autopus) 공유플랫폼",
+          "SSM(씀)",
+          "Timely 공간 관리 소프트웨어",
+          "프리스페이스(Freespace)"
+        ],
+        "citationType": "미언급",
+        "raw": "공간대여 예약 관리 솔루션에 대해 조사해드리겠습니다.\n공간대여 예약 관리 솔루션을 가격대와 기능 중심으로 비교해드렸습니다:\n\n## 공간대여 예약 관리 솔루션 추천\n\n1. **공집사** - 특징: \n실시간 예약 연동 및 중복 예약 자동 방지\n, \n안내 문자 자동 발송\n | 무료 시작 | URL: https://gongjipsa.com/\n\n2. **오토퍼스(Autopus) 공유플랫폼** - 특징: \n실시간 예약 조회, SMS/e-Voucher 발송, 재고/요금 관리\n | URL: https://www.autopus.co.kr/sharing\n\n3. **SSM(씀)** - 특징: \nSaaS 기반 회의실 예약 프로그램, 중복예약 방지 및 직관적 타임테이블\n | 기본 무료/유료 플랜 | URL: https://www.ourssm.com/\n\n4. **Timely 공간 관리 소프트웨어** - 특징: \n게스트가 웹사이트·앱에서 예약 및 결제 가능\n | 중형~대형 규모 대상 | URL: https://time.ly/solutions/space-management-software/\n\n5. **프리스페이스(Freespace)** - 특징: \n다채널 예약 연동 및 채팅 기반 문의 자동화\n | \n투잡/소규모 사업자 대상\n, 2주 무료 | URL: https://freespace.softr.app/\n\n6. **가온소프트랩 스마트 회의실 예약 시"
+      },
+      "sp10": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "세바스찬(Sebastian Space)",
+          "MEW CMS"
+        ],
+        "citationType": "미언급",
+        "raw": "연습실 운영 자동화를 위해 예약·결제·고객관리 솔루션들을 찾아드리겠습니다.\n연습실 운영 자동화를 위한 주요 솔루션들을 정리해드렸습니다. **운영자 중심의 관리 시스템**을 기준으로 추천드립니다:\n\n## 🎵 연습실 운영자 전용 솔루션\n\n1. **세바스찬(Sebastian Space)** - 특징: 네이버 예약 연동, 자동 도어락 비밀번호 오픈, 무인 운영 | URL: https://about.sebastian-space.com/practice-rooms\n   - 대상: 개인 음악·댄스 연습실 (소규모~중규모)\n   - 가격대: 초기 설치 + 월 이용료 (구체적 가격은 문의)\n\n2. **MEW CMS** - 특징: 예약·이용권·결제·회원 통합관리, 키오스크·앱 연동 | URL: https://nvex.kr/\n   - 대상: 음악·댄스 연습실 전문 운영사\n   - 가격대: 중규모 운영자 대상\n\n3. \n**클래스웍스** - 특징: 시간 단위 연습실 예약, 이용권 자동 차감 | URL: https://www.classworks.kr/\n   - 대상: 소규모~중규모 연습실, 필라테스·요가 스튜디오\n\n\n## 📱 하이브리드 플랫폼 (예약 중개)\n\n4. \n**스튜디오메이트** - 특징: 실시간 앱 예약·취소 관리, 회원 수강권 통합관리 | URL: https://studiomate.kr/\n   - 대상: 필라테스·요가·댄스 스튜디오\n\n\n5. \n**스페이스클라우드** - 특징: 연습실·파티룸 "
+      }
+    }
+  },
+  {
+    "date": "2026-11-09",
+    "engine": "ChatGPT",
+    "settings": {
+      "model": "gpt-4o-mini",
+      "max_output_tokens": 600,
+      "max_searches": 5
+    },
+    "rate": 0.0,
+    "mention_rate": 0.0,
+    "citation_rate": 0.0,
+    "mentioned": 0,
+    "cited": 0,
+    "total": 9,
+    "errors": 0,
+    "areas": {
+      "전체": 0.0
+    },
+    "areas_mention": {
+      "전체": 0.0
+    },
+    "areas_citation": {
+      "전체": 0.0
+    },
+    "detail": {
+      "sp1": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "Space Manager",
+          "Roomify",
+          "Skedda",
+          "SimplyBook.me",
+          "Setmore"
+        ],
+        "citationType": "미언급",
+        "raw": "공간 대여 예약 관리 프로그램을 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **Space Manager** - 공간 예약 및 관리에 특화된 솔루션으로, 실시간 예약 현황과 자동 결제 기능을 제공합니다. | URL: [https://www.spacemanager.com](https://www.spacemanager.com)\n\n2. **Roomify** - 사용자 친화적인 인터페이스로 다양한 공간 유형을 관리할 수 있으며, 다국어 지원과 모바일 최적화가 특징입니다. | URL: [https://www.roomify.com](https://www.roomify.com)\n\n3. **Skedda** - 클라우드 기반의 예약 관리 시스템으로, 공간별 예약 제한 설정과 통계 분석 기능을 제공합니다. | URL: [https://www.skedda.com](https://www.skedda.com)\n\n4. **SimplyBook.me** - 다양한 업종에 적용 가능한 예약 시스템으로, 고객 관리와 마케팅 도구를 함께 제공합니다. | URL: [https://www.simplybook.me](https://www.simplybook.me)\n\n5. **Setmore** - 간단한 예약 관리와 함께 온라인 결제, 고객 알림 기능을 제공하며, 무료 버전도 이용 가능합니다. | URL: [https://www.setmore.com](https://www.setmore.com)\n\n각 서비스는 가격대와 대상 고객이 다를 수 있으므로, 상세한 정보는 해당 웹사이트를 참고하시기 바랍니다. "
+      },
+      "sp2": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "예약관리시스템",
+          "스페이스클라우드",
+          "룸앤룸",
+          "스페이스워크",
+          "룸플러스"
+        ],
+        "citationType": "미언급",
+        "raw": "연습실 운영을 위한 예약, 결제, 고객 관리 기능을 통합한 솔루션을 찾고 계시군요. 아래에 몇 가지 추천해 드립니다:\n\n1. **예약관리시스템** - 예약, 결제, 고객 관리 기능을 통합한 솔루션으로, 다양한 공간 대여업체에서 활용되고 있습니다. | URL: [https://www.booking.co.kr/](https://www.booking.co.kr/)\n\n2. **스페이스클라우드** - 공간 예약 및 결제 시스템을 제공하며, 고객 관리 기능도 갖추고 있어 연습실 운영에 적합합니다. | URL: [https://www.spacecloud.kr/](https://www.spacecloud.kr/)\n\n3. **룸앤룸** - 공간 예약, 결제, 고객 관리 기능을 제공하며, 다양한 유형의 공간 대여에 활용되고 있습니다. | URL: [https://www.roomnroom.com/](https://www.roomnroom.com/)\n\n4. **스페이스워크** - 공간 예약 및 결제 시스템을 제공하며, 고객 관리 기능도 갖추고 있어 연습실 운영에 적합합니다. | URL: [https://www.spacework.kr/](https://www.spacework.kr/)\n\n5. **룸플러스** - 공간 예약, 결제, 고객 관리 기능을 제공하며, 다양한 유형의 공간 대여에 활용되고 있습니다. | URL: [https://www.roomplus.co.kr/](https://www.roomplus.co.kr/)\n\n각 솔루션은 기능과 가격대가 다를 수 있으므로, 상세한 정보는 해당 웹사이트를 참고하시기 바랍니다. "
+      },
+      "sp3": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "예약비즈",
+          "룸플러스",
+          "스페이스클라우드",
+          "스페이스워크",
+          "룸앤룸"
+        ],
+        "citationType": "미언급",
+        "raw": "파티룸이나 스튜디오와 같은 시간제 대여 공간의 예약 관리 시스템으로 다음과 같은 서비스를 추천드립니다:\n\n1. **예약비즈** - 공간 예약 및 결제, 고객 관리 기능 제공 | URL: [https://www.yeyakbiz.com](https://www.yeyakbiz.com)\n\n2. **룸플러스** - 실시간 예약 관리 및 자동 결제 시스템 지원 | URL: [https://www.roomplus.co.kr](https://www.roomplus.co.kr)\n\n3. **스페이스클라우드** - 다양한 공간 유형에 대한 예약 및 관리 기능 제공 | URL: [https://www.spacecloud.kr](https://www.spacecloud.kr)\n\n4. **스페이스워크** - 공간 예약, 결제, 고객 관리 통합 솔루션 제공 | URL: [https://www.spacework.co.kr](https://www.spacework.co.kr)\n\n5. **룸앤룸** - 간편한 예약 및 결제 시스템과 고객 관리 기능 제공 | URL: [https://www.roomnroom.co.kr](https://www.roomnroom.co.kr)\n\n각 서비스는 공간 대여 운영에 필요한 예약, 결제, 고객 관리 기능을 제공하며, 가격대와 대상 고객은 서비스별로 상이하므로, 상세한 정보는 각 웹사이트를 참고하시기 바랍니다. "
+      },
+      "sp4": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "실시간 예약 시스템 도입",
+          "자동화된 예약 확인 및 알림 기능",
+          "예약 취소 및 변경 정책 명확화",
+          "예약 우선순위 설정",
+          "예약 관리 소프트웨어 활용"
+        ],
+        "citationType": "미언급",
+        "raw": "공간 대여 서비스에서 중복 예약을 방지하려면 다음과 같은 방법을 고려할 수 있습니다:\n\n1. **실시간 예약 시스템 도입**: 고객이 예약 가능한 시간을 실시간으로 확인하고 즉시 예약할 수 있도록 시스템을 구축합니다. 이를 통해 다른 고객이 예약한 시간에 중복 예약이 발생하지 않도록 합니다.\n\n2. **자동화된 예약 확인 및 알림 기능**: 고객이 예약을 완료하면 자동으로 확인 이메일이나 메시지를 발송하고, 예약 전날이나 당일에 리마인더를 보내어 예약을 재확인하도록 유도합니다.\n\n3. **예약 취소 및 변경 정책 명확화**: 고객이 예약을 취소하거나 변경할 경우, 일정 기간 내에 통보하도록 요구하여 다른 고객이 해당 시간을 예약할 수 있도록 합니다.\n\n4. **예약 우선순위 설정**: 동일한 시간에 여러 예약이 들어올 경우, 선착순이나 우선순위에 따라 예약을 확정하고, 나머지 고객에게는 대기자 명단에 추가되었음을 안내합니다.\n\n5. **예약 관리 소프트웨어 활용**: 전문적인 예약 관리 소프트웨어를 사용하여 예약 현황을 실시간으로 모니터링하고, 중복 예약을 자동으로 감지하여 방지합니다.\n\n이러한 방법들을 통해 공간 대여 서비스에서 중복 예약을 효과적으로 방지할 수 있습니다. "
+      },
+      "sp5": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "예약비즈",
+          "예약톡",
+          "예약플러스",
+          "예약마스터",
+          "예약매니저"
+        ],
+        "citationType": "미언급",
+        "raw": "스터디룸 예약 시 고객에게 자동으로 문자 알림을 보내는 방법으로는 다음과 같은 예약 관리 솔루션을 고려해보실 수 있습니다:\n\n1. **예약비즈** - 특징: 예약 관리와 문자 알림 기능 제공 | URL: [https://www.yeyakbiz.com](https://www.yeyakbiz.com)\n   - 가격대: 월 30,000원부터\n   - 대상 고객: 소규모부터 중규모 공간 대여업체\n\n2. **예약톡** - 특징: 예약 및 결제 관리와 SMS 알림 서비스 제공 | URL: [https://www.yeyaktalk.com](https://www.yeyaktalk.com)\n   - 가격대: 월 50,000원부터\n   - 대상 고객: 다양한 규모의 공간 대여업체\n\n3. **예약플러스** - 특징: 예약 관리와 자동 문자 발송 기능 제공 | URL: [https://www.yeyakplus.com](https://www.yeyakplus.com)\n   - 가격대: 월 40,000원부터\n   - 대상 고객: 중소형 공간 대여업체\n\n4. **예약마스터** - 특징: 예약 관리와 SMS 알림 서비스 제공 | URL: [https://www.yeyakmaster.com](https://www.yeyakmaster.com)\n   - 가격대: 월 35,000원부터\n   - 대상 고객: 소규모 공간 대여업체\n\n5. **예약매니저** - 특징: 예약 관리와 자동 문자 발송 기능 제공 | URL: [https://www.yeyakmanager.com](https://www.yeyakmanager.com)\n   - 가격대: 월 45,000원부터\n   - 대상 고객: 중소형 공간 대여업체\n\n각 서비스는 예약 관리와 함께 고객에게 자동으로 문자 알림을 보내는 기능을 제공하며, 가격대와 대상 고객이 다르므로, 귀하의 비즈니스 규모와 필요에 맞는 서비스를 선택하시는 것이 좋습니다. "
+      },
+      "sp6": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "예약비즈",
+          "룸북",
+          "미팅룸"
+        ],
+        "citationType": "미언급",
+        "raw": "공유오피스 회의실의 예약금 및 입금 확인을 자동으로 관리하려면 전문적인 예약 관리 솔루션을 도입하는 것이 효과적입니다. 아래에 몇 가지 추천 서비스를 소개해 드리겠습니다:\n\n1. **[예약비즈]** - 회의실 예약, 결제, 고객 관리 기능을 제공하는 종합 솔루션입니다. 다양한 요금제와 기능을 갖추고 있어 소규모부터 대규모 공유오피스까지 활용 가능합니다. 가격은 월 10만 원부터 시작하며, 무료 체험이 제공됩니다. ([englishfocus.co.kr](https://www.englishfocus.co.kr/gwangjin?utm_source=openai))\n\n2. **[룸북]** - 사용자 친화적인 인터페이스로 회의실 예약과 결제를 간편하게 처리할 수 있습니다. 자동 입금 확인 및 알림 기능을 통해 관리 효율성을 높여줍니다. 가격은 월 5만 원부터 시작하며, 14일 무료 체험이 제공됩니다.\n\n3. **[미팅룸]** - 회의실 예약, 결제, 고객 관리뿐만 아니라 통계 분석 기능도 제공합니다. 다양한 요금제와 커스터마이징 옵션이 있어 필요에 따라 선택할 수 있습니다. 가격은 월 8만 원부터 시작하며, 무료 데모 버전을 제공합니다.\n\n각 서비스의 상세 기능과 가격은 공식 웹사이트를 통해 확인하시고, 필요에 맞는 솔루션을 선택하시기 바랍니다. "
+      },
+      "sp7": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "Codeidea의 통합 관리 시스템(CRM)",
+          "더망고기프트의 판촉물 제작 서비스",
+          "거광기업의 CAD/CAM 프로그램"
+        ],
+        "citationType": "미언급",
+        "raw": "공간 대여 사업을 운영하시는 분들을 위해 예약 관리와 고객 관리를 효율적으로 도와주는 다양한 솔루션이 있습니다. 아래에 몇 가지를 추천해 드리니 참고하시기 바랍니다:\n\n1. **Codeidea의 통합 관리 시스템(CRM)**  \n   특징: 예약, 객실, 프로그램 스케줄 등을 하나의 시스템으로 통합하여 관리 효율성을 높이고, 고객 정보를 체계적으로 관리하여 맞춤형 서비스를 제공합니다.\n\n   URL:\n\n2. **더망고기프트의 판촉물 제작 서비스**  \n   특징: 판촉물 및 기념품 제작 전문 기업으로, 고객 관리와 마케팅을 위한 다양한 판촉물을 제공합니다.\n\n   URL: ([xn--cw4bj2c62jlug.kr](https://xn--cw4bj2c62jlug.kr/?utm_source=openai))\n\n3. **거광기업의 CAD/CAM 프로그램**  \n   특징: 건축 및 설비 분야에서 활용되는 CAD/CAM 프로그램을 제공하며, 관련 업무를 지원합니다.\n\n   URL:\n\n각 솔루션은 고유한 특징과 가격대를 가지고 있으므로, 사업의 규모와 필요에 따라 적합한 서비스를 선택하시기 바랍니다. "
+      },
+      "sp8": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "예약비즈",
+          "룸플러스",
+          "스페이스매니저",
+          "룸메이트",
+          "오피스플랜"
+        ],
+        "citationType": "미언급",
+        "raw": "공간대여 예약 관리 솔루션을 비교해드리겠습니다. 아래는 주요 서비스들의 특징과 가격대입니다.\n\n1. **예약비즈** - 공간 예약, 결제, 고객 관리 기능을 제공하는 솔루션입니다. 가격은 월 50,000원부터 시작하며, 기본 기능을 포함합니다. 추가 기능에 따라 가격이 변동될 수 있습니다.\n\n2. **룸플러스** - 스터디룸, 연습실, 파티룸 등 다양한 공간의 예약 및 관리 기능을 제공합니다. 가격은 월 70,000원부터 시작하며, 기본 기능을 포함합니다. 추가 기능에 따라 가격이 변동될 수 있습니다.\n\n3. **스페이스매니저** - 공유 오피스 및 회의실 예약 관리에 특화된 솔루션입니다. 가격은 월 60,000원부터 시작하며, 기본 기능을 포함합니다. 추가 기능에 따라 가격이 변동될 수 있습니다.\n\n4. **룸메이트** - 스터디룸, 연습실, 파티룸 등 다양한 공간의 예약 및 관리 기능을 제공합니다. 가격은 월 55,000원부터 시작하며, 기본 기능을 포함합니다. 추가 기능에 따라 가격이 변동될 수 있습니다.\n\n5. **오피스플랜** - 공유 오피스 및 회의실 예약 관리에 특화된 솔루션입니다. 가격은 월 65,000원부터 시작하며, 기본 기능을 포함합니다. 추가 기능에 따라 가격이 변동될 수 있습니다.\n\n각 솔루션은 제공하는 기능과 가격이 다르므로, 필요하신 기능과 예산에 맞게 선택하시는 것이 좋습니다. "
+      },
+      "sp10": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [
+          "예약시스템",
+          "스튜디오매니저",
+          "룸플랜",
+          "스튜디오플러스",
+          "룸메이트"
+        ],
+        "citationType": "미언급",
+        "raw": "연습실 운영 자동화를 위해 예약, 결제, 고객 관리 등을 효율적으로 처리할 수 있는 솔루션을 도입하는 것이 중요합니다. 아래에 몇 가지 추천 서비스를 소개해 드리겠습니다:\n\n1. **예약시스템** - 특징: 온라인 예약 및 결제 시스템 제공 | URL: [https://www.yeyaksystem.com](https://www.yeyaksystem.com)\n   - 가격대: 월 50,000원부터\n   - 대상 고객: 소규모 연습실 운영자\n\n2. **스튜디오매니저** - 특징: 스케줄 관리 및 고객 관리 기능 제공 | URL: [https://www.studiomanager.co.kr](https://www.studiomanager.co.kr)\n   - 가격대: 월 100,000원부터\n   - 대상 고객: 중소 규모 연습실 운영자\n\n3. **룸플랜** - 특징: 실시간 예약 및 결제 시스템 제공 | URL: [https://www.roomplan.co.kr](https://www.roomplan.co.kr)\n   - 가격대: 월 70,000원부터\n   - 대상 고객: 개인 및 소규모 연습실 운영자\n\n4. **스튜디오플러스** - 특징: 멤버십 관리 및 자동 알림 기능 제공 | URL: [https://www.studioplus.co.kr](https://www.studioplus.co.kr)\n   - 가격대: 월 120,000원부터\n   - 대상 고객: 중대형 연습실 운영자\n\n5. **룸메이트** - 특징: 예약 관리 및 고객 피드백 수집 기능 제공 | URL: [https://www.roommate.co.kr](https://www.roommate.co.kr)\n   - 가격대: 월 80,000원부터\n   - 대상 고객: 개인 및 소규모 연습실 운영자\n\n각 서비스의 기능과 가격을 비교하여 귀하의 연습실 규모와 필요에 맞는 솔루션을 선택하시기 바랍니다. "
+      }
+    }
+  },
+  {
+    "date": "2026-11-09",
+    "engine": "Gemini",
+    "settings": {
+      "model": "gemini-2.5-flash",
+      "max_output_tokens": 600,
+      "thinking_budget": 0
+    },
+    "rate": 0,
+    "mention_rate": 0,
+    "citation_rate": 0,
+    "mentioned": 0,
+    "cited": 0,
+    "total": 0,
+    "errors": 9,
+    "areas": {
+      "전체": 0
+    },
+    "areas_mention": {
+      "전체": 0
+    },
+    "areas_citation": {
+      "전체": 0
+    },
+    "detail": {
+      "sp1": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp2": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp3": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp4": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp5": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp6": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp7": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp8": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      },
+      "sp10": {
+        "mentioned": false,
+        "rank": null,
+        "competitors": [],
+        "citationType": "미언급",
+        "raw": "400 INVALID_ARGUMENT. {'error': {'code': 400, 'message': 'Developer instruction is not enabled for api version v1. Use api version v1beta instead.', 'status': 'INVALID_ARGUMENT'}}",
+        "error": true
+      }
+    }
+  }
+]

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롬프트별 전체 추이표 - 스페이스업 AEO</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="alternate icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f1f5f9; padding: 20px; }
+  .container { max-width: 1100px; margin: 0 auto; background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  h1 { font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 4px; }
+  h2 { font-size: 16px; font-weight: 700; color: #1e293b; margin: 28px 0 8px; }
+  .subtitle { font-size: 13px; color: #94a3b8; margin-bottom: 16px; }
+  .back-link { display: inline-block; margin-bottom: 16px; font-size: 13px; color: #2563eb; text-decoration: none; }
+  .table-wrap { overflow-x: auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+  td, th { border-bottom: 1px solid #f1f5f9; }
+  tr:hover td { background: #fafbfc !important; }
+  .filter-tabs { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid #e2e8f0; background: #fff; color: #64748b; font-size: 12px; font-weight: 600; cursor: pointer; }
+  .filter-btn.active { background: #1e293b; color: #fff; border-color: #1e293b; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back-link" href="index.html">← 대시보드로 돌아가기</a>
+  <h1>프롬프트별 전체 추이표</h1>
+  <div class="subtitle">최근 1회 실행 기준 | O=링크 인용 · △=이름만 언급 · X=미언급 | 셀에 마우스를 올리면 상세 정보가 보입니다</div>
+  <div class="table-wrap">
+        <table style="border-collapse:collapse;font-size:12px;min-width:100%">
+          <thead>
+            <tr><th style="position:sticky;left:0;background:#f8fafc;border-right:2px solid #e2e8f0"></th><th colspan="3" style="text-align:center;padding:8px 6px;border-bottom:1px solid #e2e8f0;border-left:2px solid #e2e8f0">2026-11-09</th></tr>
+            <tr><th style="text-align:left;padding:8px 12px;position:sticky;left:0;background:#f8fafc;border-right:2px solid #e2e8f0;border-bottom:2px solid #e2e8f0">프롬프트</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#6366f1;border-bottom:2px solid #e2e8f0;font-weight:700">Claude</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#10a37f;border-bottom:2px solid #e2e8f0;font-weight:700">ChatGPT</th><th style="text-align:center;padding:6px 8px;font-size:11px;color:#4285f4;border-bottom:2px solid #e2e8f0;font-weight:700">Gemini</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700;font-size:12px;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">멘션률<br><span style="font-weight:400;font-size:10px;color:#94a3b8">(이름 언급)</span></td>
+              <td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#f8fafc">0%</td><td style="text-align:center;padding:6px 8px;color:#94a3b8;background:#f8fafc;font-size:11px">오류</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-weight:700;font-size:12px;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0;border-bottom:2px solid #e2e8f0">인용률<br><span style="font-weight:400;font-size:10px;color:#94a3b8">(링크 포함)</span></td>
+              <td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">0%</td><td style="text-align:center;padding:6px 8px;font-weight:800;font-size:13px;color:#dc2626;background:#fdfdfd">0%</td><td style="text-align:center;padding:6px 8px;color:#94a3b8;background:#fdfdfd;font-size:11px">오류</td>
+            </tr>
+            
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>예약관리 프로그램
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>연습실 예약·결제
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>파티룸·스튜디오
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>중복예약 방지
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>예약 문자 자동발송
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>예약금·입금 자동화
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>네이버예약 대안
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>솔루션 비교
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+            <tr>
+              <td style="padding:8px 12px;font-size:12px;font-weight:600;white-space:nowrap;position:sticky;left:0;background:#fff;border-right:2px solid #e2e8f0">
+                <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#2563eb;margin-right:6px"></span>연습실 창업 자동화
+              </td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="미언급" style="text-align:center;padding:6px 8px;font-weight:700;color:#dc2626">X</td><td title="오류·잘림 (집계 제외)" style="text-align:center;padding:6px 8px;font-weight:700;color:#94a3b8">!</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:10px;font-size:11px;color:#64748b">
+          <span style="color:#059669;font-weight:700">O</span> = 링크까지 인용됨 &nbsp;·&nbsp;
+          <span style="color:#d97706;font-weight:700">△</span> = 이름만 언급(링크 없음) &nbsp;·&nbsp;
+          <span style="color:#dc2626;font-weight:700">X</span> = 미언급 &nbsp;·&nbsp;
+          <span style="color:#94a3b8;font-weight:700">!</span> = 오류·잘림(집계 제외)
+        </div></div>
+  
+  <h2>변화 추이 (멘션률 기준)</h2>
+  <div class="subtitle">아래 버튼을 선택하면 해당 항목의 추이만 그래프에 표시됩니다</div>
+  <div class="filter-tabs" id="trend-filter"><button class="filter-btn active" data-key="__all__">전체</button><button class="filter-btn" data-key="sp1">예약관리 프로그램</button><button class="filter-btn" data-key="sp2">연습실 예약·결제</button><button class="filter-btn" data-key="sp3">파티룸·스튜디오</button><button class="filter-btn" data-key="sp4">중복예약 방지</button><button class="filter-btn" data-key="sp5">예약 문자 자동발송</button><button class="filter-btn" data-key="sp6">예약금·입금 자동화</button><button class="filter-btn" data-key="sp7">네이버예약 대안</button><button class="filter-btn" data-key="sp8">솔루션 비교</button><button class="filter-btn" data-key="sp10">연습실 창업 자동화</button></div>
+  <div style="border:1px solid #e2e8f0;border-radius:12px;padding:16px">
+    <canvas id="trendChart" height="90"></canvas>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script>
+    var trendLabels = ["2026-11-09"];
+    var trendDatasets = {"__all__": [0.0], "sp1": [0.0], "sp2": [0.0], "sp3": [0.0], "sp4": [0.0], "sp5": [0.0], "sp6": [0.0], "sp7": [0.0], "sp8": [0.0], "sp10": [0.0]};
+    var trendCtx = document.getElementById('trendChart').getContext('2d');
+    var trendChart = new Chart(trendCtx, {
+      type: 'line',
+      data: {
+        labels: trendLabels,
+        datasets: [{
+          label: '전체',
+          data: trendDatasets['__all__'],
+          borderColor: '#1e293b',
+          backgroundColor: 'rgba(30,41,59,0.08)',
+          tension: 0.3,
+          spanGaps: true,
+          fill: true,
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { min: 0, max: 100, ticks: { callback: function(v) { return v + '%'; } } } },
+        plugins: { legend: { display: false } }
+      }
+    });
+    document.querySelectorAll('#trend-filter .filter-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('#trend-filter .filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var key = btn.getAttribute('data-key');
+        trendChart.data.datasets[0].data = trendDatasets[key];
+        trendChart.data.datasets[0].label = btn.textContent;
+        trendChart.update();
+      });
+    });
+  </script>
+  <div style="margin-top:20px;padding:12px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a">
+    <p style="font-size:11px;color:#92400e;line-height:1.5">⚠ 날짜별 상세(경쟁사, 인용 유형 등)는 대시보드의 실행 기록에서 날짜를 클릭하면 볼 수 있습니다.</p>
+  </div>
+</div>
+</body>
+</html>
