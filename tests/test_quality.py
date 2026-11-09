@@ -499,5 +499,30 @@ class MultiProject(unittest.TestCase):
         self.assertEqual(cm.exception.code, 2)
 
 
+class KstDate(unittest.TestCase):
+    """주간 실행은 월요일 새벽(KST) = UTC 일요일 밤에 돈다. 기록 날짜는 월요일이어야 한다."""
+
+    def test_sunday_night_utc_is_monday_in_kst(self):
+        from datetime import datetime as real_dt, timezone
+
+        class FakeDatetime(real_dt):
+            @classmethod
+            def now(cls, tz=None):
+                utc = real_dt(2026, 11, 8, 20, 37, tzinfo=timezone.utc)  # 일요일 20:37 UTC
+                return utc.astimezone(tz) if tz else utc.replace(tzinfo=None)
+
+        with mock.patch.object(ac, "datetime", FakeDatetime):
+            self.assertEqual(ac.today_kst(), "2026-11-09")  # 월요일
+
+    def test_weekly_cron_lands_before_9am_kst(self):
+        wf = (Path(__file__).resolve().parent.parent / ".github" / "workflows" / "aeo-check.yml").read_text(encoding="utf-8")
+        import re
+        minute, hour, _, _, dow = re.search(r"cron: '([^']+)'", wf).group(1).split()
+        kst_hour = (int(hour) + 9) % 24
+        kst_dow = (int(dow) + (int(hour) + 9) // 24) % 7
+        self.assertEqual(kst_dow, 1, "KST 기준 월요일에 시작해야 함")
+        self.assertLessEqual(kst_hour, 6, "지연(3~4시간)을 감안해 KST 06시 이전에 시작해야 9시 전에 결과가 옴")
+
+
 if __name__ == "__main__":
     unittest.main()

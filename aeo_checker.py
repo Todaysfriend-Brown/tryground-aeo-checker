@@ -38,8 +38,15 @@ import os
 import re
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+# 날짜는 항상 한국 시간 기준. GitHub 러너는 UTC라서, 월요일 새벽(KST)에 돌면 UTC로는 아직 일요일이다.
+KST = timezone(timedelta(hours=9))
+
+
+def today_kst() -> str:
+    return datetime.now(KST).strftime("%Y-%m-%d")
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # 설정
@@ -1262,7 +1269,7 @@ def main():
         print(f"❌ 알 수 없는 프로젝트: {unknown} (가능: {list(PROJECTS)})")
         sys.exit(2)
 
-    date = datetime.now().strftime("%Y-%m-%d")
+    date = today_kst()
     started_as = PROJECT_KEY
     try:
         results = {k: run_project(k, rebuild_only, date) for k in keys}
@@ -1355,7 +1362,7 @@ def print_slack_payload() -> None:
     if status_path.exists():
         status = json.loads(status_path.read_text(encoding="utf-8"))
     else:
-        status = {"date": datetime.now().strftime("%Y-%m-%d"), "mode": "check", "projects": {
+        status = {"date": today_kst(), "mode": "check", "projects": {
             "_": {"label": "AEO 체커", "output_dir": "aeo_results", "warnings": [],
                   "problems": ["last_run_status.json이 없음 — main()이 먼저 실행되어야 함"]},
         }}

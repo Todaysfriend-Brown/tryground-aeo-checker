@@ -2,8 +2,11 @@ name: AEO 인용률 주간 체크
 
 on:
   schedule:
-    # 매주 월요일 오전 9시 (KST) = UTC 기준 일요일 00:00 (한국이 UTC+9)
-    - cron: '0 0 * * 1'
+    # 매주 월요일 05:37 (KST) = UTC 일요일 20:37 (한국이 UTC+9)
+    # 예전엔 월 09:00(KST)로 걸어뒀지만, GitHub 스케줄은 붐비는 정각(특히 UTC 자정)에 3~4시간씩 밀려
+    # 실제 결과는 12~13시에 왔다. 오전 9시 전에 받으려고 새벽으로 당기고, 혼잡한 정각을 피해 37분으로 둔다.
+    # 날짜는 aeo_checker.py가 KST로 계산하므로 UTC로 일요일이어도 '월요일 날짜'로 기록된다.
+    - cron: '37 20 * * 0'
   workflow_dispatch:
     inputs:
       rebuild_only:
@@ -48,7 +51,7 @@ jobs:
           git config --global user.name "AEO Bot"
           git config --global user.email "aeo-bot@tryground.co.kr"
           git add aeo_results/ spaceup_results/   # 프로젝트별 결과 폴더 (aeo_checker.py PROJECTS의 output_dir)
-          git diff --staged --quiet || git commit -m "AEO 체크 결과 업데이트 $(date +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "AEO 체크 결과 업데이트 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           git push
 
       - name: Slack 알림 전송
