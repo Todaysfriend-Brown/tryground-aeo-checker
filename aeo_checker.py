@@ -254,7 +254,9 @@ def call_gemini(question: str) -> str:
     from google import genai
     from google.genai import types
     cfg = CALL_SETTINGS["Gemini"]
-    client = genai.Client(api_key=API_KEYS["gemini"])
+    # API 버전을 v1beta로 고정한다. google-genai 3.0.0(2026-11-06)부터 기본값이 v1로 바뀌었는데,
+    # v1은 시스템 프롬프트(system_instruction)를 거부해 11/9 실행에서 Gemini 19건이 전부 400으로 실패했다.
+    client = genai.Client(api_key=API_KEYS["gemini"], http_options=types.HttpOptions(api_version="v1beta"))
     grounding_tool = types.Tool(google_search=types.GoogleSearch())
     config = types.GenerateContentConfig(
         system_instruction=SYSTEM_PROMPT,

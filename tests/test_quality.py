@@ -499,6 +499,30 @@ class MultiProject(unittest.TestCase):
         self.assertEqual(cm.exception.code, 2)
 
 
+class GeminiApiVersion(unittest.TestCase):
+    def test_client_pins_v1beta(self):
+        """라이브러리 기본 API 버전이 바뀌어도 v1beta로 호출해야 한다 (v1은 system_instruction을 거부)"""
+        from google import genai
+        seen = {}
+
+        class FakeClient:
+            def __init__(self, **kw):
+                seen.update(kw)
+                self.models = mock.Mock()
+                self.models.generate_content.return_value = mock.Mock(text="x" * 200, candidates=[])
+
+        with mock.patch.object(genai, "Client", FakeClient), mock.patch.dict(ac.API_KEYS, {"gemini": "k"}):
+            try:
+                ac.call_gemini("질문")
+            except Exception:
+                pass  # 응답 파싱은 이 테스트의 관심사가 아님
+        self.assertEqual(seen["http_options"].api_version, "v1beta")
+
+    def test_workflow_pins_genai_below_3(self):
+        wf = (Path(__file__).resolve().parent.parent / ".github" / "workflows" / "aeo-check.yml").read_text(encoding="utf-8")
+        self.assertIn("google-genai>=2.34,<3", wf)
+
+
 class KstDate(unittest.TestCase):
     """주간 실행은 월요일 새벽(KST) = UTC 일요일 밤에 돈다. 기록 날짜는 월요일이어야 한다."""
 

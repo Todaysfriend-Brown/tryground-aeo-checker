@@ -28,7 +28,9 @@ jobs:
           python-version: '3.11'
 
       - name: 패키지 설치
-        run: pip install openai google-genai anthropic
+        # google-genai는 마지막으로 정상 동작한 2.x대로 고정 (3.0.0에서 기본 API 버전이 바뀌어 11/9 실행이 깨졌음).
+        # 올릴 때는 새 버전으로 한 번 직접 돌려보고 올린다.
+        run: pip install openai "google-genai>=2.34,<3" anthropic
 
       - name: 자동 검증 테스트 (API 호출 없음 - 로직이 깨졌으면 비용을 쓰기 전에 여기서 중단)
         run: python -m unittest discover -s tests -p "test_quality.py" -v
